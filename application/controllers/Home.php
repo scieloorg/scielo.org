@@ -56,7 +56,13 @@ class Home extends CI_Controller
 
 			// Define firt the number of columns to know the size of them int the bootstrap grid and how many content is there.
 			$alert_number_of_columns = $alert['acf']['cols'];
+
+			// The default size for mobile is 12 (i.e, 'xs' stands for extra small).
 			$alert_column_size_desktop = "col-xs-12 ";
+
+			// Define the default size of the outter content column.
+			$alert_outside_column_size_desktop = "col-xs-12 col-sm-12 col-md-12";
+
 			$alert_column_content = array();
 
 			// Get the content of each column.
@@ -66,10 +72,10 @@ class Home extends CI_Controller
 
 			// Define the size of the grid for each column. Note that it's bootstrap dependent.
 			switch($alert_number_of_columns) {
-				case 1: $alert_column_size_desktop .= "col-sm-10 col-md-10"; break;
-				case 2: $alert_column_size_desktop .= "col-sm-5 col-md-5"; break;
-				case 3: $alert_column_size_desktop .= "col-sm-3 col-md-3"; break;
-				case 4: $alert_column_size_desktop .= "col-sm-2 col-md-2"; break;
+				case 1: $alert_column_size_desktop .= "col-sm-12 col-md-12"; break;
+				case 2: $alert_column_size_desktop .= "col-sm-6 col-md-6"; break;
+				case 3: $alert_column_size_desktop .= "col-sm-4 col-md-4"; break;
+				case 4: $alert_column_size_desktop .= "col-sm-3 col-md-3"; break;
 			}
 
 			$this->load->vars('alert_number_of_columns', $alert_number_of_columns);
@@ -79,16 +85,19 @@ class Home extends CI_Controller
 			// Check if the link exists to be show as the last column on the alert.
 			$show_alert_link = ( isset($alert['acf']['link']) && isset($alert['acf']['linkText']) );
 			$this->load->vars('show_alert_link', $show_alert_link);
-
+			
 			if($show_alert_link) {
 
 				// Get the link's content and anchor.
 				$alert_link  = $alert['acf']['link'];
 				$alert_link_text  = $alert['acf']['linkText'];
+				$alert_outside_column_size_desktop = "col-xs-12 col-sm-11 col-md-9";
 
 				$this->load->vars('alert_link', $alert_link);
 				$this->load->vars('alert_link_text', $alert_link_text);
 			}
+
+			$this->load->vars('alert_outside_column_size_desktop', $alert_outside_column_size_desktop);
 		}
 		
 		$this->load->vars('show_alert', $show_alert);
