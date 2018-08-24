@@ -40,7 +40,7 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  padding: 3rem 0; }
+  padding: 0 0 3rem 0; }
   .slick-track:before, .slick-track:after {
     content: "";
     display: table; }

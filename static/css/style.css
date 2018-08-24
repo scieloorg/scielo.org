@@ -5870,45 +5870,71 @@ body {
         background: rgba(255, 255, 255, 0.4);
         text-decoration: none; }
 
-.tab-pane {
+section .tab-pane {
   border-radius: 3px;
   background: #f7f6f4;
-  padding: 0 1.6rem; }
+  padding: 3.2rem 1.6rem; }
   @media (min-width: 768px) {
-    .tab-pane {
+    section .tab-pane {
       margin-top: 2rem;
       margin-bottom: 0; }
-      .tab-pane.tab-pane-white {
-        background: #fff; } }
-
-section.blog {
-  margin-bottom: 0; }
-  section.blog .tab-content {
-    margin: 0;
-    padding: 0; }
-    section.blog .tab-content .tab-pane {
-      margin: 0;
-      padding: 0; }
-  section.blog .slick-prev {
-    left: 0px; }
-    @media (min-width: 992px) {
-      section.blog .slick-prev {
-        left: -15px; } }
-  section.blog .slick-next {
-    right: 0px; }
-    @media (min-width: 992px) {
-      section.blog .slick-next {
-        right: -15px; } }
-
-section.link-blog {
-  margin-bottom: 0; }
-
-section.collection .tab-pane {
-  padding: 3.2rem 1.6rem; }
+      section .tab-pane.tab-pane-white {
+        background: #fff;
+        padding: 0 1.6rem; } }
 
 @media (min-width: 992px) {
-  section.collection {
+  section:nth-child(2) {
     margin-bottom: 10rem; } }
+
+section .slick-prev {
+  left: 0px; }
+  @media (min-width: 992px) {
+    section .slick-prev {
+      left: -15px; } }
+
+section .slick-next {
+  right: 0px; }
+  @media (min-width: 992px) {
+    section .slick-next {
+      right: -15px; } }
+
+section:first-child {
+  margin-bottom: 0;
+  height: 70vh;
+  position: relative; }
+
+@media (min-width: 1200px) and (orientation: landscape) and (max-height: 850px) {
+  section:first-child {
+    min-height: 350px; } }
+  section:first-child .logo {
+    background: url(../images/logo-scielo-portal.svg) no-repeat;
+    background-position: center center;
+    background-size: auto 100%;
+    height: 200px;
+    max-height: 25vh;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 28vh; }
+    @media (orientation: landscape) {
+      section:first-child .logo {
+        max-height: 35vh;
+        bottom: 25vh; } }
+
+@media (min-width: 768px) and (orientation: landscape) {
+  section:first-child .logo {
+    bottom: 22vh; } }
+    @media (min-width: 1200px) {
+      section:first-child .logo {
+        bottom: 34vh; } }
+
+@media (min-width: 1200px) and (orientation: landscape) and (max-height: 850px) {
+  section:first-child .logo {
+    bottom: auto;
+    top: 70px;
+    height: 175px;
+    min-height: 175px; } }
 
 .row-tab-desk {
   display: none; }
@@ -6125,44 +6151,6 @@ section.collection .tab-pane {
       #tab-numeros .btn::after {
         right: 4rem; } }
 
-.cover {
-  margin-bottom: 0;
-  height: 70vh;
-  position: relative; }
-
-@media (min-width: 1200px) and (orientation: landscape) and (max-height: 850px) {
-  .cover {
-    min-height: 350px; } }
-  .cover .logo {
-    background: url(../images/logo-scielo-portal.svg) no-repeat;
-    background-position: center center;
-    background-size: auto 100%;
-    height: 200px;
-    max-height: 25vh;
-    width: 100%;
-    display: block;
-    margin: 0 auto;
-    position: absolute;
-    bottom: 28vh; }
-    @media (orientation: landscape) {
-      .cover .logo {
-        max-height: 35vh;
-        bottom: 25vh; } }
-
-@media (min-width: 768px) and (orientation: landscape) {
-  .cover .logo {
-    bottom: 22vh; } }
-    @media (min-width: 1200px) {
-      .cover .logo {
-        bottom: 34vh; } }
-
-@media (min-width: 1200px) and (orientation: landscape) and (max-height: 850px) {
-  .cover .logo {
-    bottom: auto;
-    top: 70px;
-    height: 175px;
-    min-height: 175px; } }
-
 .search-box {
   width: 100%;
   margin: 0 auto;
@@ -6374,7 +6362,6 @@ section.collection .tab-pane {
         padding-left: 17px; }
       .menu-lang ul li.en::before {
         width: 17px;
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg width='17px' height='12px' viewBox='0 0 17 12' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E %3Cdefs%3E %3Crect id='path-1' x='0' y='0' width='16.8' height='12' rx='2'%3E%3C/rect%3E %3C/defs%3E %3Cg id='Symbols' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' opacity='0.5'%3E %3Cg id='Proposta/Menu-Topo' transform='translate(-236.000000, -3.000000)'%3E %3Cg id='Menu-Topo'%3E %3Cg id='GB' transform='translate(236.000000, 3.000000)'%3E %3Cmask id='mask-2' fill='white'%3E %3Cuse xlink:href='%23path-1'%3E%3C/use%3E %3C/mask%3E %3Cuse id='Mask' fill='%23FFFFFF' xlink:href='%23path-1'%3E%3C/use%3E %3Crect id='Mask-Copy' fill='%230A17A7' mask='url(%23mask-2)' x='0' y='0' width='16.8' height='12'%3E%3C/rect%3E %3Cpath d='M4.00424474,8 L6.66133815e-16,8 L6.66133815e-16,4 L4.00424474,4 L-1.66419016,0.176592378 L-0.769481519,-1.14986774 L6.4,3.68600861 L6.4,-0.8 L10.4,-0.8 L10.4,3.68600861 L17.5694815,-1.14986774 L18.4641902,0.176592378 L12.7957553,4 L16.8,4 L16.8,8 L12.7957553,8 L18.4641902,11.8234076 L17.5694815,13.1498677 L10.4,8.31399139 L10.4,12.8 L6.4,12.8 L6.4,8.31399139 L-0.769481519,13.1498677 L-1.66419016,11.8234076 L4.00424474,8 Z' id='Rectangle-2' fill='%23FFFFFF' mask='url(%23mask-2)'%3E%3C/path%3E %3Cpath d='M11.2007813,3.79931641 L18.8,-1.2' id='Line' stroke='%23DB1F35' stroke-width='0.666666667' stroke-linecap='round' mask='url(%23mask-2)'%3E%3C/path%3E %3Cpath d='M12.007666,12.8102051 L18.8199707,8.21850586' id='Line-Copy-2' stroke='%23DB1F35' stroke-width='0.666666667' stroke-linecap='round' mask='url(%23mask-2)' transform='translate(15.413818, 10.514355) scale(1, -1) translate(-15.413818, -10.514355) '%3E%3C/path%3E %3Cpath d='M4.80332031,3.7862793 L-2.30249023,-1.00258789' id='Line-Copy' stroke='%23DB1F35' stroke-width='0.666666667' stroke-linecap='round' mask='url(%23mask-2)'%3E%3C/path%3E %3Cpath d='M5.57402344,13.3862793 L-2.30249023,8.16293945' id='Line-Copy-3' stroke='%23DB1F35' stroke-width='0.666666667' stroke-linecap='round' mask='url(%23mask-2)' transform='translate(1.635767, 10.774609) scale(1, -1) translate(-1.635767, -10.774609) '%3E%3C/path%3E %3Cpolygon id='Rectangle-2-Copy-3' fill='%23E6273E' mask='url(%23mask-2)' points='0 7.2 7.2 7.2 7.2 12 9.6 12 9.6 7.2 16.8 7.2 16.8 4.8 9.6 4.8 9.6 0 7.2 0 7.2 4.8 0 4.8'%3E%3C/polygon%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E");
         background-size: 17px 12px;
         background-repeat: no-repeat;
         margin-top: 4px; }
@@ -6382,7 +6369,6 @@ section.collection .tab-pane {
         padding-left: 22px; }
       .menu-lang ul li.es::before {
         width: 17px;
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg width='17px' height='12px' viewBox='0 0 17 12' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E %3Cdefs%3E %3Crect id='path-1' x='0' y='0' width='17' height='12' rx='2'%3E%3C/rect%3E %3C/defs%3E %3Cg id='Symbols' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' opacity='0.5'%3E %3Cg id='Proposta/Menu-Topo' transform='translate(-142.000000, -3.000000)'%3E %3Cg id='Menu-Topo'%3E %3Cg id='_Flags/ES' transform='translate(142.000000, 3.000000)'%3E %3Cg id='ES'%3E %3Cmask id='mask-2' fill='white'%3E %3Cuse xlink:href='%23path-1'%3E%3C/use%3E %3C/mask%3E %3Cuse id='Mask' fill='%23FFFFFF' xlink:href='%23path-1'%3E%3C/use%3E %3Crect id='Rectangle-2' fill='%23DD172C' mask='url(%23mask-2)' x='0' y='0' width='17' height='3.2'%3E%3C/rect%3E %3Crect id='Rectangle-2' fill='%23DD172C' mask='url(%23mask-2)' x='0' y='8.8' width='17' height='3.2'%3E%3C/rect%3E %3Crect id='Rectangle-2' fill='%23FFD133' mask='url(%23mask-2)' x='0' y='3.2' width='17' height='5.6'%3E%3C/rect%3E %3Cpolygon id='Rectangle-139-Copy' fill='%23FFEDB1' mask='url(%23mask-2)' points='4.45238095 5.6 5.26190476 5.6 5.26190476 6.1 4.45238095 6.1'%3E%3C/polygon%3E %3Cpath d='M4.45191902,7.23628869 C4.38550436,7.25601456 4.31619715,7.26666667 4.24573072,7.26666667 L4.24573072,7.93333333 L4.65903119,7.93333333 L4.65903119,7.26666667 C4.58812592,7.26666667 4.51852229,7.25601696 4.45191902,7.23628869 Z' id='Rectangle-137' stroke='%23A41517' stroke-width='0.666666667' mask='url(%23mask-2)'%3E%3C/path%3E %3Cpolygon id='Rectangle-139' fill='%23A41517' mask='url(%23mask-2)' points='3.64285714 6 5.26190476 6 5.26190476 6.4 4.85714286 6.4 4.45238095 7.2 4.04761905 6.4 3.64285714 6.4'%3E%3C/polygon%3E %3Crect id='Rectangle-135' fill='%23A41517' mask='url(%23mask-2)' x='2.42857143' y='4.8' width='1' height='2.8'%3E%3C/rect%3E %3Crect id='Rectangle-135-Copy' fill='%23A41517' mask='url(%23mask-2)' x='5.66666667' y='4.8' width='1' height='2.8'%3E%3C/rect%3E %3Cpath d='M3.64285714,4.4 C3.64285714,4.1790861 3.8161236,4 4.05141122,4 L4.85335068,4 C5.07898887,4 5.26190476,4.18554687 5.26190476,4.4 L5.26190476,4.47460937 C5.26190476,4.65431765 5.1124907,4.8 4.93426632,4.8 L3.97049559,4.8 C3.78954587,4.8 3.64285714,4.64575195 3.64285714,4.47460937 L3.64285714,4.4 Z' id='Rectangle-138' fill='%23A41517' mask='url(%23mask-2)'%3E%3C/path%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E");
         background-size: 17px 12px;
         background-repeat: no-repeat;
         margin-top: 4px; }
@@ -6390,8 +6376,7 @@ section.collection .tab-pane {
         padding-left: 22px; }
       .menu-lang ul li a {
         font-size: 1.2rem;
-        color: #403D39;
-        text-transform: uppercase; }
+        color: #403D39; }
 
 .btn-arrow {
   display: inline-block;
@@ -6458,40 +6443,7 @@ section.collection .tab-pane {
     border-top-right-radius: 3px;
     width: 100%; }
   .card .card-body {
-    padding: 1.6rem 1.6rem 4rem;
-    /*
-		h1{
-			font-size: 2.4rem; 
-			font-weight: 500;
-			color:#6789D3;
-			margin:0 0 .8rem;
-
-			span{
-				font-size: 1.1rem;
-				font-weight: bold;
-				color: rgba(64,61,57,.5);
-				text-transform: uppercase;
-				display:block;
-				margin-bottom:.8rem;
-				//letter-spacing: .20rem;
-			}
-
-			a{
-				color:#6789D3;
-
-				span{
-
-				}
-
-				&:hover{
-					text-decoration:none;
-					span{
-
-					}
-				}
-			}
-		}
-		*/ }
+    padding: 1.6rem 1.6rem 4rem; }
     .card .card-body .card-title a span {
       font-size: 1.1rem;
       font-weight: bold;
