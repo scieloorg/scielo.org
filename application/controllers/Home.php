@@ -32,8 +32,8 @@ class Home extends CI_Controller
 		$categories = $this->get_content_from_cache('categories', WP_CATEGORIES_URL, ONE_HOUR_TIMEOUT);
 
 		$this->load_alert();
-		$this->load_tabs();
-		$this->load_blog_rss_feed();
+		$this->load_blog_rss_feed();	
+		$this->load_tabs();			
 		$this->load_footer();
 
 		$this->load->vars('posts', $posts);
@@ -111,11 +111,7 @@ class Home extends CI_Controller
 		$tabs = $this->get_content_from_cache('tabs', TABS_API_PATH, FOUR_HOURS_TIMEOUT);
 		$tab_group = $tabs['acf']['tab_group'];
 
-		// Each tab group is a section on the template (note that the section has a specific CSS class)
-		// First group is the '<section class="collection">'
-		// Second group is the '<section class="blog">'
-
-		// print_r($tab_group);
+		$this->load->vars('tab_group', $tab_group);
 	}
 
 	/**
