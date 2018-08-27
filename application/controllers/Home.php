@@ -82,22 +82,9 @@ class Home extends CI_Controller
 
 		$footer = $this->get_content_from_cache('footer', FOOTER_API_PATH, FOUR_HOURS_TIMEOUT);
 
-		$scielo_signature = NULL;
-		$scielo_partners = array();
-		$scielo_open_access_declaration = NULL;
+		$this->load->model('Footer');
 
-		// Iterate through the blocks array getting the signature, partners array and last html content.
-		foreach($footer['acf']['blocks'] as $block) {
-			switch($block['type']){
-				case 1: $scielo_signature = $block['content']; break;
-				case 2: $scielo_partners = $block['partners']; break;
-				case 3: $scielo_open_access_declaration = $block['content']; break;
-			}
-		}
-		
-		$this->load->vars('scielo_signature', $scielo_signature);
-		$this->load->vars('scielo_partners', $scielo_partners);
-		$this->load->vars('scielo_open_access_declaration', $scielo_open_access_declaration);
+		$this->Footer->initialize($footer);
 	}	
 
 	/**

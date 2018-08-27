@@ -9,19 +9,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <span class="logo-svg-footer"></span>
                 </div>
                 <div class="col-xs-12 col-sm-10 col-md-8 adress-footer">
-                    <?= $scielo_signature ?>
+                    <?= $this->Footer->get_signature() ?>
                 </div>
             </div>
         </div>
     </div>
     <div class="partners">
-        <?php foreach($scielo_partners as $partner):?>
-            <a href="<?= $partner['link'] ?>" target="_blank"><img src="<?= $partner['logo'] ?>" alt="<?= $partner['name'] ?>" title="<?= $partner['name'] ?>"></a>
+        <?php foreach($this->Footer->get_partners() as $partner):?>
+            <a href="<?= $partner->get_link() ?>" target="_blank"><img src="<?=  $partner->get_logo() ?>" alt="<?= $partner->get_name() ?>" title="<?= $partner->get_name() ?>"></a>
         <?php endforeach;?>
     </div>
     <div class="container collectionLicense">
         <a href="/collection/about/" class="ico-oa">
-            <?= $scielo_open_access_declaration ?>
+            <?= $this->Footer->get_open_access_declaration() ?>
         </a>
     </div>
 </footer>
