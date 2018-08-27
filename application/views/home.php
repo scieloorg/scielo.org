@@ -36,12 +36,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<li class="info">
 						<a href="">Sobre o SciELO</a>
 					</li>
+					<?php foreach($available_languages as $language):?>
 					<li class="es">
-						<a href="">Español</a>
+						<a href="<?= $language['link'] ?>"><?= $language['language'] ?></a>
 					</li>
-					<li class="en">
-						<a href="">English</a>
-					</li>
+					<?php endforeach;?>
 				</ul>
 			</div>
 			<h1 class="logo"></h1>

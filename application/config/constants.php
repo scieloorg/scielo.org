@@ -155,5 +155,10 @@ define('ONE_HOUR_TIMEOUT', (60 * 60));
 define('FOUR_HOURS_TIMEOUT', (ONE_HOUR_TIMEOUT * 4));
 define('ONE_DAY_TIMEOUT', (ONE_HOUR_TIMEOUT * 24));
 
+// Default SciELO website languages
+define('SCIELO_LANG', 'portuguese');
+define('SCIELO_EN_LANG', 'english');
+define('SCIELO_ES_LANG', 'spanish');
+
 // We dont need these variables any more
 unset($base_uri, $base_url);

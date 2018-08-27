@@ -35,15 +35,16 @@ class Content {
         return $data;
     }
 
-    public function get_from_wordpress($url) {
-
-        $apiToken = $this->get_token();
+    public function get_from_wordpress($url, $use_token = FALSE) {
 
         $headers = array();
         $headers[] = 'Content-length: 0';
         $headers[] = 'Content-type: application/json';
-        $headers[] = 'Authorization: Bearer ' . $apiToken;
 
+        if($use_token) {
+            $headers[] = 'Authorization: Bearer ' . $this->get_token();
+        }
+        
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
