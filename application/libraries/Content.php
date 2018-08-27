@@ -12,9 +12,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Content {
 
-   public function get_blog_content() {
+   public function get_blog_content($url) {
 
-        $url = SCIELO_BLOG_URL;
         $headers = array();
         $headers[] = 'Content-length: 0';
         $headers[] = 'Content-type: application/xml';

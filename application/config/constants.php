@@ -110,55 +110,59 @@ if (isset($_SERVER['HTTP_HOST'])) {
     $base_uri = '/';
 }
 
-// Define these values to be used later on
+// Define these values to be used later on.
 define('BASE_URL', $base_url);
 define('BASE_URI', $base_uri);
 define('APPPATH_URI', BASE_URI . APPPATH);
 define('STATIC_ASSETS_PATH', BASE_URL.'static/');
 
-// API Token
+// API Token.
 define('API_USR',''); // @TODO - Define on production
 define('API_PWD',''); // @TODO - Define on production
 define('SALT', ''); // @TODO - Define on production
 
-// API Default Path
+// API Default Path.
 define('WORDPRESS_URL', 'http://scielohomolog.parati.ag/scielo-org-adm');
 define('WORDPRESS_API_PATH', WORDPRESS_URL.'/wp-json');
 define('WORDPRESS_API_PATH_EN', WORDPRESS_URL.'/en/wp-json');
 define('WORDPRESS_API_PATH_ES', WORDPRESS_URL.'/es/wp-json');
 define('WORDPRESS_PAGES_API_PATH', '/wp/v2/pages');
 
-// Alert API Path
+// Alert API Path.
 define('ALERT_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/103');
 define('ALERT_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/103');
 define('ALERT_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/103');
 
-// Tabs API Path
+// Tabs API Path.
 define('TABS_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/80');
 define('TABS_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/80');
 define('TABS_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/80');
 
-// Footer API Path
+// Footer API Path.
 define('FOOTER_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/126');
 define('FOOTER_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/126');
 define('FOOTER_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/126');
 
-// URL for the Wordpress Rest API
+// URL for the Wordpress Rest API.
 define('WP_TOKEN_URL', WORDPRESS_API_PATH.'/jwt-auth/v1/token');
 define('WP_POSTS_URL', WORDPRESS_API_PATH.'/wp/v2/posts');
 define('WP_PAGES_URL', WORDPRESS_API_PATH.'/wp/v2/pages');
 define('WP_CATEGORIES_URL', WORDPRESS_API_PATH.'/wp/v2/categories');
 
-// URL for the SciELO Blog
+// URL for the SciELO Blog.
 define('SCIELO_BLOG_URL', 'https://blog.scielo.org/feed/');
+define('SCIELO_BLOG_EN_URL', 'https://blog.scielo.org/en/feed/');
+define('SCIELO_BLOG_ES_URL', 'https://blog.scielo.org/es/feed/');
+
+// Default timeouts for the cache API.
 define('ONE_HOUR_TIMEOUT', (60 * 60));
 define('FOUR_HOURS_TIMEOUT', (ONE_HOUR_TIMEOUT * 4));
 define('ONE_DAY_TIMEOUT', (ONE_HOUR_TIMEOUT * 24));
 
-// Default SciELO website languages
+// Default SciELO website languages.
 define('SCIELO_LANG', 'portuguese');
 define('SCIELO_EN_LANG', 'english');
 define('SCIELO_ES_LANG', 'spanish');
 
-// We dont need these variables any more
+// We dont need these variables any more.
 unset($base_uri, $base_url);

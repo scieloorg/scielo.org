@@ -112,15 +112,56 @@ class Home extends CI_Controller
 	private function load_blog_rss_feed()
 	{
 
-		$blog_key = 'blog_posts';
-		$blog_posts = $this->cache->get($blog_key);
+		$key = 'blog';
 
-		if (is_null($blog_posts)) {
-			$blog_posts = $this->content->get_blog_content();
-			$this->cache->set($blog_key, $blog_posts, ONE_HOUR_TIMEOUT);
+		$portugueseKey = $key . '-' . SCIELO_LANG;
+		$cachedContentPortuguese = $this->put_blog_rss_feed_in_cache($portugueseKey, SCIELO_BLOG_URL, ONE_HOUR_TIMEOUT);
+
+		$englishKey = $key . '-' . SCIELO_EN_LANG;
+		$cachedContentEnglish = $this->put_blog_rss_feed_in_cache($englishKey, SCIELO_BLOG_EN_URL, ONE_HOUR_TIMEOUT);
+
+		$spanishKey = $key . '-' . SCIELO_ES_LANG;
+		$cachedContentSpanish = $this->put_blog_rss_feed_in_cache($spanishKey, SCIELO_BLOG_ES_URL, ONE_HOUR_TIMEOUT);
+
+		$blog_posts = array();
+
+		switch ($this->language) {
+
+			case SCIELO_LANG:
+				$blog_posts = $cachedContentPortuguese;
+				break;
+
+			case SCIELO_EN_LANG:
+				$blog_posts = $cachedContentEnglish;
+				break;
+
+			case SCIELO_ES_LANG:
+				$blog_posts = $cachedContentSpanish;
+				break;
 		}
 
-		$this->load->vars($blog_key, simplexml_load_string($blog_posts, 'SimpleXMLElement', LIBXML_NOCDATA));
+		$this->load->vars('blog_posts', simplexml_load_string($blog_posts, 'SimpleXMLElement', LIBXML_NOCDATA));
+	}
+
+	/**
+	 * Put the content of the Blog RSS Feed in the cache, and if the content not exists load from the XML RSS URL and put it with the respective timeout.
+	 * After that, returns to the caller the cached content.
+	 * @param  int 		$key     The cache content key to be searched.
+	 * @param  string 	$url     The XML RSS URL to load the content.
+	 * @param  int		$timeout The time before the content expire in the cache.
+	 * @return string
+	 */
+	private function put_blog_rss_feed_in_cache($key, $url, $timeout)
+	{
+
+		$cachedContent = $this->cache->get($key);
+
+		if (is_null($cachedContent)) {
+			$cachedContent = $this->content->get_blog_content($url);
+			$this->cache->set($key, $cachedContent, $timeout);
+		}
+
+		return $cachedContent;
 	}
 
 	/**
@@ -137,13 +178,13 @@ class Home extends CI_Controller
 	{
 
 		$portugueseKey = $key . '-' . SCIELO_LANG;
-		$cachedContentPortuguese = $this->put_cache_content($portugueseKey, $portuguese_url, $timeout);
+		$cachedContentPortuguese = $this->put_content_in_cache($portugueseKey, $portuguese_url, $timeout);
 
 		$englishKey = $key . '-' . SCIELO_EN_LANG;
-		$cachedContentEnglish = $this->put_cache_content($englishKey, $english_url, $timeout);
+		$cachedContentEnglish = $this->put_content_in_cache($englishKey, $english_url, $timeout);
 
 		$spanishKey = $key . '-' . SCIELO_ES_LANG;
-		$cachedContentSpanish = $this->put_cache_content($spanishKey, $spanish_url, $timeout);;
+		$cachedContentSpanish = $this->put_content_in_cache($spanishKey, $spanish_url, $timeout);;
 
 		switch ($this->language) {
 
@@ -169,7 +210,7 @@ class Home extends CI_Controller
 	 * @param  int		$timeout The time before the content expire in the cache.
 	 * @return string
 	 */
-	private function put_cache_content($key, $url, $timeout)
+	private function put_content_in_cache($key, $url, $timeout)
 	{
 
 		$cachedContent = $this->cache->get($key);
@@ -190,23 +231,28 @@ class Home extends CI_Controller
 	private function load_available_languages()
 	{
 
+		$language_url = base_url('language');
+		$portuguese = array('link' => $language_url . '/portuguese', 'language' => 'Português');
+		$english = array('link' => $language_url . '/english', 'language' => 'English');
+		$spanish = array('link' => $language_url . '/spanish', 'language' => 'Español');
+
 		$available_languages = array();
 
 		switch ($this->language) {
 
 			case SCIELO_LANG:
-				$available_languages[] = array('link' => base_url('language/english'), 'language' => 'English');
-				$available_languages[] = array('link' => base_url('language/spanish'), 'language' => 'Español');
+				$available_languages[] = $english;
+				$available_languages[] = $spanish;
 				break;
 
 			case SCIELO_EN_LANG:
-				$available_languages[] = array('link' => base_url('language/portuguese'), 'language' => 'Português');
-				$available_languages[] = array('link' => base_url('language/spanish'), 'language' => 'Español');
+				$available_languages[] = $portuguese;
+				$available_languages[] = $spanish;
 				break;
 
 			case SCIELO_ES_LANG:
-				$available_languages[] = array('link' => base_url('language/english'), 'language' => 'English');
-				$available_languages[] = array('link' => base_url('language/portuguese'), 'language' => 'Português');
+				$available_languages[] = $english;
+				$available_languages[] = $portuguese;
 				break;
 		}
 
