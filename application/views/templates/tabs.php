@@ -1,14 +1,16 @@
-<?php foreach($tab_group as $group): ?>
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
+<?php foreach($this->TabGroup->get_groups() as $group): 
+$tabs = $this->TabGroup->get_tabs($group);
+?>
 <section>
     <div class="row row-tab-desk">
         <div class="col-md-12 nav-center">
             <ul class="nav nav-tabs">
-                <?php 
-                    foreach($group['group'] as $key => $tab): 
-                        $tabContent = get_tab_content($tab['tab_content_type'], $key);
-                ?>
-                <li <?php if($key == 0):?>class="active"<?php endif;?>>
-                    <h2><a  href="#<?= $tabContent['ID'] ?>" data-toggle="tab"><?= $tab['tab_title'] ?></a></h2>
+                <?php foreach($tabs as $tab): ?>
+                <li <?php if($tab->is_active()):?>class="active"<?php endif;?>>
+                    <h2><a  href="#<?= $tab->get_id() ?>" data-toggle="tab"><?= $tab->get_title() ?></a></h2>
                 </li>
                 <?php endforeach;?>
             </ul>
@@ -16,18 +18,15 @@
     </div>
 
     <div class="tab-content clearfix">
-        <?php 
-            foreach($group['group'] as $key => $tab):
-                $tabContent = get_tab_content($tab['tab_content_type'], $key, $tab['tab_html_content']);
-        ?>
+        <?php foreach($tabs as $tab): ?>
         <div class="row row-tab-mobile">
             <div class="col-xs-12">
-                <h2><a href="#<?= $tabContent['ID'] ?>" data-toggle="tab" class="btn btn-tab-mobile active"><?= $tab['tab_title'] ?></a></h2>
+                <h2><a href="#<?= $tab->get_id() ?>" data-toggle="tab" class="btn btn-tab-mobile active"><?= $tab->get_title() ?></a></h2>
             </div>
         </div>
         
-        <div class="tab-pane <?php if($key == 0):?>active<?php endif;?> <?php if($tab['tab_content_type'] == 4 || $tab['tab_content_type'] == 5):?>tab-pane-white<?php endif;?>" id="<?= $tabContent['ID'] ?>">
-            <?php $this->load->view($tabContent['content']); ?>
+        <div class="tab-pane <?php if($tab->is_active()):?>active<?php endif;?> <?php if($tab->get_content_type() == 4 || $tab->get_content_type() == 5):?>tab-pane-white<?php endif;?>" id="<?= $tab->get_id() ?>">
+            <?php $this->load->view($tab->get_content()); ?>
         </div>
         <?php endforeach;?>            
     </div>

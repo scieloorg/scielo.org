@@ -1,3 +1,6 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 <div class="row">
     <div class="col-sm-3 col-sm-offset-3 col-md-3 col-md-offset-3">
         <dl>

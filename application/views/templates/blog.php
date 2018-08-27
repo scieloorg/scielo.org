@@ -1,3 +1,6 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 <div class="row slider-blog">
     <?php foreach($blog_posts->channel->item as $post): ?>
     <?php  

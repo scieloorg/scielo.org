@@ -1,9 +1,11 @@
 <?php
 /**
- * @license
- * Copyright SciELO - Scientific Electronic Library Online All Rights Reserved.
  * @author
- * SciELO https://www.scielo.org/
+ * SciELO - Scientific Electronic Library Online 
+ * @link 
+ * https://www.scielo.org/
+ * @license
+ * Copyright SciELO All Rights Reserved.
  */
 
 defined('BASEPATH') or exit('No direct script access allowed');
@@ -23,6 +25,7 @@ class Home extends CI_Controller
 	 * So any other public methods not prefixed with an underscore will
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
+	 * @return void
 	 */
 	public function index()
 	{
@@ -44,78 +47,36 @@ class Home extends CI_Controller
 
 	/**
 	 * Load from cache and setup the alert to be shown in the template top section.
+	 * 
+	 * @return void
 	 */
 	private function load_alert() {
 
 		$alert = $this->get_content_from_cache('alert', ALERT_API_PATH, FOUR_HOURS_TIMEOUT);
 
-		// Verify if it is to show the alert or not.
-		$show_alert = (!isset($alert['code']) || $alert['code'] != 'rest_forbidden');
+		$this->load->model('Alert');
 
-		if($show_alert) {
-
-			// Define firt the number of columns to know the size of them int the bootstrap grid and how many content is there.
-			$alert_number_of_columns = $alert['acf']['cols'];
-
-			// The default size for mobile is 12 (i.e, 'xs' stands for extra small).
-			$alert_column_size_desktop = "col-xs-12 ";
-
-			// Define the default size of the outter content column.
-			$alert_outside_column_size_desktop = "col-xs-12 col-sm-12 col-md-12";
-
-			$alert_column_content = array();
-
-			// Get the content of each column.
-			for($i = 1; $i <= $alert_number_of_columns; $i++) {
-				$alert_column_content['column'.$i] = $alert['acf']['column'.$i];
-			}
-
-			// Define the size of the grid for each column. Note that it's bootstrap dependent.
-			switch($alert_number_of_columns) {
-				case 1: $alert_column_size_desktop .= "col-sm-12 col-md-12"; break;
-				case 2: $alert_column_size_desktop .= "col-sm-6 col-md-6"; break;
-				case 3: $alert_column_size_desktop .= "col-sm-4 col-md-4"; break;
-				case 4: $alert_column_size_desktop .= "col-sm-3 col-md-3"; break;
-			}
-
-			$this->load->vars('alert_number_of_columns', $alert_number_of_columns);
-			$this->load->vars('alert_column_size_desktop', $alert_column_size_desktop);
-			$this->load->vars('alert_column_content', $alert_column_content);
-
-			// Check if the link exists to be show as the last column on the alert.
-			$show_alert_link = ( isset($alert['acf']['link']) && isset($alert['acf']['linkText']) );
-			$this->load->vars('show_alert_link', $show_alert_link);
-			
-			if($show_alert_link) {
-
-				// Get the link's content and anchor.
-				$alert_link  = $alert['acf']['link'];
-				$alert_link_text  = $alert['acf']['linkText'];
-				$alert_outside_column_size_desktop = "col-xs-12 col-sm-11 col-md-9";
-
-				$this->load->vars('alert_link', $alert_link);
-				$this->load->vars('alert_link_text', $alert_link_text);
-			}
-
-			$this->load->vars('alert_outside_column_size_desktop', $alert_outside_column_size_desktop);
-		}
-		
-		$this->load->vars('show_alert', $show_alert);
+		$this->Alert->initialize($alert);
 	}
 
 	/**
 	 * Load from cache and setup the tabs to be shown in the template tabs section.
+	 * 
+	 * @return void
 	 */
 	private function load_tabs() {
 
 		$tabs = $this->get_content_from_cache('tabs', TABS_API_PATH, FOUR_HOURS_TIMEOUT);
-		$tab_group = $tabs['acf']['tab_group'];
 
-		$this->load->vars('tab_group', $tab_group);
+		$this->load->model('TabGroup');
+
+	 	$this->TabGroup->initialize($tabs);
 	}
 
 	/**
 	 * Load from cache and setup the footer (signature and partners) to be shown in the template footer section.
+	 * 
+	 * @return void
 	 */
 	private function load_footer() {
 
@@ -142,6 +103,8 @@ class Home extends CI_Controller
 	/**
 	 * Load from cache and parse a XML to be shown in the template blog section.
 	 * Note that this method does not use the 'get_from_wordpress()' function because it loads the content from a RSS Feed.
+	 * 
+	 * @return void
 	 */
 	private function load_blog_rss_feed() {
 
@@ -159,10 +122,10 @@ class Home extends CI_Controller
 	/**
 	 * Verify in the cache if the content exists, if not, load from the API Rest Service URL and put it with the respective timeout.
 	 * After that, returns to the caller the cached content.
-	 * @param $key
-	 * @param $url
-	 * @param $timeout
-	 * @return $cached content
+	 * @param  int 		$key		The cache content key to be searched.
+	 * @param  string 	$url		The Rest API Service URL to load the content.
+	 * @param  int		$timeout	The time before the content expire in the cache.
+	 * @return string
 	 */
 	private function get_content_from_cache($key, $url, $timeout) {
 

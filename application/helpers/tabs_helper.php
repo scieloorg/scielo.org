@@ -1,15 +1,25 @@
 <?php
 /**
- * @license
- * Copyright SciELO - Scientific Electronic Library Online All Rights Reserved.
  * @author
- * SciELO https://www.scielo.org/
+ * SciELO - Scientific Electronic Library Online 
+ * @link 
+ * https://www.scielo.org/
+ * @license
+ * Copyright SciELO All Rights Reserved.
  */
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
 if (!function_exists('get_tab_content')) {
 
+    /**
+	 * Return the content of the tab based on the content type.
+	 *
+	 * @param	int	    $tab_content_type	The content type of the tab is a number from 1 to 6.
+     * @param   int     $key                The array iteration index to generate a tab HTML element ID.
+     * @param   string  $tab_html_content   The html content of a tab that comes from the rest service API. 
+     * @return	arrray
+	 */
     function get_tab_content($tab_content_type, $key, $tab_html_content = NULL)
     {
 

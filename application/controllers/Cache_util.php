@@ -1,9 +1,11 @@
 <?php
 /**
- * @license
- * Copyright SciELO - Scientific Electronic Library Online All Rights Reserved.
  * @author
- * SciELO https://www.scielo.org/
+ * SciELO - Scientific Electronic Library Online 
+ * @link 
+ * https://www.scielo.org/
+ * @license
+ * Copyright SciELO All Rights Reserved.
  */
 
 defined('BASEPATH') or exit('No direct script access allowed');
@@ -16,6 +18,8 @@ class Cache_util extends CI_Controller
 	 *
 	 * Maps to the following URL
 	 * 		http://your-website-url/cache_util/clean_cache
+	 * 
+	 * @return void
 	 */
     public function clean_cache() {
         $this->cache->clear();

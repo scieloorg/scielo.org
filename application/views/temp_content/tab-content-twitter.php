@@ -1,3 +1,6 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 <div class="row slider-twitter" >
     <div class="col-xs-12 col-md-4">
         <div class="card">
