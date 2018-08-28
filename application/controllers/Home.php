@@ -112,33 +112,18 @@ class Home extends CI_Controller
 	private function load_blog_rss_feed()
 	{
 
-		$key = 'blog';
+		$key = 'blog-';
 
-		$portugueseKey = $key . '-' . SCIELO_LANG;
+		$portugueseKey = $key.SCIELO_LANG;
 		$cachedContentPortuguese = $this->put_blog_rss_feed_in_cache($portugueseKey, SCIELO_BLOG_URL, ONE_HOUR_TIMEOUT);
 
-		$englishKey = $key . '-' . SCIELO_EN_LANG;
+		$englishKey = $key.SCIELO_EN_LANG;
 		$cachedContentEnglish = $this->put_blog_rss_feed_in_cache($englishKey, SCIELO_BLOG_EN_URL, ONE_HOUR_TIMEOUT);
 
-		$spanishKey = $key . '-' . SCIELO_ES_LANG;
+		$spanishKey = $key.SCIELO_ES_LANG;
 		$cachedContentSpanish = $this->put_blog_rss_feed_in_cache($spanishKey, SCIELO_BLOG_ES_URL, ONE_HOUR_TIMEOUT);
 
-		$blog_posts = array();
-
-		switch ($this->language) {
-
-			case SCIELO_LANG:
-				$blog_posts = $cachedContentPortuguese;
-				break;
-
-			case SCIELO_EN_LANG:
-				$blog_posts = $cachedContentEnglish;
-				break;
-
-			case SCIELO_ES_LANG:
-				$blog_posts = $cachedContentSpanish;
-				break;
-		}
+		$blog_posts = $this->get_content_by_language($cachedContentPortuguese, $cachedContentEnglish, $cachedContentSpanish);
 
 		$this->load->vars('blog_posts', simplexml_load_string($blog_posts, 'SimpleXMLElement', LIBXML_NOCDATA));
 	}
@@ -177,29 +162,18 @@ class Home extends CI_Controller
 	private function get_content_from_cache($key, $timeout, $english_url, $spanish_url, $portuguese_url)
 	{
 
-		$portugueseKey = $key . '-' . SCIELO_LANG;
+		$key .= '-';
+
+		$portugueseKey = $key.SCIELO_LANG;
 		$cachedContentPortuguese = $this->put_content_in_cache($portugueseKey, $portuguese_url, $timeout);
 
-		$englishKey = $key . '-' . SCIELO_EN_LANG;
+		$englishKey = $key.SCIELO_EN_LANG;
 		$cachedContentEnglish = $this->put_content_in_cache($englishKey, $english_url, $timeout);
 
-		$spanishKey = $key . '-' . SCIELO_ES_LANG;
+		$spanishKey = $key.SCIELO_ES_LANG;
 		$cachedContentSpanish = $this->put_content_in_cache($spanishKey, $spanish_url, $timeout);;
 
-		switch ($this->language) {
-
-			case SCIELO_LANG:
-				return $cachedContentPortuguese;
-				break;
-
-			case SCIELO_EN_LANG:
-				return $cachedContentEnglish;
-				break;
-
-			case SCIELO_ES_LANG:
-				return $cachedContentSpanish;
-				break;
-		}
+		return $this->get_content_by_language($cachedContentPortuguese, $cachedContentEnglish, $cachedContentSpanish);
 	}
 
 	/**
@@ -221,6 +195,32 @@ class Home extends CI_Controller
 		}
 
 		return $cachedContent;
+	}
+
+	/**
+	 * Returns the variable specific to the language selected by the user.
+	 * 
+	 * @param string $portugueseContent
+	 * @param string $englishContent
+	 * @param string $spanishContent
+	 * @return string
+	 */
+	private function get_content_by_language($portugueseContent, $englishContent, $spanishContent) {
+
+		switch ($this->language) {
+
+			case SCIELO_LANG:
+				return $portugueseContent;
+				break;
+
+			case SCIELO_EN_LANG:
+				return $englishContent;
+				break;
+
+			case SCIELO_ES_LANG:
+				return $spanishContent;
+				break;
+		}
 	}
 
 	/**
@@ -290,7 +290,7 @@ class Home extends CI_Controller
 					break;
 			}
 
-			set_cookie('language', $language, ONE_DAY_TIMEOUT * 30);
+			set_cookie('language', $this->language, ONE_DAY_TIMEOUT * 30);
 		}
 	}
 }
