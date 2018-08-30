@@ -26,7 +26,10 @@ $tabs = $this->TabGroup->get_tabs($group);
         </div>
         
         <div class="tab-pane <?php if($tab->is_active()):?>active<?php endif;?> <?php if($tab->get_content_type() == 4 || $tab->get_content_type() == 5):?>tab-pane-white<?php endif;?>" id="<?= $tab->get_id() ?>">
-            <?php $this->load->view($tab->get_content()); ?>
+            <?php 
+                $this->load->vars('tab', $tab); 
+                $this->load->view($tab->get_content()); 
+            ?>
         </div>
         <?php endforeach;?>            
     </div>

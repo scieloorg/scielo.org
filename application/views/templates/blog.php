@@ -14,8 +14,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     ?>
     <div class="col-xs-12 col-md-4">
         <div class="card">
-            <div class="card-header">
-                <img src="<?= $img ?>" alt="capa-post-scielo20anos" title="capa-post-scielo20anos">
+            <div class="card-header" style="background-image:url('<?= $img ?>')">
             </div>
             <div class="card-body">
                 <div class="card-title">
@@ -25,10 +24,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?php else : ?>	
                         <span>Por SciELO</span>
                         <?php endif; ?>	
-                        <h3><?= $post->title ?></h3>
+                        <h3><?= character_limiter($post->title, 100) ?></h3>
                     </a>
                 </div>
-                <p><?= str_replace('Read More &#8594;', '', strip_tags($post->description)) ?></p>
+                <p><?= character_limiter(str_replace('Read More &#8594;', '', strip_tags($post->description)), 400) ?></p>
             </div>
             <div class="card-footer">
                 <div class="row">
@@ -36,7 +35,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <span><?= date('d M Y', strtotime($post->pubDate)) ?></span>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                        <a href="<?= $post->link ?>" class="btn-arrow arrow-blue">Leia mais</a>
+                        <a href="<?= $post->link ?>" class="btn-arrow arrow-blue"><?= $read_more_text ?></a>
                     </div>
                 </div>
             </div>
@@ -46,6 +45,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-4 col-md-offset-8">
-        <a href="https://blog.scielo.org/" class="btn btn-default btn-arrow arrow-blue btn-link-blog">Acesse o blog <strong>Scielo em perspectiva</strong></a>
+        <a href="<?= $tab->get_link() ?>" class="btn btn-default btn-arrow arrow-blue btn-link-blog"><?= $tab->get_link_text() ?></a>
     </div>
 </div>

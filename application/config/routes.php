@@ -52,3 +52,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['pt/sobre-o-scielo/(:any)/(:any)'] = 'home/about_subpage/$1/$2';
+$route['en/about-scielo/(:any)/(:any)'] = 'home/about_subpage/$1/$2';
+$route['es/sobre-el-scielo/(:any)/(:any)'] = 'home/about_subpage/$1/$2';
+
+$route['pt/sobre-o-scielo/(:any)'] = 'home/about/$1';
+$route['en/about-scielo/(:any)'] = 'home/about/$1';
+$route['es/sobre-el-scielo/(:any)'] = 'home/about/$1';
+
+$route['pt/sobre-o-scielo'] = 'home/about';
+$route['en/about-scielo'] = 'home/about';
+$route['es/sobre-el-scielo'] = 'home/about';
+
+$route['pt/(:any)'] = 'home/index';
+$route['en/(:any)'] = 'home/index';
+$route['es/(:any)'] = 'home/index';
+
+$route['pt'] = 'home/index';
+$route['en'] = 'home/index';
+$route['es'] = 'home/index';
+

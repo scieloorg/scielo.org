@@ -20,8 +20,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php endforeach;?>
     </div>
     <div class="container collectionLicense">
-        <a href="/collection/about/" class="ico-oa">
+        <a href="<?= $about_menu_item['link'] ?>/declaracao-de-acesso-aberto" class="ico-oa">
             <?= $this->Footer->get_open_access_declaration() ?>
         </a>
     </div>
 </footer>
+
+<script src="<?= get_static_js_path('jquery-1.11.0.min.js') ?>" type="text/javascript"></script>
+<script src="<?= get_static_js_path('bootstrap.min.js') ?>" type="text/javascript"></script>
+<script src="<?= get_static_js_path('slick.js') ?>" type="text/javascript" charset="utf-8"></script>
+<script src="<?= get_static_js_path('scielo.js') ?>" type="text/javascript" charset="utf-8"></script>
+<script>
+$(function(){
+    scieloLib.Init();
+});
+</script>
+</body>
+</html>

@@ -116,16 +116,16 @@ define('BASE_URI', $base_uri);
 define('APPPATH_URI', BASE_URI . APPPATH);
 define('STATIC_ASSETS_PATH', BASE_URL.'static/');
 
-// API Token.
+// API Token Authentication.
 define('API_USR',''); // @TODO - Define on production
 define('API_PWD',''); // @TODO - Define on production
 define('SALT', ''); // @TODO - Define on production
 
-// API Default Path.
-define('WORDPRESS_URL', 'http://scielohomolog.parati.ag/scielo-org-adm');
-define('WORDPRESS_API_PATH', WORDPRESS_URL.'/wp-json');
-define('WORDPRESS_API_PATH_EN', WORDPRESS_URL.'/en/wp-json');
-define('WORDPRESS_API_PATH_ES', WORDPRESS_URL.'/es/wp-json');
+// API Default Path. Very Important: Remember to add the last slash in this URL.
+define('WORDPRESS_URL', 'http://scielohomolog.parati.ag/scielo-org-adm/');
+define('WORDPRESS_API_PATH', WORDPRESS_URL.'wp-json');
+define('WORDPRESS_API_PATH_EN', WORDPRESS_URL.'en/wp-json');
+define('WORDPRESS_API_PATH_ES', WORDPRESS_URL.'es/wp-json');
 define('WORDPRESS_PAGES_API_PATH', '/wp/v2/pages');
 
 // Alert API Path.
@@ -143,6 +143,16 @@ define('FOOTER_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/126');
 define('FOOTER_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/126');
 define('FOOTER_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/126');
 
+// URL for the About Rest API
+define('ABOUT_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/93');
+define('ABOUT_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/93');
+define('ABOUT_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/93');
+
+// URL for Subpages Rest API
+define('SUBPAGES_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/?parent=pageID&orderby=menu_order&order=asc&per_page=50');
+define('SUBPAGES_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/?parent=pageID&orderby=menu_order&order=asc&per_page=50');
+define('SUBPAGES_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/?parent=pageID&orderby=menu_order&order=asc&per_page=50');
+
 // URL for the Wordpress Rest API.
 define('WP_TOKEN_URL', WORDPRESS_API_PATH.'/jwt-auth/v1/token');
 define('WP_POSTS_URL', WORDPRESS_API_PATH.'/wp/v2/posts');
@@ -154,15 +164,23 @@ define('SCIELO_BLOG_URL', 'https://blog.scielo.org/feed/');
 define('SCIELO_BLOG_EN_URL', 'https://blog.scielo.org/en/feed/');
 define('SCIELO_BLOG_ES_URL', 'https://blog.scielo.org/es/feed/');
 
+// URL for the SciELO Collections.
+define('SCIELO_COLLECTIONS_URL', 'http://articlemeta.scielo.org/api/v1/collection/identifiers/');
+
+// API Path to query pages by slug.
+define('SLUG_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/?slug=');
+define('SLUG_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/?filter[meta_key]=_wpglobus_slug_en&filter[meta_value]=');
+define('SLUG_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/?filter[meta_key]=_wpglobus_slug_es&filter[meta_value]=');
+
 // Default timeouts for the cache API.
 define('ONE_HOUR_TIMEOUT', (60 * 60));
 define('FOUR_HOURS_TIMEOUT', (ONE_HOUR_TIMEOUT * 4));
 define('ONE_DAY_TIMEOUT', (ONE_HOUR_TIMEOUT * 24));
 
 // Default SciELO website languages.
-define('SCIELO_LANG', 'portuguese');
-define('SCIELO_EN_LANG', 'english');
-define('SCIELO_ES_LANG', 'spanish');
+define('SCIELO_LANG', 'pt');
+define('SCIELO_EN_LANG', 'en');
+define('SCIELO_ES_LANG', 'es');
 
 // We dont need these variables any more.
 unset($base_uri, $base_url);

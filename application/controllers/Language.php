@@ -23,34 +23,34 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Language extends CI_Controller
 {
 
-    public function english()
+    public function en()
     {
         $this->set_language_cookie(SCIELO_EN_LANG);
 
-        $this->redirect_to_home();
+        $this->redirect_to_home(SCIELO_EN_LANG);
     }
 
-    public function spanish()
+    public function es()
     {
         $this->set_language_cookie(SCIELO_ES_LANG);
 
-        $this->redirect_to_home();
+        $this->redirect_to_home(SCIELO_ES_LANG);
     }
 
-    public function portuguese()
+    public function pt()
     {
         $this->set_language_cookie(SCIELO_LANG);
 
-        $this->redirect_to_home();
+        $this->redirect_to_home(SCIELO_LANG);
     }
 
     private function set_language_cookie($value)
     {
-        set_cookie('language', $value, ONE_DAY_TIMEOUT * 30);
+        $this->input->set_cookie('language', $value, ONE_DAY_TIMEOUT * 30);
     }
 
-    private function redirect_to_home()
+    private function redirect_to_home($lang)
     {
-        redirect('/');
+        redirect($lang);
     }
 }

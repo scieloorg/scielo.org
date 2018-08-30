@@ -88,6 +88,20 @@ var scieloLib = {
 
 		scieloLib.SetScreen();
 
+		//abre menu share
+		$(".dropdown-toggle").click(function (e) {
+
+			var t = $(this);
+
+			e.preventDefault();
+			$('.menu-share').show();
+		});
+
+		//fecha menu share
+		$(document).on('click', function (e) {    
+		    if (!$(e.target).closest('.dropdown-toggle').length) $('.menu-share').hide();
+		});
+
 		// Fecha o alert notification ao clicar no X
 		$(".close").click(function () {
 			$(".alert-notification").slideUp("fast");
@@ -103,11 +117,15 @@ var scieloLib = {
 		var ROW_TAB_MOBILE = $(".row-tab-mobile");
 		var ROW_TAB_DESK = $(".row-tab-desk");
 
+		var BTN_ACCORDION = $(".btn-accordion");
+		var ROW_ACCORDION = $(".row-accordion");
+
 		// Local function to be used in mobile
 		var REMOVE_ACTIVE_CLASS_MOBILE = function () {
 			BTN_TAB_MOBILE.removeClass(ACTIVE_CSS);
 			TAB_PANE.removeClass(ACTIVE_CSS);
 		};
+
 
 		// Todas as tabs ficam inativas e todas as tab-pane ficam fechadas
 		if (scieloLib.IsMobile) {
@@ -125,6 +143,10 @@ var scieloLib = {
 
 			ROW_TAB_MOBILE.hide();
 			ROW_TAB_DESK.show();
+
+			if (scieloLib.IsDesktop){
+				$(".showTooltip").tooltip();
+			}
 		}
 
 		// 'btn-tab-mobile' deve ter comportamento de accordion: Quando ta fechado, clicou, abre. Quando ta aberto, clicou fecha.
@@ -147,6 +169,29 @@ var scieloLib = {
 				REMOVE_ACTIVE_CLASS_MOBILE();
 
 				btnTabMobile.slideDown().addClass(ACTIVE_CSS);
+			}
+		});
+
+		//accordion
+		BTN_ACCORDION.click(function (e) {
+			e.preventDefault();
+
+			var btnAccordion = $(this);
+			var tabPane = $(btnAccordion.attr('href'));
+
+			if (btnAccordion.hasClass(ACTIVE_CSS)) {
+
+				btnAccordion.removeClass(ACTIVE_CSS);
+
+				setTimeout(function () {
+					tabPane.slideUp();
+				}, 100);
+
+			} else {
+
+				$(".row-accordion-content").removeClass('active');
+				tabPane.slideDown();
+				btnAccordion.addClass(ACTIVE_CSS);
 			}
 		});
 
