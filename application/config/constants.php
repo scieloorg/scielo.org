@@ -172,6 +172,10 @@ define('SLUG_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/?slug=');
 define('SLUG_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/?filter[meta_key]=_wpglobus_slug_en&filter[meta_value]=');
 define('SLUG_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/?filter[meta_key]=_wpglobus_slug_es&filter[meta_value]=');
 
+// API Path to callback slugs.
+define('SLUG_CALLBACK_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/?slug=');
+define('SLUG_CALLBACK_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/?slug=');
+
 // Default timeouts for the cache API.
 define('ONE_HOUR_TIMEOUT', (60 * 60));
 define('FOUR_HOURS_TIMEOUT', (ONE_HOUR_TIMEOUT * 4));

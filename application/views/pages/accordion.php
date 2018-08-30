@@ -32,17 +32,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="row">
 				<div class="breadcrumb-path">
 					<ul>
+						<?php foreach ($breadcrumbs as $breadcrumb) : ?>
 						<li>
-							<a href="<?= base_url($this->input->cookie('language')) ?>">Home</a>
+							<a href="<?= $breadcrumb['link'] ?>"><?= $breadcrumb['link_text'] ?></a>
                         </li>
-                        
-                        <li>
-                            <a href="<?= $about_menu_item['link'] ?>"><?= $about_menu_item['text'] ?></a>
-                        </li>
-                        
+						<?php endforeach; ?>
 						<li>
 							<?= $page['title']['rendered'] ?>
-						</li>
+                        </li>
 					</ul>
 				</div>
 			</div>
@@ -61,12 +58,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	</div>
 </section>
 
-<?= $page['content']['rendered'] ?>
-
 <section>
     <div class="container">
+		<?php if (!empty($page['content']['rendered'])) : ?>
+		<div class="row">
+			<div class="col-xs-12">
+				<?= $page['content']['rendered'] ?>
+			</div>        
+		</div>
+		<?php endif; ?>
+
         <div class="sci-accordion">
-            <?php foreach($page['acf']['acordeons'] as $key => $acordeon):?>
+            <?php foreach ($page['acf']['acordeons'] as $key => $acordeon) : ?>
             <div class="row row-accordion">
                 <div class="col-xs-12">
                     <h3><a href="#accordion-<?= $key ?>" data-toggle="tab" class="btn btn-accordion"><?= $acordeon['title'] ?></a></h3>
@@ -77,7 +80,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <?= $acordeon['content'] ?>
                 </div>
             </div>
-            <?php endforeach;?>            
+            <?php endforeach; ?>            
         </div>
     </div>
 </section>

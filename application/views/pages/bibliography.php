@@ -32,11 +32,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="row">
 				<div class="breadcrumb-path">
 					<ul>
-						<?php foreach($breadcrumbs as $breadcrumb):?>
+						<?php foreach ($breadcrumbs as $breadcrumb) : ?>
 						<li>
 							<a href="<?= $breadcrumb['link'] ?>"><?= $breadcrumb['link_text'] ?></a>
                         </li>
-						<?php endforeach;?>
+						<?php endforeach; ?>
 						<li>
 							<?= $page['title']['rendered'] ?>
                         </li>
@@ -58,14 +58,37 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	</div>
 </section>
 
-<section>
+<section class="collection collectionAbout">
     <div class="container">
-		<div class="row">
-			<div class="col-xs-12 content">
-				<?= $page['content']['rendered'] ?>
-			</div>        
-		</div>
-    </div>	
+        <?php if (!empty($page['content']['rendered'])) : ?>
+            <div class="row">
+                <div class="col-xs-12">
+                    <?= $page['content']['rendered'] ?>
+                </div>        
+            </div>
+		<?php endif; ?>
+
+        <div class="list">
+            <ul>
+                <?php foreach ($page['acf']['bibliography'] as $bibliography) : ?>
+                <?php 
+                $icon = 'ico-link';
+
+                if ($bibliography['type'] == 'PDF') {
+                    $icon = 'ico-pdf';
+                }
+
+                if ($bibliography['type'] == 'EPUB') {
+                    $icon = 'ico-epub';
+                }
+                ?>
+                <li class="<?= $icon ?>">
+                    <?= $bibliography['reference'] ?> <a href="<?= $bibliography['available_from'] ?>"><?= $bibliography['available_from'] ?></a>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
 </section>
 
 <!-- footer -->
