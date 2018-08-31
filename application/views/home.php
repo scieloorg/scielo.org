@@ -28,9 +28,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<h1 class="logo"></h1>
 		<div class="search-box">
-			<input type="text" placeholder="Procure artigos...">
+			<input type="text" placeholder="<?= $search_texts['placeholder'] ?>">
 			<a href="" class="btn btn-default btn-input"></a>
-			<a href="">Pesquisa avançada</a>
+			<a href=""><?= $search_texts['link_text'] ?></a>
 		</div>
 	</section>
 

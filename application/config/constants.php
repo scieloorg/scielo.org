@@ -129,7 +129,7 @@ define('TWITTER_CONSUMER_SECRET', ''); // @TODO - Define on production
 define('TWITTER_SCREEN_NAME', ''); // @TODO - Define on production
 
 // API Default Path. Very Important: Remember to add the last slash in this URL.
-define('WORDPRESS_URL', 'http://scielohomolog.parati.ag/scielo-org-adm/');
+define('WORDPRESS_URL', ''); // @TODO - Define on production
 define('WORDPRESS_API_PATH', WORDPRESS_URL . 'wp-json');
 define('WORDPRESS_API_PATH_EN', WORDPRESS_URL . 'en/wp-json');
 define('WORDPRESS_API_PATH_ES', WORDPRESS_URL . 'es/wp-json');

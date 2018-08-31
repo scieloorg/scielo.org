@@ -4,26 +4,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <div class="row slider-twitter" >
     <?php foreach ($tweets as $tweet) : ?>
     <?php
+        $profile_img = $tweet->user->profile_image_url;
+        
         $tweetElapsedTime = get_tweet_elapsed_time($tweet->created_at) ;
 
         $media_url = NULL;
 
         if(isset($tweet->entities->media[0]->media_url)){
             $media_url = $tweet->entities->media[0]->media_url;
+        }else{
+            $media_url = get_static_image_path('blog/post1.png');
         }
     ?>
     <div class="col-xs-12 col-md-4">
         <div class="card">
-            <div class="card-header">
-                <?php if(!is_null($media_url)):?>
-                    <img src="<?= $media_url ?>" alt="capa-post-twitter-1" title="capa-post-twitter-1">
-                <?php endif;?>
+            <div class="card-header" style="background-image:url('<?= $media_url ?>')">
             </div>
             <div class="card-body card-body-twitter">
 
                 <div class="row row-avatar">
                     <div class="col-xs-12">
-                        <a href="https://twitter.com/RedeSciELO" class="avatar"></a>
+                        <a href="https://twitter.com/RedeSciELO" class="avatar" style="background-image:url('<?= $profile_img ?>')"></a>
                         <div class="twitter-info">
                             <strong>SciELO</strong>
                             <span>@RedeSciELO</span>
@@ -41,9 +42,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 text-right">
                         <div class="twitter-actions">
-                            <a href="" class="btn btn-comment"></a>
-                            <a href="" class="btn btn-retweet"></a>
-                            <a href="" class="btn btn-like"></a>
+                            <a href="https://twitter.com/RedeSciELO" class="btn btn-comment" target="_blank"></a>
+                            <a href="https://twitter.com/RedeSciELO" class="btn btn-retweet" target="_blank"></a>
+                            <a href="https://twitter.com/RedeSciELO" class="btn btn-like" target="_blank"></a>
                         </div>
                     </div>
                 </div>

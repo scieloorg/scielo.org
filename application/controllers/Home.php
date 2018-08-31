@@ -449,14 +449,16 @@ class Home extends CI_Controller
 
 		$available_languages = array();
 		$read_more_text = "";
+		$search_texts = array();
 		$book_texts = array();
-
+		
 		switch ($this->language) {
 
 			case SCIELO_LANG:
 				$available_languages[] = $english;
 				$available_languages[] = $spanish;
 				$read_more_text = "Leia mais";
+				$search_texts = array('placeholder' => 'Procure artigos...', 'link_text' => 'Pesquisa avançada');
 				$book_texts = array('ebook_pdf' => 'Livro em PDF', 'ebook_epub' => 'Livro em ePUB', 'abstract' => 'Sinopse', 'download' => 'Baixar');
 				break;
 
@@ -464,6 +466,7 @@ class Home extends CI_Controller
 				$available_languages[] = $portuguese;
 				$available_languages[] = $spanish;
 				$read_more_text = "Read more";
+				$search_texts = array('placeholder' => 'Browse articles...', 'link_text' => 'Advanced Search');				
 				$book_texts = array('ebook_pdf' => 'PDF Book', 'ebook_epub' => 'ePUB Book', 'abstract' => 'Abstract', 'download' => 'Download');
 				break;
 
@@ -471,12 +474,14 @@ class Home extends CI_Controller
 				$available_languages[] = $english;
 				$available_languages[] = $portuguese;
 				$read_more_text = "Lea mas";
+				$search_texts = array('placeholder' => 'Ver artículos...', 'link_text' => 'Búsqueda avanzada');				
 				$book_texts = array('ebook_pdf' => 'Libro en PDF', 'ebook_epub' => 'Libro en ePUB', 'abstract' => 'Sinopsis', 'download' => 'Descargar');
 				break;
 		}
 
 		$this->load->vars('available_languages', $available_languages);
 		$this->load->vars('read_more_text', $read_more_text);
+		$this->load->vars('search_texts', $search_texts);
 		$this->load->vars('book_texts', $book_texts);
 	}
 

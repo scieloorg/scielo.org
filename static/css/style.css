@@ -6181,7 +6181,20 @@ section:first-child {
 
 .row-accordion-content {
   display: none;
-  margin-bottom: 1.6rem; }
+  margin: 1.6rem; }
+  .row-accordion-content ul {
+    margin-bottom: 3.2rem;
+    list-style: none;
+    padding: 0; }
+    .row-accordion-content ul li {
+      padding-left: 40px;
+      margin-bottom: 1.6rem; }
+      .row-accordion-content ul li::before {
+        display: inline-block;
+        content: "●";
+        color: #999;
+        position: absolute;
+        margin-left: -20px; }
 
 /*tab contents*/
 #tab-colecoes dl dt {
@@ -6690,7 +6703,6 @@ section:first-child {
       width: 80px;
       height: 80px;
       display: inline-block;
-      background: url(../images/twitter/avatar.svg) no-repeat;
       background-size: 80px 80px;
       border-radius: 100px;
       margin-top: -2.5rem; }
