@@ -94,33 +94,39 @@ $(function() {
 	$('form').attr('action', 'javascript:void(0);');
 
 	$('form').on('submit', function() {
-
+		var t = this;
 		// Avoid the user to submit the form a lot of time while the ajax request is doing its job.
 		$('input[type="submit"]').attr('disabled', true);
 
 		// Form ID attribute, it is necessary for the Rest API Service.
-		var formID = $('input[name="_wpcf7"]').val();
+		var formID = $('input[name="_wpcf7"]').val(),
+			formAction = "<?= WORDPRESS_API_PATH.WORDPRESS_CONTACT_API_PATH; ?>",
+			params = "",
+			formItems = $('form').serializeArray();
 
-		// Serialize the form and call via ajax the post service. 
-		var params = '&formID=' + formID;
-
-		var formItems = $('form').serializeArray();
+		formAction = formAction.replace("{ID}",formID);
 
 		$(formItems).each(function(index, item) {
-
 			// The body of the post should be all data in the form, except fields that begin with "__wpcf7"
 			if(item.name.indexOf('_wpcf7') == -1) {
 				params += '&' + item.name + '=' + item.value;
 			}
 		});
-	
+
 		$.ajax({
-			url: '<?= base_url('contact/send') ?>',
+			url: formAction,
 			method: "POST",
 			data: params,
 			dataType: 'json',
+			beforeSend: function() {
+				$(".validation-error",t).each(function() {
+					$(this).removeClass("validation-error");
+					$(this).find(".validation-message").remove();
+				});
+				$('.alert-danger, .message-has-success').addClass('hidden');
+			},
 			success: function(response) {
-				
+
 				// Enable the input button after the response return
 				$('input[type="submit"]').removeAttr('disabled');
 
@@ -129,13 +135,14 @@ $(function() {
 					$('.message-has-success').html('<p>' + response.message + '</p>');
 					$('.message-has-success').removeClass('hidden');
 
+					$("html,body").animate({
+						scrollTop: $(".message-has-success").offset().top
+					},200);
 				} else if(response.status == 'validation_failed') {
-
 					$('.alert-danger').html('<p>' + response.message + '</p>');
 					$('.alert-danger').removeClass('hidden');
 
 					$(response.invalidFields).each(function(index, field) {	
-						
 						var path = field.into.split('.');
 
 						var element = path[0];
@@ -144,9 +151,23 @@ $(function() {
 						var parent = $(element + '[class="' + className + ' '+ fieldName +'"]').parent();
 						parent.addClass('validation-error');
 						parent.append('<p class="validation-message">' + field.message + '</p>');
-						
+
 					});
+
+					$("html,body").animate({
+						scrollTop: $(".alert-danger").offset().top
+					},200);
+				} else {
+					$('.alert-danger').html('<p>' + response.message + '</p>');
+					$('.alert-danger').removeClass('hidden');
+
+					$("html,body").animate({
+						scrollTop: $(".alert-danger").offset().top
+					},200);
 				}
+			},
+			error: function(response) {
+				$('input[type="submit"]').removeAttr('disabled');
 			}
 		});
 	});

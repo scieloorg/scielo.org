@@ -451,7 +451,8 @@ class Home extends CI_Controller
 		$read_more_text = "";
 		$search_texts = array();
 		$book_texts = array();
-		
+		$collections_texts = array();
+
 		switch ($this->language) {
 
 			case SCIELO_LANG:
@@ -460,6 +461,7 @@ class Home extends CI_Controller
 				$read_more_text = "Leia mais";
 				$search_texts = array('placeholder' => 'Procure artigos...', 'link_text' => 'Pesquisa avançada');
 				$book_texts = array('ebook_pdf' => 'Livro em PDF', 'ebook_epub' => 'Livro em ePUB', 'abstract' => 'Sinopse', 'download' => 'Baixar');
+				$collections_texts = array('titles' => 'títulos', 'articles' => 'artigos', 'open_access' => 'em acesso aberto', 'journals' => 'periódicos', 'books_list' => 'Coleções de livros', 'journals_list' => 'Coleções de periódicos', 'development_list' => 'Em desenvolvimento', 'discontinued_list' => 'Descontinuadas', 'scientific_list' => 'Divulgação científica');
 				break;
 
 			case SCIELO_EN_LANG:
@@ -468,6 +470,7 @@ class Home extends CI_Controller
 				$read_more_text = "Read more";
 				$search_texts = array('placeholder' => 'Browse articles...', 'link_text' => 'Advanced Search');				
 				$book_texts = array('ebook_pdf' => 'PDF Book', 'ebook_epub' => 'ePUB Book', 'abstract' => 'Abstract', 'download' => 'Download');
+				$collections_texts = array('titles' => 'titles', 'articles' => 'articles', 'open_access' => 'in open access', 'journals' => 'journals', 'books_list' => 'Collections of books', 'journals_list' => 'Collections of periodicals', 'development_list' => 'Under development', 'discontinued_list' => 'Discontinued', 'scientific_list' => 'Scientific divulgation');
 				break;
 
 			case SCIELO_ES_LANG:
@@ -476,6 +479,7 @@ class Home extends CI_Controller
 				$read_more_text = "Lea mas";
 				$search_texts = array('placeholder' => 'Ver artículos...', 'link_text' => 'Búsqueda avanzada');				
 				$book_texts = array('ebook_pdf' => 'Libro en PDF', 'ebook_epub' => 'Libro en ePUB', 'abstract' => 'Sinopsis', 'download' => 'Descargar');
+				$collections_texts = array('titles' => 'títulos', 'articles' => 'artículos', 'open_access' => 'en acceso abierto', 'journals' => 'publicaciones periódicas', 'books_list' => 'Colecciones de libros', 'journals_list' => 'Colecciones de periódicos', 'development_list' => 'En desarrollo', 'discontinued_list' => 'Discontinuado', 'scientific_list' => 'Divulgación científica');
 				break;
 		}
 
@@ -483,6 +487,7 @@ class Home extends CI_Controller
 		$this->load->vars('read_more_text', $read_more_text);
 		$this->load->vars('search_texts', $search_texts);
 		$this->load->vars('book_texts', $book_texts);
+		$this->load->vars('collections_texts', $collections_texts);
 	}
 
 	/**

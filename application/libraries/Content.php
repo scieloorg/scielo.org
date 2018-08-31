@@ -75,10 +75,7 @@ class Content
 
     public function send_post_request_to_wordpress($url, $post_data, $use_token = false)
     {
-
         $headers = array();
-        $headers[] = 'Content-length: 0';
-        $headers[] = 'Content-type: application/json';
 
         if ($use_token) {
             $headers[] = 'Authorization: Bearer ' . $this->get_token();
@@ -87,10 +84,9 @@ class Content
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_HTTPHEADER => $headers,
             CURLOPT_URL => $url,
             CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => $post_data
+            CURLOPT_POSTFIELDS => $post_data,
         ));
         $data = curl_exec($curl);
 

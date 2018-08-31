@@ -134,6 +134,7 @@ define('WORDPRESS_API_PATH', WORDPRESS_URL . 'wp-json');
 define('WORDPRESS_API_PATH_EN', WORDPRESS_URL . 'en/wp-json');
 define('WORDPRESS_API_PATH_ES', WORDPRESS_URL . 'es/wp-json');
 define('WORDPRESS_PAGES_API_PATH', '/wp/v2/pages');
+define('WORDPRESS_CONTACT_API_PATH', '/contact-form-7/v1/contact-forms/{ID}/feedback');
 
 // Alert API Path.
 define('ALERT_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/103');
@@ -182,9 +183,6 @@ define('SLUG_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/
 // API Path to callback slugs.
 define('SLUG_CALLBACK_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/?slug=');
 define('SLUG_CALLBACK_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/?slug=');
-
-// API Path to form requests.
-define('FORM_POST_REQUEST_API_PATH', WORDPRESS_API_PATH . '/contact-form-7/v1/contact-forms/formID/feedback');
 
 // Default timeouts for the cache API.
 define('ONE_HOUR_TIMEOUT', (60 * 60));
