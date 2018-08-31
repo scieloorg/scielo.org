@@ -114,50 +114,57 @@ if (isset($_SERVER['HTTP_HOST'])) {
 define('BASE_URL', $base_url);
 define('BASE_URI', $base_uri);
 define('APPPATH_URI', BASE_URI . APPPATH);
-define('STATIC_ASSETS_PATH', BASE_URL.'static/');
+define('STATIC_ASSETS_PATH', BASE_URL . 'static/');
 
 // API Token Authentication.
-define('API_USR',''); // @TODO - Define on production
-define('API_PWD',''); // @TODO - Define on production
+define('API_USR', ''); // @TODO - Define on production
+define('API_PWD', ''); // @TODO - Define on production
 define('SALT', ''); // @TODO - Define on production
+
+// Twitter API Authentication.
+define('TWITTER_ACCESS_TOKEN', ''); // @TODO - Define on production
+define('TWITTER_ACCESS_TOKEN_SECRET', ''); // @TODO - Define on production
+define('TWITTER_CONSUMER_KEY', ''); // @TODO - Define on production
+define('TWITTER_CONSUMER_SECRET', ''); // @TODO - Define on production
+define('TWITTER_SCREEN_NAME', ''); // @TODO - Define on production
 
 // API Default Path. Very Important: Remember to add the last slash in this URL.
 define('WORDPRESS_URL', 'http://scielohomolog.parati.ag/scielo-org-adm/');
-define('WORDPRESS_API_PATH', WORDPRESS_URL.'wp-json');
-define('WORDPRESS_API_PATH_EN', WORDPRESS_URL.'en/wp-json');
-define('WORDPRESS_API_PATH_ES', WORDPRESS_URL.'es/wp-json');
+define('WORDPRESS_API_PATH', WORDPRESS_URL . 'wp-json');
+define('WORDPRESS_API_PATH_EN', WORDPRESS_URL . 'en/wp-json');
+define('WORDPRESS_API_PATH_ES', WORDPRESS_URL . 'es/wp-json');
 define('WORDPRESS_PAGES_API_PATH', '/wp/v2/pages');
 
 // Alert API Path.
-define('ALERT_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/103');
-define('ALERT_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/103');
-define('ALERT_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/103');
+define('ALERT_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/103');
+define('ALERT_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/103');
+define('ALERT_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/103');
 
 // Tabs API Path.
-define('TABS_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/80');
-define('TABS_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/80');
-define('TABS_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/80');
+define('TABS_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/80');
+define('TABS_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/80');
+define('TABS_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/80');
 
 // Footer API Path.
-define('FOOTER_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/126');
-define('FOOTER_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/126');
-define('FOOTER_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/126');
+define('FOOTER_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/126');
+define('FOOTER_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/126');
+define('FOOTER_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/126');
 
 // URL for the About Rest API
-define('ABOUT_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/93');
-define('ABOUT_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/93');
-define('ABOUT_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/93');
+define('ABOUT_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/93');
+define('ABOUT_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/93');
+define('ABOUT_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/93');
 
 // URL for Subpages Rest API
-define('SUBPAGES_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/?parent=pageID&orderby=menu_order&order=asc&per_page=50');
-define('SUBPAGES_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/?parent=pageID&orderby=menu_order&order=asc&per_page=50');
-define('SUBPAGES_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/?parent=pageID&orderby=menu_order&order=asc&per_page=50');
+define('SUBPAGES_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/?parent=pageID&orderby=menu_order&order=asc&per_page=50');
+define('SUBPAGES_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/?parent=pageID&orderby=menu_order&order=asc&per_page=50');
+define('SUBPAGES_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/?parent=pageID&orderby=menu_order&order=asc&per_page=50');
 
 // URL for the Wordpress Rest API.
-define('WP_TOKEN_URL', WORDPRESS_API_PATH.'/jwt-auth/v1/token');
-define('WP_POSTS_URL', WORDPRESS_API_PATH.'/wp/v2/posts');
-define('WP_PAGES_URL', WORDPRESS_API_PATH.'/wp/v2/pages');
-define('WP_CATEGORIES_URL', WORDPRESS_API_PATH.'/wp/v2/categories');
+define('WP_TOKEN_URL', WORDPRESS_API_PATH . '/jwt-auth/v1/token');
+define('WP_POSTS_URL', WORDPRESS_API_PATH . '/wp/v2/posts');
+define('WP_PAGES_URL', WORDPRESS_API_PATH . '/wp/v2/pages');
+define('WP_CATEGORIES_URL', WORDPRESS_API_PATH . '/wp/v2/categories');
 
 // URL for the SciELO Blog.
 define('SCIELO_BLOG_URL', 'https://blog.scielo.org/feed/');
@@ -168,13 +175,16 @@ define('SCIELO_BLOG_ES_URL', 'https://blog.scielo.org/es/feed/');
 define('SCIELO_COLLECTIONS_URL', 'http://articlemeta.scielo.org/api/v1/collection/identifiers/');
 
 // API Path to query pages by slug.
-define('SLUG_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/?slug=');
-define('SLUG_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/?filter[meta_key]=_wpglobus_slug_en&filter[meta_value]=');
-define('SLUG_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/?filter[meta_key]=_wpglobus_slug_es&filter[meta_value]=');
+define('SLUG_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/?slug=');
+define('SLUG_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/?filter[meta_key]=_wpglobus_slug_en&filter[meta_value]=');
+define('SLUG_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/?filter[meta_key]=_wpglobus_slug_es&filter[meta_value]=');
 
 // API Path to callback slugs.
-define('SLUG_CALLBACK_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/?slug=');
-define('SLUG_CALLBACK_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/?slug=');
+define('SLUG_CALLBACK_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/?slug=');
+define('SLUG_CALLBACK_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/?slug=');
+
+// API Path to form requests.
+define('FORM_POST_REQUEST_API_PATH', WORDPRESS_API_PATH . '/contact-form-7/v1/contact-forms/formID/feedback');
 
 // Default timeouts for the cache API.
 define('ONE_HOUR_TIMEOUT', (60 * 60));

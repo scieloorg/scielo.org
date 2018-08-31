@@ -161,7 +161,7 @@ class TabGroup
 
                 case 5:
                     $tabContent['ID'] = 'tab-twitter';
-                    $tabContent['content'] = 'temp_content/tab-content-twitter';
+                    $tabContent['content'] = 'templates/twitter';
                     break;
 
                 default:

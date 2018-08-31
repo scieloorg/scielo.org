@@ -60,6 +60,13 @@ class Collections
     private $journals_list = array();
 
     /**
+     * List of all the data used in the collections discontinued section.
+     *
+     * @var	array
+     */
+    private $discontinued_list = array();
+
+    /**
      * Gets the about json array and call other setup methods.
      *
      * @param   array  $collection_json The rest API service data converted in an array.
@@ -117,6 +124,17 @@ class Collections
     }
 
     /**
+     * Returns the discontinued list.
+     *
+     * @return	array
+     */
+    public function get_discontinued_list()
+    {
+
+        return $this->discontinued_list;
+    }
+
+    /**
      * Set the collections list in the respective array by type.
      * Note that in this case I did not created a class (just cast the array), 
      * because this data can change in the future (this data comes from and external service, not wordpress). 
@@ -127,22 +145,32 @@ class Collections
     {
         foreach ($this->collection_json as $collection) {
 
-            switch ($collection['status']) {
+            if ($collection['type'] == 'journals') {
 
-                case 'diffusion': // Section 'Coleções de livros'
-                    $this->books_list[] = (object)$collection;
-                    break;
+                if ($collection['is_active']) {
 
-                case 'certified': // Section 'Coleções de periódicos'
-                    $this->journals_list[] = (object)$collection;
-                    break;
+                    switch ($collection['status']) {
 
-                case 'development': // Section 'Em desenvolvimento'
-                    $this->development_list[] = (object)$collection;
-                    break;
+                        case 'certified': // Section 'Coleções certificadas'                        
+                            $this->journals_list[] = (object)$collection;
+                            break;
+
+                        case 'diffusion': // Section 'Coleção de divulgação científica'
+                            $this->scientific_list[] = (object)$collection;
+                            break;
+
+                        case 'development': // Section 'Coleção em desenvolvimento'
+                            $this->development_list[] = (object)$collection;
+                            break;
+                    }
+
+                } else {
+                    $this->discontinued_list[] = (object)$collection;
+                }
+
+            } elseif ($collection['type'] == 'books') {
+                $this->books_list[] = (object)$collection;
             }
         }
-
     }
-
 }

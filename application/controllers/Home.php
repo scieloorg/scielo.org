@@ -57,9 +57,10 @@ class Home extends CI_Controller
 		// In the home page the metadata comes from the tabs API return json data.
 		$this->load_page_metadata('pageMetadataHome', TABS_EN_API_PATH, TABS_ES_API_PATH, TABS_API_PATH);
 		$this->load_alert();
-		$this->load_blog_rss_feed();
-		$this->load_tabs();
 		$this->load_collections();
+		$this->load_blog_rss_feed();
+		$this->load_twitter();
+		$this->load_tabs();
 
 		$this->load->view('home');
 	}
@@ -313,6 +314,25 @@ class Home extends CI_Controller
 		}
 
 		return $cachedContent;
+	}
+
+	/**
+	 * Load the content of the user from the twitter REST API to be show in its respective template.
+	 * 
+	 * @return void
+	 */
+	private function load_twitter()
+	{
+		
+		$key = 'tweets';
+		$tweets = $this->cache->get($key);
+
+		if (is_null($tweets)) {
+			$tweets = $this->twitter->get_connection()->get('statuses/user_timeline', ['count' => 10, 'tweet_mode' => 'extended', 'include_entities' => true, 'exclude_replies' => true]);
+			$this->cache->set($key, $tweets, ONE_HOUR_TIMEOUT);
+		}
+		
+		$this->load->vars('tweets', $tweets);
 	}
 
 	/**

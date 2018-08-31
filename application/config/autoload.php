@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('Cache', 'Content');
+$autoload['libraries'] = array('Cache', 'Content', 'Twitter');
 
 /*
 | -------------------------------------------------------------------
@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'assets', 'text');
+$autoload['helper'] = array('url', 'assets', 'text', 'twitter');
 
 /*
 | -------------------------------------------------------------------

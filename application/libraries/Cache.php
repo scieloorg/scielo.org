@@ -12,6 +12,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 use phpFastCache\CacheManager;
 
+/**
+ * Cache Class
+ *
+ * This class uses the phpfastcache library to cache the website content.
+ *
+ * @category	Libraries
+ * @author		SciELO - Scientific Electronic Library Online 
+ * @link		https://www.scielo.org/
+ */
 class Cache
 {
 
