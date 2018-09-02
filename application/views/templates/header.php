@@ -7,7 +7,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<title><?= $this->PageMetadata->get_page_title() ?></title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
-
+	<link rel="icon" href="<?= get_static_image_path('ico/favicon.ico') ?>">
+	
 	<!-- css bootstrap -->
 	<link href="<?= get_static_css_path('bootstrap.css') ?>" rel="stylesheet" type="text/css" media="screen" />
 

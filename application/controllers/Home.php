@@ -83,7 +83,7 @@ class Home extends CI_Controller
 		}
 
 		// Iterate through the array getting each page by slug and mounting the breadcrumb
-		$breadcrumbs[] = array('link' => base_url($this->input->cookie('language') . '/'), 'link_text' => 'Home');
+		$breadcrumbs[] = array('link' => base_url($this->language . '/'), 'link_text' => 'Home');
 
 		for ($i = 0; $i < count($page_slugs) - 1; $i++) {
 
@@ -99,7 +99,7 @@ class Home extends CI_Controller
 				$page = $page[0];
 			}
 
-			$scielo_url = ($this->input->cookie('language') == SCIELO_LANG) ? base_url($this->input->cookie('language') . '/') : base_url();
+			$scielo_url = ($this->language == SCIELO_LANG) ? base_url($this->language . '/') : base_url();
 			$link = str_replace(WORDPRESS_URL, $scielo_url, $page['link']);
 			$link_text = $page['title']['rendered'];
 
@@ -180,7 +180,7 @@ class Home extends CI_Controller
 		$about_url = explode('/', $about['link']);
 		$about_url = $about_url[count($about_url) - 2];
 
-		$about_menu_item = array('link' => base_url($this->input->cookie('language') . '/' . $about_url), 'text' => $about['title']['rendered']);
+		$about_menu_item = array('link' => base_url($this->language . '/' . $about_url), 'text' => $about['title']['rendered']);
 		$this->load->vars('about_menu_item', $about_menu_item);
 	}
 
@@ -491,35 +491,96 @@ class Home extends CI_Controller
 	}
 
 	/**
-	 * Set default language (english) if none was selected.
+	 * Set default language (english) if none was selected and make it available to all templates. 
+	 * Note that, if a differente language is at the browser url, it has a higher precedence than user location. 
 	 * 
 	 * @return void
 	 */
 	private function set_language()
 	{
 
-		$this->language = $this->input->cookie('language', true);
+		$this->language = get_cookie('language', TRUE);
 
-		if (!isset($this->language) || empty($this->language)) {
+		// Because the webite could be deploy in a server subfolder we remove the base_uri.
+		$language_url = str_replace(BASE_URI,'',$_SERVER['REQUEST_URI']);
+		$language_url = substr($language_url, 0, 2);
+		
+		// Verify if the language is set in the cookie.
+		if (isset($this->language) && !empty($this->language)) {
 
-			$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+			$this->set_language_if_in_URL($language_url, SCIELO_LANG);
+			$this->set_language_if_in_URL($language_url, SCIELO_ES_LANG);
+			$this->set_language_if_in_URL($language_url, SCIELO_EN_LANG);
 
-			switch ($lang) {
+		} else {
 
-				case SCIELO_LANG:
-					$this->language = SCIELO_LANG;
-					break;
+			// If the language is at the browser URL, it has a higher precedence than user location. 
+			if(!$this->set_language_if_equal_to($language_url)) {
 
-				case SCIELO_ES_LANG:
-					$this->language = SCIELO_ES_LANG;
-					break;
+				// The language isn't in the browser URL, so we get the user location, if it's not one of the tree languages, set it to english (default). 
+				$language_location = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 
-				default:
-					$this->language = SCIELO_EN_LANG;
-					break;
+				if(!$this->set_language_if_equal_to($language_location)) {
+					$this->set_language_cookie(SCIELO_EN_LANG);
+				}
 			}
+		}	
+		
+		$this->load->vars('language', $this->language);
+	}
 
-			$this->input->set_cookie('language', $this->language, ONE_DAY_TIMEOUT * 30);
+	/**
+	 * Set language if in the URL. 
+	 * 
+	 * @param  string	$language_url
+	 * @param  string	$language
+	 * @return void
+	 */
+	private function set_language_if_in_URL($language_url, $language) {
+
+		if($language_url == $language && $this->language != $language) {
+
+			$this->set_language_cookie($language);			
 		}
+	}
+
+	/**
+	 * Set language if it's equal to the parameter passed or return FALSE. 
+	 * 
+	 * @param  string	$language
+	 * @return boolean
+	 */
+	private function set_language_if_equal_to($language) {
+
+		switch ($language) {
+
+			case SCIELO_LANG:
+				$this->set_language_cookie(SCIELO_LANG);
+				return TRUE;
+
+			case SCIELO_ES_LANG:
+				$this->set_language_cookie(SCIELO_ES_LANG);
+				return TRUE;
+
+			case SCIELO_EN_LANG:
+				$this->set_language_cookie(SCIELO_EN_LANG);	
+				return TRUE;
+		}
+
+		return FALSE;		
+	}
+
+	/**
+	 * Set language in the cookie for 30 days. 
+	 * 
+	 * @param  string	$language
+	 * @return void
+	 */
+	private function set_language_cookie($language)
+	{
+
+		$this->language = $language;
+		delete_cookie('language');
+		set_cookie('language', $this->language, ONE_DAY_TIMEOUT * 30);
 	}
 }

@@ -36,6 +36,6 @@ class Cache_util extends CI_Controller
 
 		$this->cache->clear();
 
-		redirect($this->input->cookie('language'));
+		redirect(get_cookie('language'));
 	}
 }

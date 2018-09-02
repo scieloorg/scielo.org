@@ -6,25 +6,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <?php $this->load->view('templates/header'); ?>
 <!-- ./header -->
 
-<header>
-	<div class="container">
-		<div class="menu-lang">
-			<ul>
-				<li class="info">
-					<a href="<?= $about_menu_item['link'] ?>"><?= $about_menu_item['text'] ?></a>
-				</li>
-				<?php foreach ($available_languages as $language) : ?>
-				<li>
-					<a href="<?= $language['link'] ?>"><?= $language['language'] ?></a>
-				</li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-		<h1 class="logo-interno">
-			<a href="<?= base_url($this->input->cookie('language') . '/') ?>"></a>
-		</h1>
-	</div>
-</header>
+<!-- language-menu -->
+<?php $this->load->view('templates/language-menu'); ?>
+<!-- ./language-menu -->
 
 <section>
 	<div class="breadcrumb">
@@ -82,7 +66,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						$link = $subpage['acf']['document_pt'];
 					} else {
 						// If the language is Portuguese it is necessary to concatenate the cookie language value. 
-						$scielo_url = ($this->input->cookie('language') == SCIELO_LANG) ? base_url($this->input->cookie('language') . '/') : base_url();
+						$scielo_url = ($language == SCIELO_LANG) ? base_url($language . '/') : base_url();
 						$link = str_replace(WORDPRESS_URL, $scielo_url, $subpage['link']);
 					}
 				?>

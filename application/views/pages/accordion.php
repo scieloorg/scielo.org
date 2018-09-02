@@ -6,25 +6,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <?php $this->load->view('templates/header'); ?>
 <!-- ./header -->
 
-<header>
-	<div class="container">
-		<div class="menu-lang">
-			<ul>
-				<li class="info">
-					<a href="<?= $about_menu_item['link'] ?>"><?= $about_menu_item['text'] ?></a>
-				</li>
-				<?php foreach ($available_languages as $language) : ?>
-				<li>
-					<a href="<?= $language['link'] ?>"><?= $language['language'] ?></a>
-				</li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-		<h1 class="logo-interno">
-			<a href="<?= base_url($this->input->cookie('language')) ?>"></a>
-		</h1>
-	</div>
-</header>
+<!-- language-menu -->
+<?php $this->load->view('templates/language-menu'); ?>
+<!-- ./language-menu -->
 
 <section>
 	<div class="breadcrumb">

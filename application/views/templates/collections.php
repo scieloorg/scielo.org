@@ -2,8 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 <?php
-$lang_index = $this->input->cookie('language');
-$lang_index = isset($lang_index) ? $lang_index : 'en';
+$lang_index = isset($language) ? $language : SCIELO_EN_LANG;
 ?>
 <div class="row">
     <div class="col-sm-12 col-md-12">

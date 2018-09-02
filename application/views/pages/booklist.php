@@ -6,25 +6,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <?php $this->load->view('templates/header'); ?>
 <!-- ./header -->
 
-<header>
-	<div class="container">
-		<div class="menu-lang">
-			<ul>
-				<li class="info">
-					<a href="<?= $about_menu_item['link'] ?>"><?= $about_menu_item['text'] ?></a>
-				</li>
-				<?php foreach ($available_languages as $language) : ?>
-				<li>
-					<a href="<?= $language['link'] ?>"><?= $language['language'] ?></a>
-				</li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-		<h1 class="logo-interno">
-			<a href="<?= base_url($this->input->cookie('language')) ?>"></a>
-		</h1>
-	</div>
-</header>
+<!-- language-menu -->
+<?php $this->load->view('templates/language-menu'); ?>
+<!-- ./language-menu -->
 
 <section>
 	<div class="breadcrumb">
@@ -75,7 +59,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <li>
                     <div class="row">
                         <div class="col-md-2">
-                            <img src="<?= $book['bookCover_' . $this->input->cookie('language')] ?>" alt="">
+                            <img src="<?= $book['bookCover_' . $language] ?>" alt="">
                         </div>
                         <div class="col-md-7">
                             <h3><?= $book['bookTitle'] ?></h3>
@@ -90,12 +74,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <strong><?= $book_texts['download'] ?></strong>
                                     </li>
                                     <li class="ico-pdf">
-                                        <a href="<?= $book['downloadPDF_' . $this->input->cookie('language')] ?>">
+                                        <a href="<?= $book['downloadPDF_' . $language] ?>">
                                         <?= $book_texts['ebook_pdf'] ?>
                                         </a>
                                     </li>
                                     <li class="ico-epub">
-                                        <a href="<?= $book['downloadEbook_' . $this->input->cookie('language')] ?>">
+                                        <a href="<?= $book['downloadEbook_' . $language] ?>">
                                         <?= $book_texts['ebook_epub'] ?>
                                         </a>
                                     </li>
