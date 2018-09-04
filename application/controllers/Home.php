@@ -435,7 +435,7 @@ class Home extends CI_Controller
 	}
 
 	/**
-	 * The array containing the available languages and the static texts for other items to be shown in the templates.
+	 * Variables and arrays containing the available languages and the static texts for other items to be show in the templates.
 	 * 
 	 * @return void
 	 */
@@ -449,6 +449,7 @@ class Home extends CI_Controller
 
 		$available_languages = array();
 		$read_more_text = "";
+		$twitter_text = "";
 		$search_texts = array();
 		$book_texts = array();
 		$collections_texts = array();
@@ -459,6 +460,7 @@ class Home extends CI_Controller
 				$available_languages[] = $english;
 				$available_languages[] = $spanish;
 				$read_more_text = "Leia mais";
+				$twitter_text = "Siga-nos no <strong>Twitter @RedeSciELO</strong>";
 				$search_texts = array('placeholder' => 'Procure artigos...', 'link_text' => 'Pesquisa avançada');
 				$book_texts = array('ebook_pdf' => 'Livro em PDF', 'ebook_epub' => 'Livro em ePUB', 'abstract' => 'Sinopse', 'download' => 'Baixar');
 				$collections_texts = array('titles' => 'títulos', 'articles' => 'artigos', 'open_access' => 'em acesso aberto', 'journals' => 'periódicos', 'books_list' => 'Coleções de livros', 'journals_list' => 'Coleções de periódicos', 'development_list' => 'Em desenvolvimento', 'discontinued_list' => 'Descontinuadas', 'scientific_list' => 'Divulgação científica');
@@ -468,23 +470,26 @@ class Home extends CI_Controller
 				$available_languages[] = $portuguese;
 				$available_languages[] = $spanish;
 				$read_more_text = "Read more";
-				$search_texts = array('placeholder' => 'Browse articles...', 'link_text' => 'Advanced Search');				
+				$twitter_text = "Follow us on <strong>Twitter @RedeSciELO</strong>";
+				$search_texts = array('placeholder' => 'Search articles...', 'link_text' => 'Advanced Search');				
 				$book_texts = array('ebook_pdf' => 'PDF Book', 'ebook_epub' => 'ePUB Book', 'abstract' => 'Abstract', 'download' => 'Download');
-				$collections_texts = array('titles' => 'titles', 'articles' => 'articles', 'open_access' => 'in open access', 'journals' => 'journals', 'books_list' => 'Collections of books', 'journals_list' => 'Collections of periodicals', 'development_list' => 'Under development', 'discontinued_list' => 'Discontinued', 'scientific_list' => 'Scientific divulgation');
+				$collections_texts = array('titles' => 'titles', 'articles' => 'articles', 'open_access' => 'in open access', 'journals' => 'journals', 'books_list' => 'Book collections', 'journals_list' => 'Journal collections', 'development_list' => 'In development', 'discontinued_list' => 'Discontinued', 'scientific_list' => 'Scientific diffusion');
 				break;
 
 			case SCIELO_ES_LANG:
 				$available_languages[] = $english;
 				$available_languages[] = $portuguese;
-				$read_more_text = "Lea mas";
-				$search_texts = array('placeholder' => 'Ver artículos...', 'link_text' => 'Búsqueda avanzada');				
+				$read_more_text = "Lea más";
+				$twitter_text = "Síguenos en <strong>Twitter @RedeSciELO</strong>";
+				$search_texts = array('placeholder' => 'Busca artículos...', 'link_text' => 'Búsqueda avanzada');				
 				$book_texts = array('ebook_pdf' => 'Libro en PDF', 'ebook_epub' => 'Libro en ePUB', 'abstract' => 'Sinopsis', 'download' => 'Descargar');
-				$collections_texts = array('titles' => 'títulos', 'articles' => 'artículos', 'open_access' => 'en acceso abierto', 'journals' => 'publicaciones periódicas', 'books_list' => 'Colecciones de libros', 'journals_list' => 'Colecciones de periódicos', 'development_list' => 'En desarrollo', 'discontinued_list' => 'Discontinuado', 'scientific_list' => 'Divulgación científica');
+				$collections_texts = array('titles' => 'títulos', 'articles' => 'artículos', 'open_access' => 'en acceso abierto', 'journals' => 'publicaciones periódicas', 'books_list' => 'Colecciones de libros', 'journals_list' => 'Colecciones de revistas', 'development_list' => 'En desarrollo', 'discontinued_list' => 'Discontinuado', 'scientific_list' => 'Divulgación científica');
 				break;
 		}
 
 		$this->load->vars('available_languages', $available_languages);
 		$this->load->vars('read_more_text', $read_more_text);
+		$this->load->vars('twitter_text', $twitter_text);
 		$this->load->vars('search_texts', $search_texts);
 		$this->load->vars('book_texts', $book_texts);
 		$this->load->vars('collections_texts', $collections_texts);

@@ -55,6 +55,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-4 col-md-offset-8">
-        <a href="https://twitter.com/RedeSciELO" class="btn btn-default btn-arrow arrow-blue btn-link-blog">Siga-nos no <strong>Twitter @RedeSciELO</strong></a>
+        <a href="https://twitter.com/RedeSciELO" class="btn btn-default btn-arrow arrow-blue btn-link-blog"><?= $twitter_text ?></a>
     </div>
 </div>
