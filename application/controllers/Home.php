@@ -79,7 +79,7 @@ class Home extends CI_Controller
 		$breadcrumb = array();
 
 		if (!isset($page_slugs) || count($page_slugs) == 0) {
-			show_404();
+			redirect('home/page_not_found');
 		}
 
 		// Iterate through the array getting each page by slug and mounting the breadcrumb
@@ -164,6 +164,19 @@ class Home extends CI_Controller
 
 			$this->load->view('pages/booklist');
 		}
+	}
+
+	/**
+	 * The default handler for 404 error.
+	 *
+	 * @return void
+	 */
+	public function page_not_found() {
+
+		// In the page not found the metadata comes from the tabs API return json data.
+		$this->load_page_metadata('pageMetadataHome', TABS_EN_API_PATH, TABS_ES_API_PATH, TABS_API_PATH);
+		
+		$this->load->view('page_not_found');
 	}
 
 	/**
@@ -378,7 +391,7 @@ class Home extends CI_Controller
 		}
 
 		if (count($content) == 0) {
-			show_404();
+			redirect('home/page_not_found');
 		}
 
 		return $content;

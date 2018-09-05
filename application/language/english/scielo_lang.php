@@ -36,3 +36,5 @@ $lang['send_by_email'] = 'Send link by email';
 $lang['share_on_facebook'] = 'Share on Facebook';
 $lang['share_on_twitter'] = 'Share on twitter';
 $lang['other_social_networks'] = 'Other social networks';
+$lang['page_not_found'] = '404 - Page not found';
+$lang['page_not_found_tip'] = 'We can not find your content, please search again in the field below.';
