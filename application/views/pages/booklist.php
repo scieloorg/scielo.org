@@ -71,16 +71,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="download">
                                 <ul>
                                     <li>
-                                        <strong><?= $book_texts['download'] ?></strong>
+                                        <strong><?= lang('download') ?></strong>
                                     </li>
                                     <li class="ico-pdf">
                                         <a href="<?= $book['downloadPDF_' . $language] ?>">
-                                        <?= $book_texts['ebook_pdf'] ?>
+                                        <?= lang('ebook_pdf') ?>
                                         </a>
                                     </li>
                                     <li class="ico-epub">
                                         <a href="<?= $book['downloadEbook_' . $language] ?>">
-                                        <?= $book_texts['ebook_epub'] ?>
+                                        <?= lang('ebook_epub') ?>
                                         </a>
                                     </li>
                                 </ul>
@@ -89,7 +89,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h4><?= $book_texts['abstract'] ?></h4>
+                            <h4><?= lang('abstract') ?></h4>
                             <?= $book['abstract'] ?>                            
                         </div>
                     </div>

@@ -35,7 +35,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <span><?= date('d M Y', strtotime($post->pubDate)) ?></span>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                        <a href="<?= $post->link ?>" class="btn-arrow arrow-blue"><?= $read_more_text ?></a>
+                        <a href="<?= $post->link ?>" class="btn-arrow arrow-blue"><?= lang('read_more_text') ?></a>
                     </div>
                 </div>
             </div>

@@ -6,11 +6,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <ul>
         <li>
             <span>
-                Compartilhe
+                <?= lang('share') ?>
             </span>
         </li>
         <li>
-            <a href="" class="showTooltip" data-toggle="tooltip" data-placement="top" title="Imprimir">
+            <a href="" class="showTooltip" data-toggle="tooltip" data-placement="top" title="<?= lang('print') ?>">
                 <span class="glyphBtn print"></span>
             </a>
         </li>
@@ -20,27 +20,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </a>
         </li>
         <li>
-            <a href="" class="showTooltip" data-toggle="tooltip" data-placement="top" title="Enviar link por e-mail">
+            <a href="" class="showTooltip" data-toggle="tooltip" data-placement="top" title="<?= lang('send_by_email') ?>">
                 <span class="glyphBtn sendMail"></span>
             </a>
         </li>
         <li>
-            <a href="" class="showTooltip" data-toggle="tooltip" data-placement="top" data-toggle="tooltip" data-placement="auto" title="Compartilhar no Facebook">
+            <a href="" class="showTooltip" data-toggle="tooltip" data-placement="top" data-toggle="tooltip" data-placement="auto" title="<?= lang('share_on_facebook') ?>">
                 <span class="glyphBtn facebook"></span>
             </a>
         </li>
         <li>
-            <a href="" class="showTooltip" data-toggle="tooltip" data-placement="top" data-toggle="tooltip" data-placement="auto" title="Compartilhar no twitter">
+            <a href="" class="showTooltip" data-toggle="tooltip" data-placement="top" data-toggle="tooltip" data-placement="auto" title="<?= lang('share_on_twitter') ?>">
                 <span class="glyphBtn twitter"></span>
             </a>
         </li>
         <li>
-            <a href="" class="dropdown-toggle showTooltip" data-toggle="tooltip" data-placement="auto" title="Outras redes sociais">
+            <a href="" class="dropdown-toggle showTooltip" data-toggle="tooltip" data-placement="auto" title="<?= lang('other_social_networks') ?>">
                 <span class="glyphBtn otherNetworks"></span>
             </a>
             <div class="menu-share">
                 <ul>
-                    <li class="dropdown-header"> Outras redes sociais</li>
+                    <li class="dropdown-header"> <?= lang('other_social_networks') ?></li>
                     <li>
                         <a href="" class="shareGooglePlus">
                             <span class="glyphBtn googlePlus"></span> Google+

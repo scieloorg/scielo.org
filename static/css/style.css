@@ -6430,9 +6430,10 @@ section:first-child {
     background-color: #fff;
     border: 1px solid #B5C4E5;
     font-size: 1.5rem;
-    color: rgba(64, 61, 57, 0.3);
+    color: #333;
     padding: 1rem 5rem 1rem 2rem;
-    border-radius: 3px; }
+    border-radius: 3px;
+    box-shadow: 0px 4px 10px 0px rgba(64, 61, 57, 0.1); }
     .search-box input[type="text"]::-webkit-input-placeholder {
       /* Chrome/Opera/Safari */
       color: rgba(64, 61, 57, 0.3); }
@@ -7077,3 +7078,187 @@ section {
     .wpcf7 .message-has-success p {
       margin: 0;
       color: rgba(40, 167, 69, 0.9); }
+
+.content-404 h5 {
+  width: 80%;
+  text-align: center;
+  margin: 5rem auto 1rem; }
+  @media (min-width: 768px) {
+    .content-404 h5 {
+      text-align: left;
+      padding-left: 2rem; } }
+
+.search-box-404 {
+  width: 100%;
+  margin: 0 auto 5rem;
+  text-align: center;
+  position: relative; }
+  .search-box-404 input[type="text"] {
+    width: 80%;
+    display: inline-block;
+    background-color: #fff;
+    border: 1px solid #B5C4E5;
+    font-size: 1.5rem;
+    color: #333;
+    padding: 1rem 5rem 1rem 2rem;
+    border-radius: 3px;
+    box-shadow: 0px 4px 10px 0px rgba(64, 61, 57, 0.1); }
+    .search-box-404 input[type="text"]::-webkit-input-placeholder {
+      /* Chrome/Opera/Safari */
+      color: rgba(64, 61, 57, 0.3); }
+    .search-box-404 input[type="text"]::-moz-placeholder {
+      /* Firefox 19+ */
+      color: rgba(64, 61, 57, 0.3); }
+    .search-box-404 input[type="text"]:-ms-input-placeholder {
+      /* IE 10+ */
+      color: rgba(64, 61, 57, 0.3); }
+    .search-box-404 input[type="text"]:-moz-placeholder {
+      /* Firefox 18- */
+      color: rgba(64, 61, 57, 0.3); }
+  .search-box-404 a {
+    display: block;
+    text-align: center;
+    margin: 1rem 0 0;
+    text-transform: uppercase;
+    font-size: 1rem; }
+    @media (min-width: 768px) {
+      .search-box-404 a {
+        text-align: left;
+        width: 80%;
+        padding-left: 2rem;
+        display: inline-block; } }
+  .search-box-404 .btn-input {
+    position: absolute;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg width='15px' height='15px' viewBox='0 0 15 15' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E %3Cdefs%3E %3Cpath d='M1.06029774,5.73261803 C1.06029774,3.1522681 3.15168392,1.06088193 5.73261803,1.06088193 C8.31296796,1.06088193 10.4043541,3.1522681 10.4043541,5.73261803 C10.4043541,8.31296796 8.31296796,10.4043541 5.73261803,10.4043541 C3.15168392,10.4043541 1.06029774,8.31296796 1.06029774,5.73261803 M14.6876065,12.6756696 L11.9915877,9.97965085 C11.6521756,9.63965455 11.141597,9.58182013 10.7385086,9.79621642 L10.2267616,9.28446941 C10.9996398,8.3071261 11.4646519,7.07507765 11.4646519,5.73261803 C11.4646519,2.56632946 8.89832241,0 5.73261803,0 C2.56632946,0 0,2.56632946 0,5.73261803 C0,8.8989066 2.56632946,11.4652361 5.73261803,11.4652361 C7.07507765,11.4652361 8.3071261,11.0002239 9.28388523,10.2273458 L9.79563224,10.7390928 C9.58182013,11.1421812 9.64023874,11.6521756 9.97965085,11.9915877 L12.6750854,14.6876065 C13.0921943,15.1041312 13.7675134,15.1041312 14.1840381,14.6876065 L14.6876065,14.1846223 C15.1041312,13.7680976 15.1041312,13.0921943 14.6876065,12.6756696' id='path-1'%3E%3C/path%3E %3C/defs%3E %3Cg id='Symbols' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E %3Cg id='Proposta-Abel/Periodicos' transform='translate(-434.000000, -168.000000)'%3E %3Cg id='Group-4' transform='translate(43.000000, 158.000000)'%3E %3Cg id='Icone' transform='translate(391.000000, 10.000000)'%3E %3Cg id='_Icone/Busca'%3E %3Cmask id='mask-2' fill='white'%3E %3Cuse xlink:href='%23path-1'%3E%3C/use%3E %3C/mask%3E %3Cuse id='Fill-1' fill='%23333333' fill-rule='evenodd' xlink:href='%23path-1'%3E%3C/use%3E %3Cg id='_Icone/Cores/Azul' mask='url(%23mask-2)' fill='%236789D3' fill-rule='evenodd'%3E %3Crect id='Rectangle' x='0' y='0' width='15' height='15'%3E%3C/rect%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E");
+    background-color: transparent;
+    background-size: 15px 15px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: auto;
+    padding: 1.85rem 2rem;
+    margin-left: -4.2rem;
+    border: 0;
+    box-shadow: none;
+    right: 11%;
+    top: -7px; }
+    @media (min-width: 768px) {
+      .search-box-404 .btn-input {
+        right: 10.7%;
+        top: -7px; } }
+
+.row-journal-filter {
+  margin-bottom: 2rem; }
+  .row-journal-filter label.btn, .row-journal-filter .wpcf7 label.wpcf7-form-control.wpcf7-submit, .wpcf7 .row-journal-filter label.wpcf7-form-control.wpcf7-submit {
+    border: 1px solid #ddd;
+    color: #6789d3;
+    background: #fff; }
+    .row-journal-filter label.btn.active, .row-journal-filter .wpcf7 label.active.wpcf7-form-control.wpcf7-submit, .wpcf7 .row-journal-filter label.active.wpcf7-form-control.wpcf7-submit {
+      color: #000;
+      background: #f7f6f4; }
+    .row-journal-filter label.btn .lbl-corrente::before, .row-journal-filter .wpcf7 label.wpcf7-form-control.wpcf7-submit .lbl-corrente::before, .wpcf7 .row-journal-filter label.wpcf7-form-control.wpcf7-submit .lbl-corrente::before {
+      font-family: 'Trebuchet MS',Arial;
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      border-radius: 99px;
+      background: #569162;
+      width: 7px;
+      height: 7px;
+      margin-right: 5px; }
+    .row-journal-filter label.btn .lbl-nao-corrente::before, .row-journal-filter .wpcf7 label.wpcf7-form-control.wpcf7-submit .lbl-nao-corrente::before, .wpcf7 .row-journal-filter label.wpcf7-form-control.wpcf7-submit .lbl-nao-corrente::before {
+      font-family: 'Trebuchet MS',Arial;
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      border-radius: 99px;
+      background: #d92929;
+      width: 7px;
+      height: 7px;
+      margin-right: 5px; }
+  .row-journal-filter .collectionSearch {
+    border-color: #dae3f4;
+    margin: 0;
+    font-size: .9em;
+    padding-right: 40px; }
+    @media (max-width: 767px) {
+      .row-journal-filter .collectionSearch {
+        margin-top: 2rem; } }
+    @media (min-width: 768px) {
+      .row-journal-filter .collectionSearch {
+        background: url(../images/ico/button.glyphs.png) 100% -1670px no-repeat; } }
+  .row-journal-filter .btn-input {
+    position: absolute;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg width='15px' height='15px' viewBox='0 0 15 15' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E %3Cdefs%3E %3Cpath d='M1.06029774,5.73261803 C1.06029774,3.1522681 3.15168392,1.06088193 5.73261803,1.06088193 C8.31296796,1.06088193 10.4043541,3.1522681 10.4043541,5.73261803 C10.4043541,8.31296796 8.31296796,10.4043541 5.73261803,10.4043541 C3.15168392,10.4043541 1.06029774,8.31296796 1.06029774,5.73261803 M14.6876065,12.6756696 L11.9915877,9.97965085 C11.6521756,9.63965455 11.141597,9.58182013 10.7385086,9.79621642 L10.2267616,9.28446941 C10.9996398,8.3071261 11.4646519,7.07507765 11.4646519,5.73261803 C11.4646519,2.56632946 8.89832241,0 5.73261803,0 C2.56632946,0 0,2.56632946 0,5.73261803 C0,8.8989066 2.56632946,11.4652361 5.73261803,11.4652361 C7.07507765,11.4652361 8.3071261,11.0002239 9.28388523,10.2273458 L9.79563224,10.7390928 C9.58182013,11.1421812 9.64023874,11.6521756 9.97965085,11.9915877 L12.6750854,14.6876065 C13.0921943,15.1041312 13.7675134,15.1041312 14.1840381,14.6876065 L14.6876065,14.1846223 C15.1041312,13.7680976 15.1041312,13.0921943 14.6876065,12.6756696' id='path-1'%3E%3C/path%3E %3C/defs%3E %3Cg id='Symbols' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E %3Cg id='Proposta-Abel/Periodicos' transform='translate(-434.000000, -168.000000)'%3E %3Cg id='Group-4' transform='translate(43.000000, 158.000000)'%3E %3Cg id='Icone' transform='translate(391.000000, 10.000000)'%3E %3Cg id='_Icone/Busca'%3E %3Cmask id='mask-2' fill='white'%3E %3Cuse xlink:href='%23path-1'%3E%3C/use%3E %3C/mask%3E %3Cuse id='Fill-1' fill='%23333333' fill-rule='evenodd' xlink:href='%23path-1'%3E%3C/use%3E %3Cg id='_Icone/Cores/Azul' mask='url(%23mask-2)' fill='%236789D3' fill-rule='evenodd'%3E %3Crect id='Rectangle' x='0' y='0' width='15' height='15'%3E%3C/rect%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E");
+    background-color: transparent;
+    background-size: 15px 15px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: auto;
+    padding: 1.85rem 2rem;
+    margin-left: -4.2rem;
+    border: 0;
+    box-shadow: none;
+    right: 4%;
+    top: -2px; }
+    @media (min-width: 768px) {
+      .row-journal-filter .btn-input {
+        display: none; } }
+
+.list-journals table {
+  width: 100%;
+  margin-bottom: 10rem; }
+  .list-journals table thead th {
+    background-color: #f8f8f8;
+    border-top: 1px dashed rgba(0, 0, 0, 0.25);
+    text-align: left;
+    padding: 5px 15px; }
+    .list-journals table thead th .downloadList {
+      width: 125px;
+      text-align: right;
+      font-weight: 400;
+      font-size: .8em;
+      color: #b6b3af;
+      float: right; }
+      .list-journals table thead th .downloadList span {
+        padding-right: .8rem;
+        display: inline-block;
+        line-height: 24px;
+        float: left; }
+      .list-journals table thead th .downloadList .glyphBtn {
+        opacity: 0.4;
+        float: left;
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        background: url(../images/ico/button.glyphs.png) no-repeat; }
+        .list-journals table thead th .downloadList .glyphBtn:hover {
+          opacity: 1; }
+        .list-journals table thead th .downloadList .glyphBtn.downloadXLS {
+          background-position: center -4240px; }
+        .list-journals table thead th .downloadList .glyphBtn.downloadCSV {
+          background-position: center -820px; }
+  .list-journals table tbody td {
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.25);
+    border-spacing: 0;
+    font-size: .9em;
+    padding: 5px 15px;
+    line-height: 24px; }
+    .list-journals table tbody td:first-child {
+      border-top: 1px dashed rgba(0, 0, 0, 0.15); }
+    .list-journals table tbody td a {
+      padding-left: 20px;
+      text-decoration: none; }
+      .list-journals table tbody td a::before {
+        position: absolute;
+        font-family: 'Trebuchet MS',Arial;
+        content: '\2219';
+        font-size: 4.5em;
+        margin: -2px 0 0 -20px;
+        color: #569162; }
+      .list-journals table tbody td a.disabled::before {
+        color: #d92929; }
+      .list-journals table tbody td a strong.journalTitle {
+        font-size: 1.1em;
+        color: #6789d3; }
+  .list-journals table tbody tr:hover td {
+    background: #f7f9fd; }
