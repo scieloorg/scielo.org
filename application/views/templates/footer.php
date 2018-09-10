@@ -30,10 +30,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?= get_static_js_path('bootstrap.min.js') ?>" type="text/javascript"></script>
 <script src="<?= get_static_js_path('slick.js') ?>" type="text/javascript" charset="utf-8"></script>
 <script src="<?= get_static_js_path('scielo.js') ?>" type="text/javascript" charset="utf-8"></script>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
 <script>
 $(function(){
     scieloLib.Init();
 });
+
+_uacct = "UA-23713828-1";
+urchinTracker();
 </script>
 </body>
 </html>
