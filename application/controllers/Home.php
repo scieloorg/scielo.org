@@ -209,7 +209,9 @@ class Home extends CI_Controller
 		}
 
 		$total_journals = $this->Journals_model->total_journals($status, $search);
-		$base_url = base_url($this->language . '/journals/list-by-alphabetical-order/?');
+
+		$journals_links = $this->get_journals_links();
+		$base_url = $journals_links[$this->language]['list-by-alphabetical-order'] . '/?';
 
 		if ($status) {
 			$base_url .= 'status=' . $status;
@@ -282,7 +284,8 @@ class Home extends CI_Controller
 		}
 
 		$total_journals = $this->Journals_model->total_journals($status, $search);
-		$base_url = base_url($this->language . '/journals/list-by-publishers/?');
+		$journals_links = $this->get_journals_links();
+		$base_url = $journals_links[$this->language]['list-by-publishers'] . '/?';
 
 		if ($status) {
 			$base_url .= 'status=' . $status;
@@ -356,7 +359,8 @@ class Home extends CI_Controller
 		}
 
 		$total_journals = $this->Journals_model->total_journals_by_subject_area($id_subject_area, $status, $search);
-		$base_url = base_url($this->language . '/journals/list-by-subject-area/' . $id_subject_area . '/' . $subject_area . '/?');
+		$journals_links = $this->get_journals_links();
+		$base_url = $journals_links[$this->language]['list-by-subject-area'] . '/' . $id_subject_area . '/' . $subject_area . '/?';
 
 		if ($status) {
 			$base_url .= 'status=' . $status;
@@ -510,16 +514,18 @@ class Home extends CI_Controller
 
 	/**
 	 * Load from the database the journals subject areas tab content to be shown in the tab template.
+	 * Create the links for the journals based on the language selected.
 	 * 
 	 * @return void
 	 */
 	private function load_journals()
 	{
-		$this->load->model('Journals_model');
 
+		$this->load->model('Journals_model');
 		$subject_areas = $this->Journals_model->list_all_subject_areas($this->language);
 
 		$this->load->vars('subject_areas', $subject_areas);
+		$this->load->vars('journals_links', $this->get_journals_links());
 	}
 
 	/**
@@ -819,5 +825,29 @@ class Home extends CI_Controller
 		$this->language = $language;
 		delete_cookie('language');
 		set_cookie('language', $this->language, ONE_DAY_TIMEOUT * 30);
+	}
+
+	/**
+	 * Returns the journals links for each language. 
+	 * 
+	 * @return array
+	 */
+	private function get_journals_links()
+	{
+
+		$journals_links = array();
+		$journals_links['pt']['list-by-alphabetical-order'] = base_url($this->language . '/periodicos/listar-por-ordem-alfabetica');
+		$journals_links['en']['list-by-alphabetical-order'] = base_url($this->language . '/journals/list-by-alphabetical-order');
+		$journals_links['es']['list-by-alphabetical-order'] = base_url($this->language . '/revistas/listar-por-orden-alfabetico');
+
+		$journals_links['pt']['list-by-publishers'] = base_url($this->language . '/periodicos/listar-por-publicador');
+		$journals_links['en']['list-by-publishers'] = base_url($this->language . '/journals/list-by-publishers');
+		$journals_links['es']['list-by-publishers'] = base_url($this->language . '/revistas/listar-por-el-publicador');
+
+		$journals_links['pt']['list-by-subject-area'] = base_url($this->language . '/periodicos/listar-por-assunto');
+		$journals_links['en']['list-by-subject-area'] = base_url($this->language . '/journals/list-by-subject-area');
+		$journals_links['es']['list-by-subject-area'] = base_url($this->language . '/revistas/listar-por-tema');
+
+		return $journals_links;
 	}
 }

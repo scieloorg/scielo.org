@@ -44,17 +44,7 @@ class Journals_model extends CI_Model
         $this->db->from($this->subject_areas_table);
         $this->db->where('id_subject_area', $id_subject_area);
 
-        $subject_area = null;
-
-        $result = $this->db->get();
-
-        if ($result->num_rows() > 0) {
-            $subject_area = $result->row_array();
-        }
-
-        $result->free_result();
-
-        return $subject_area;
+        return $this->get_result_array();
     }
 
     /**
@@ -68,17 +58,8 @@ class Journals_model extends CI_Model
 
         $this->db->from($this->subject_areas_table);
         $this->db->order_by('name_' . $language, 'ASC');
-        $result = $this->db->get();
 
-        $list_subject_areas = array();
-
-        if ($result->num_rows() > 0) {
-            $list_subject_areas = $result->result_array();
-        }
-
-        $result->free_result();
-
-        return $list_subject_areas;
+        return $this->get_results_array();
     }
 
     /**
@@ -94,7 +75,7 @@ class Journals_model extends CI_Model
     {
 
         $this->db->from($this->journals_table);
-        
+
         if ($status) {
             $this->db->where('status', $status);
         }
@@ -106,17 +87,7 @@ class Journals_model extends CI_Model
         $this->db->limit($limit, $offset);
         $this->db->order_by('title', 'ASC');
 
-        $result = $this->db->get();
-
-        $list_journals = array();
-
-        if ($result->num_rows() > 0) {
-            $list_journals = $result->result();
-        }
-
-        $result->free_result();
-
-        return $list_journals;
+        return $this->get_results_obj();
     }
 
     /**
@@ -154,8 +125,8 @@ class Journals_model extends CI_Model
 
         $this->db->from($this->journals_table);
         $this->db->join($this->subject_areas_journals_table, $this->journals_table . '.id_journal=' . $this->subject_areas_journals_table . '.id_journal', 'left');
-        $this->db->where('id_subject_area', $id_subject_area);        
-       
+        $this->db->where('id_subject_area', $id_subject_area);
+
         if ($status) {
             $this->db->where('status', $status);
         }
@@ -167,17 +138,7 @@ class Journals_model extends CI_Model
         $this->db->limit($limit, $offset);
         $this->db->order_by('title', 'ASC');
 
-        $result = $this->db->get();
-
-        $list_journals = array();
-
-        if ($result->num_rows() > 0) {
-            $list_journals = $result->result();
-        }
-
-        $result->free_result();
-
-        return $list_journals;
+        return $this->get_results_obj();
     }
 
     /**
@@ -191,7 +152,7 @@ class Journals_model extends CI_Model
     {
 
         $this->db->where('id_subject_area', $id_subject_area);
-        
+
         if ($status) {
             $this->db->where('status', $status);
         }
@@ -201,7 +162,71 @@ class Journals_model extends CI_Model
         }
 
         $this->db->join($this->subject_areas_journals_table, $this->journals_table . '.id_journal=' . $this->subject_areas_journals_table . '.id_journal', 'left');
-        
+
         return $this->db->count_all_results($this->journals_table);
     }
+
+    /**
+     * Utility function to support the Codeigniter database API.
+     *
+     * @return	array
+     */
+    private function get_result_array()
+    {
+
+        $result_obj = null;
+
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            $result_obj = $result->row_array();
+        }
+
+        $result->free_result();
+
+        return $result_obj;
+    }
+
+    /**
+     * Utility function to support the Codeigniter database API.
+     *
+     * @return	array
+     */
+    private function get_results_array()
+    {
+
+        $result_list = array();
+
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            $result_list = $result->result_array();
+        }
+
+        $result->free_result();
+
+        return $result_list;
+    }
+
+    /**
+     * Utility function to support the Codeigniter database API.
+     *
+     * @return	array
+     */
+    private function get_results_obj()
+    {
+
+        $result_list = array();
+
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            $result_list = $result->result();
+        }
+
+        $result->free_result();
+
+        return $result_list;
+    }
+
 }
