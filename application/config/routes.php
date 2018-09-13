@@ -53,6 +53,18 @@ $route['default_controller'] = 'home';
 $route['404_override'] = 'home/page_not_found';
 $route['translate_uri_dashes'] = FALSE;
 
+$route['pt/journals/list-by-alphabetical-order'] = 'home/list_journals_by_alphabetical_order';
+$route['en/journals/list-by-alphabetical-order'] = 'home/list_journals_by_alphabetical_order';
+$route['es/journals/list-by-alphabetical-order'] = 'home/list_journals_by_alphabetical_order';
+
+$route['pt/journals/list-by-publishers'] = 'home/list_by_publishers';
+$route['en/journals/list-by-publishers'] = 'home/list_by_publishers';
+$route['es/journals/list-by-publishers'] = 'home/list_by_publishers';
+
+$route['pt/journals/list-by-subject-area/(:num)/(:any)'] = 'home/list_by_subject_area/$1/$2';
+$route['en/journals/list-by-subject-area/(:num)/(:any)'] = 'home/list_by_subject_area/$1/$2';
+$route['es/journals/list-by-subject-area/(:num)/(:any)'] = 'home/list_by_subject_area/$1/$2';
+
 $route['pt/(.+)'] = 'home/page/$1';
 $route['en/(.+)'] = 'home/page/$1';
 $route['es/(.+)'] = 'home/page/$1';

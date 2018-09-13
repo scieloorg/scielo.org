@@ -42,9 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 text-right">
                         <div class="twitter-actions">
-                            <a href="https://twitter.com/RedeSciELO" class="btn btn-comment" target="_blank"></a>
                             <a href="https://twitter.com/RedeSciELO" class="btn btn-retweet" target="_blank"></a>
-                            <a href="https://twitter.com/RedeSciELO" class="btn btn-like" target="_blank"></a>
                         </div>
                     </div>
                 </div>

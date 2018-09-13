@@ -58,6 +58,7 @@ class Home extends CI_Controller
 		$this->load_page_metadata('pageMetadataHome', TABS_EN_API_PATH, TABS_ES_API_PATH, TABS_API_PATH);
 		$this->load_alert();
 		$this->load_collections();
+		$this->load_journals();
 		$this->load_blog_rss_feed();
 		$this->load_twitter();
 		$this->load_tabs();
@@ -76,13 +77,12 @@ class Home extends CI_Controller
 	public function page(...$page_slugs)
 	{
 
-		$breadcrumb = array();
-
 		if (!isset($page_slugs) || count($page_slugs) == 0) {
 			redirect('home/page_not_found');
 		}
 
 		// Iterate through the array getting each page by slug and mounting the breadcrumb
+		$breadcrumb = array();
 		$breadcrumbs[] = array('link' => base_url($this->language . '/'), 'link_text' => 'Home');
 
 		for ($i = 0; $i < count($page_slugs) - 1; $i++) {
@@ -167,15 +167,240 @@ class Home extends CI_Controller
 	}
 
 	/**
+	 * List all journals by alphabetical order.
+	 *
+	 * @return	void
+	 */
+	public function list_journals_by_alphabetical_order()
+	{
+
+		$this->load->model('PageMetadata');
+		$pageMetadata = array('acf' => array('pageTitle' => ucfirst(lang('journals')) . ' | SciELO.org', 'pageDescription' => 'Biblioteca Virtual em Saúde'));
+		$this->PageMetadata->initialize($pageMetadata);
+
+		$breadcrumb = array();
+		$breadcrumbs[] = array('link' => base_url($this->language . '/'), 'link_text' => 'Home');
+		$this->load->vars('breadcrumbs', $breadcrumbs);
+
+		$this->load->model('Journals_model');
+
+		$offset = $this->input->get('offset', true);
+
+		if (!$offset) {
+			$offset = 0;
+		}
+
+		$status = $this->input->get('status', true);
+		$search = $this->input->get('search', true);
+		$export = $this->input->get('export', true);
+
+		$journals = $this->Journals_model->list_all_journals(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+
+		if ($export == 'csv') {
+
+			$this->load->vars('journals', $journals);
+			$this->load->view('pages/journals-csv');
+			return;
+		} elseif ($export == 'xls') {
+
+			$this->load->vars('journals', $journals);
+			$this->load->view('pages/journals-xls');
+			return;
+		}
+
+		$total_journals = $this->Journals_model->total_journals($status, $search);
+		$base_url = base_url($this->language . '/journals/list-by-alphabetical-order/?');
+
+		if ($status) {
+			$base_url .= 'status=' . $status;
+		}
+
+		if ($search) {
+			$base_url .= 'search=' . $search;
+		}
+
+		$config['base_url'] = $base_url;
+		$config['total_rows'] = $total_journals;
+		$config['per_page'] = SCIELO_JOURNAL_LIMIT;
+		$config['first_link'] = lang('pagination_first_link');
+		$config['last_link'] = lang('pagination_last_link');
+
+		init_pagination($config);
+
+		if ($offset) {
+			$base_url .= '&offset=' . $offset;
+		}
+
+		$this->load->vars('base_url', $base_url);
+		$this->load->vars('status', $status);
+		$this->load->vars('search', $search);
+		$this->load->vars('total_journals', $total_journals);
+		$this->load->vars('journals', $journals);
+		$this->load->vars('show_publisher_name', false);
+		$this->load->view('pages/journals');
+	}
+
+	/**
+	 * List all journals publishers ordered by name.
+	 *
+	 * @return	void
+	 */
+	public function list_by_publishers()
+	{
+		$this->load->model('PageMetadata');
+		$pageMetadata = array('acf' => array('pageTitle' => ucfirst(lang('journals')) . ' | SciELO.org', 'pageDescription' => 'Biblioteca Virtual em Saúde'));
+		$this->PageMetadata->initialize($pageMetadata);
+
+		$breadcrumb = array();
+		$breadcrumbs[] = array('link' => base_url($this->language . '/'), 'link_text' => 'Home');
+		$this->load->vars('breadcrumbs', $breadcrumbs);
+
+		$this->load->model('Journals_model');
+
+		$offset = $this->input->get('offset', true);
+
+		if (!$offset) {
+			$offset = 0;
+		}
+
+		$status = $this->input->get('status', true);
+		$search = $this->input->get('search', true);
+		$export = $this->input->get('export', true);
+
+		$journals = $this->Journals_model->list_all_journals(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+
+		if ($export == 'csv') {
+
+			$this->load->vars('journals', $journals);
+			$this->load->view('pages/journals-csv');
+			return;
+		} elseif ($export == 'xls') {
+
+			$this->load->vars('journals', $journals);
+			$this->load->view('pages/journals-xls');
+			return;
+		}
+
+		$total_journals = $this->Journals_model->total_journals($status, $search);
+		$base_url = base_url($this->language . '/journals/list-by-publishers/?');
+
+		if ($status) {
+			$base_url .= 'status=' . $status;
+		}
+
+		if ($search) {
+			$base_url .= 'search=' . $search;
+		}
+
+		$config['base_url'] = $base_url;
+		$config['total_rows'] = $total_journals;
+		$config['per_page'] = SCIELO_JOURNAL_LIMIT;
+		$config['first_link'] = lang('pagination_first_link');
+		$config['last_link'] = lang('pagination_last_link');
+
+		init_pagination($config);
+
+		if ($offset) {
+			$base_url .= '&offset=' . $offset;
+		}
+
+		$this->load->vars('base_url', $base_url);
+		$this->load->vars('status', $status);
+		$this->load->vars('search', $search);
+		$this->load->vars('total_journals', $total_journals);
+		$this->load->vars('journals', $journals);
+		$this->load->vars('show_publisher_name', true);
+		$this->load->view('pages/journals');
+	}
+
+	/**
+	 * List all journals by subject area ordered by name.
+	 *
+	 * @return	void
+	 */
+	public function list_by_subject_area($id_subject_area, $subject_area)
+	{
+
+		$this->load->model('PageMetadata');
+		$pageMetadata = array('acf' => array('pageTitle' => ucfirst(lang('journals')) . ' | SciELO.org', 'pageDescription' => 'Biblioteca Virtual em Saúde'));
+		$this->PageMetadata->initialize($pageMetadata);
+
+		$breadcrumb = array();
+		$breadcrumbs[] = array('link' => base_url($this->language . '/'), 'link_text' => 'Home');
+		$this->load->vars('breadcrumbs', $breadcrumbs);
+
+		$this->load->model('Journals_model');
+
+		$offset = $this->input->get('offset', true);
+
+		if (!$offset) {
+			$offset = 0;
+		}
+
+		$status = $this->input->get('status', true);
+		$search = $this->input->get('search', true);
+		$export = $this->input->get('export', true);
+
+		$journals = $this->Journals_model->list_all_journals_by_subject_area($id_subject_area, SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+
+		if ($export == 'csv') {
+
+			$this->load->vars('journals', $journals);
+			$this->load->view('pages/journals-csv');
+			return;
+		} elseif ($export == 'xls') {
+
+			$this->load->vars('journals', $journals);
+			$this->load->view('pages/journals-xls');
+			return;
+		}
+
+		$total_journals = $this->Journals_model->total_journals_by_subject_area($id_subject_area, $status, $search);
+		$base_url = base_url($this->language . '/journals/list-by-subject-area/' . $id_subject_area . '/' . $subject_area . '/?');
+
+		if ($status) {
+			$base_url .= 'status=' . $status;
+		}
+
+		if ($search) {
+			$base_url .= 'search=' . $search;
+		}
+
+		$config['base_url'] = $base_url;
+		$config['total_rows'] = $total_journals;
+		$config['per_page'] = SCIELO_JOURNAL_LIMIT;
+		$config['first_link'] = lang('pagination_first_link');
+		$config['last_link'] = lang('pagination_last_link');
+
+		init_pagination($config);
+
+		if ($offset) {
+			$base_url .= '&offset=' . $offset;
+		}
+
+		$subject_area = $this->Journals_model->get_subject_area($id_subject_area);
+
+		$this->load->vars('subject_area', $subject_area);
+		$this->load->vars('base_url', $base_url);
+		$this->load->vars('status', $status);
+		$this->load->vars('search', $search);
+		$this->load->vars('total_journals', $total_journals);
+		$this->load->vars('journals', $journals);
+		$this->load->vars('show_publisher_name', false);
+		$this->load->view('pages/journals');
+	}
+
+	/**
 	 * The default handler for 404 error.
 	 *
 	 * @return void
 	 */
-	public function page_not_found() {
+	public function page_not_found()
+	{
 
 		// In the page not found the metadata comes from the tabs API return json data.
 		$this->load_page_metadata('pageMetadataHome', TABS_EN_API_PATH, TABS_ES_API_PATH, TABS_API_PATH);
-		
+
 		$this->load->view('page_not_found');
 	}
 
@@ -284,6 +509,20 @@ class Home extends CI_Controller
 	}
 
 	/**
+	 * Load from the database the journals subject areas tab content to be shown in the tab template.
+	 * 
+	 * @return void
+	 */
+	private function load_journals()
+	{
+		$this->load->model('Journals_model');
+
+		$subject_areas = $this->Journals_model->list_all_subject_areas($this->language);
+
+		$this->load->vars('subject_areas', $subject_areas);
+	}
+
+	/**
 	 * Load from cache and parse a XML to be shown in the template blog section.
 	 * Note that this method does not use the 'get_from_wordpress()' function because it loads the content from a RSS Feed.
 	 * 
@@ -336,7 +575,7 @@ class Home extends CI_Controller
 	 */
 	private function load_twitter()
 	{
-		
+
 		$key = 'tweets';
 		$tweets = $this->cache->get($key);
 
@@ -344,7 +583,7 @@ class Home extends CI_Controller
 			$tweets = $this->twitter->get_connection()->get('statuses/user_timeline', ['count' => 10, 'tweet_mode' => 'extended', 'include_entities' => true, 'exclude_replies' => true]);
 			$this->cache->set($key, $tweets, ONE_HOUR_TIMEOUT);
 		}
-		
+
 		$this->load->vars('tweets', $tweets);
 	}
 
@@ -465,19 +704,19 @@ class Home extends CI_Controller
 		switch ($this->language) {
 
 			case SCIELO_LANG:
-				$this->lang->load('scielo', 'portuguese-brazilian');
+				$this->lang->load(array('scielo', 'pagination', 'db'), 'portuguese-brazilian');
 				$available_languages[] = $english;
 				$available_languages[] = $spanish;
 				break;
 
 			case SCIELO_EN_LANG:
-				$this->lang->load('scielo', 'english');
+				$this->lang->load(array('scielo', 'pagination', 'db'), 'english');
 				$available_languages[] = $portuguese;
 				$available_languages[] = $spanish;
 				break;
 
 			case SCIELO_ES_LANG:
-				$this->lang->load('scielo', 'spanish');
+				$this->lang->load(array('scielo', 'pagination', 'db'), 'spanish');
 				$available_languages[] = $english;
 				$available_languages[] = $portuguese;
 				break;
@@ -495,10 +734,10 @@ class Home extends CI_Controller
 	private function set_language()
 	{
 
-		$this->language = get_cookie('language', TRUE);
+		$this->language = get_cookie('language', true);
 
 		// Because the webite could be deploy in a server subfolder we remove the base_uri.
-		$language_url = str_replace(BASE_URI,'',$_SERVER['REQUEST_URI']);
+		$language_url = str_replace(BASE_URI, '', $_SERVER['REQUEST_URI']);
 		$language_url = substr($language_url, 0, 2);
 		
 		// Verify if the language is set in the cookie.
@@ -511,17 +750,17 @@ class Home extends CI_Controller
 		} else {
 
 			// If the language is at the browser URL, it has a higher precedence than user location. 
-			if(!$this->set_language_if_equal_to($language_url)) {
+			if (!$this->set_language_if_equal_to($language_url)) {
 
 				// The language isn't in the browser URL, so we get the user location, if it's not one of the tree languages, set it to english (default). 
 				$language_location = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 
-				if(!$this->set_language_if_equal_to($language_location)) {
+				if (!$this->set_language_if_equal_to($language_location)) {
 					$this->set_language_cookie(SCIELO_EN_LANG);
 				}
 			}
-		}	
-		
+		}
+
 		$this->load->vars('language', $this->language);
 	}
 
@@ -532,11 +771,12 @@ class Home extends CI_Controller
 	 * @param  string	$language
 	 * @return void
 	 */
-	private function set_language_if_in_URL($language_url, $language) {
+	private function set_language_if_in_URL($language_url, $language)
+	{
 
-		if($language_url == $language && $this->language != $language) {
+		if ($language_url == $language && $this->language != $language) {
 
-			$this->set_language_cookie($language);			
+			$this->set_language_cookie($language);
 		}
 	}
 
@@ -546,24 +786,25 @@ class Home extends CI_Controller
 	 * @param  string	$language
 	 * @return boolean
 	 */
-	private function set_language_if_equal_to($language) {
+	private function set_language_if_equal_to($language)
+	{
 
 		switch ($language) {
 
 			case SCIELO_LANG:
 				$this->set_language_cookie(SCIELO_LANG);
-				return TRUE;
+				return true;
 
 			case SCIELO_ES_LANG:
 				$this->set_language_cookie(SCIELO_ES_LANG);
-				return TRUE;
+				return true;
 
 			case SCIELO_EN_LANG:
-				$this->set_language_cookie(SCIELO_EN_LANG);	
-				return TRUE;
+				$this->set_language_cookie(SCIELO_EN_LANG);
+				return true;
 		}
 
-		return FALSE;		
+		return false;
 	}
 
 	/**

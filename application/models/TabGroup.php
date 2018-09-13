@@ -146,7 +146,7 @@ class TabGroup
 
                 case 2:
                     $tabContent['ID'] = 'tab-periodicos';
-                    $tabContent['content'] = 'temp_content/tab-content-journals';
+                    $tabContent['content'] = 'templates/journals';
                     break;
 
                 case 3:

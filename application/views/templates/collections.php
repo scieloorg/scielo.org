@@ -22,7 +22,7 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                  <dd class="flag-<?= $journal->code ?>">
                     <a href="http://<?= $journal->domain ?>">
                         <h4><?= $journal->name[$lang_index] ?></h4>
-                        <span><?= $journal->journal_count['current'] ?> <?= lang('journals') ?> • <?= $journal->document_count ?> <?= lang('articles') ?></span>
+                        <span><?php if (array_key_exists('current', $journal->journal_count)): ?><?= $journal->journal_count['current'] ?> <?= lang('journals') ?> •<?php endif; ?> <?= $journal->document_count ?> <?= lang('articles') ?></span>
                     </a>
                 </dd>
             <?php endforeach; ?>
