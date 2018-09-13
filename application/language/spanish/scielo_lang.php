@@ -51,3 +51,7 @@ $lang['deceased_journals'] = 'Revistas descontinuadas';
 $lang['deceaseds'] = 'Descontinuadas';
 $lang['search_journals_placeholder'] = 'Ingrese una o más palabras para filtrar la lista';
 $lang['list_download'] = 'descargar la lista';
+$lang['subject'] = 'Tema';
+$lang['export_to_xls_tooltip'] = 'Lista de archivos para Excel';
+$lang['export_to_cvs_tooltip'] = 'Lista en archivo CSV';
+$lang['publisher'] = 'Publicador';

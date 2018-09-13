@@ -10,27 +10,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </span>
         </li>
         <li>
-            <a href="" class="showTooltip" data-toggle="tooltip" data-placement="top" title="<?= lang('print') ?>">
+            <a href="javascript:window.print();" class="showTooltip" data-toggle="tooltip" data-placement="top" title="<?= lang('print') ?>">
                 <span class="glyphBtn print"></span>
             </a>
         </li>
         <li>
-            <a href="" class="showTooltip" data-toggle="tooltip" data-placement="top" title="Atom">
+            <a href="https://scielosp.org/journals/feed/" class="showTooltip" data-toggle="tooltip" data-placement="top" title="Atom">
                 <span class="glyphBtn rssMini"></span>
             </a>
         </li>
         <li>
-            <a href="" class="showTooltip" data-toggle="tooltip" data-placement="top" title="<?= lang('send_by_email') ?>">
+            <a href="#" class="showTooltip" data-toggle="tooltip" data-placement="top" title="<?= lang('send_by_email') ?>">
                 <span class="glyphBtn sendMail"></span>
             </a>
         </li>
         <li>
-            <a href="" class="showTooltip" data-toggle="tooltip" data-placement="top" data-toggle="tooltip" data-placement="auto" title="<?= lang('share_on_facebook') ?>">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=<?= current_url() ?>" class="showTooltip" data-toggle="tooltip" data-placement="top" data-toggle="tooltip" data-placement="auto" title="<?= lang('share_on_facebook') ?>">
                 <span class="glyphBtn facebook"></span>
             </a>
         </li>
         <li>
-            <a href="" class="showTooltip" data-toggle="tooltip" data-placement="top" data-toggle="tooltip" data-placement="auto" title="<?= lang('share_on_twitter') ?>">
+            <a href="https://twitter.com/intent/tweet?text=<?= current_url() ?>" class="showTooltip" data-toggle="tooltip" data-placement="top" data-toggle="tooltip" data-placement="auto" title="<?= lang('share_on_twitter') ?>">
                 <span class="glyphBtn twitter"></span>
             </a>
         </li>
@@ -42,32 +42,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <ul>
                     <li class="dropdown-header"> <?= lang('other_social_networks') ?></li>
                     <li>
-                        <a href="" class="shareGooglePlus">
+                        <a href="https://plus.google.com/share?url=<?= current_url() ?>" class="shareGooglePlus">
                             <span class="glyphBtn googlePlus"></span> Google+
                         </a>
                     </li>
                     <li>
-                        <a href="" class="shareLinkedIn">
+                        <a href="http://www.linkedin.com/shareArticle?mini=true&url=<?= current_url() ?>" class="shareLinkedIn">
                             <span class="glyphBtn linkedIn"></span> LinkedIn
                         </a>
                     </li>
                     <li>
-                        <a href="" class="shareReddit">
+                        <a href="http://www.reddit.com/submit?url=<?= current_url() ?>" class="shareReddit">
                             <span class="glyphBtn reddit"></span> Reddit
                         </a>
                     </li>
                     <li>
-                        <a href="" class="shareStambleUpon">
+                        <a href="http://www.stumbleupon.com/submit?url=<?= current_url() ?>" class="shareStambleUpon">
                             <span class="glyphBtn stambleUpon"></span> StambleUpon
                         </a>
                     </li>
                     <li>
-                        <a href="" class="shareCiteULike">
+                        <a href="http://www.citeulike.org/posturl?url=<?= current_url() ?>" class="shareCiteULike">
                             <span class="glyphBtn citeULike"></span> CiteULike
                         </a>
                     </li>
                     <li>
-                        <a href="" class="shareMendeley">
+                        <a href="http://www.mendeley.com/import/?url=<?= current_url() ?>" class="shareMendeley">
                             <span class="glyphBtn mendeley"></span> Mendeley
                         </a>
                     </li>

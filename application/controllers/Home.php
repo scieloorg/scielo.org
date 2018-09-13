@@ -174,14 +174,8 @@ class Home extends CI_Controller
 	public function list_journals_by_alphabetical_order()
 	{
 
-		$this->load->model('PageMetadata');
-		$pageMetadata = array('acf' => array('pageTitle' => ucfirst(lang('journals')) . ' | SciELO.org', 'pageDescription' => 'Biblioteca Virtual em Saúde'));
-		$this->PageMetadata->initialize($pageMetadata);
-
-		$breadcrumb = array();
-		$breadcrumbs[] = array('link' => base_url($this->language . '/'), 'link_text' => 'Home');
-		$this->load->vars('breadcrumbs', $breadcrumbs);
-
+		$this->load_journals_page_metadata();
+		
 		$this->load->model('Journals_model');
 
 		$offset = $this->input->get('offset', true);
@@ -238,7 +232,6 @@ class Home extends CI_Controller
 		$this->load->vars('search', $search);
 		$this->load->vars('total_journals', $total_journals);
 		$this->load->vars('journals', $journals);
-		$this->load->vars('show_publisher_name', false);
 		$this->load->view('pages/journals');
 	}
 
@@ -249,13 +242,7 @@ class Home extends CI_Controller
 	 */
 	public function list_by_publishers()
 	{
-		$this->load->model('PageMetadata');
-		$pageMetadata = array('acf' => array('pageTitle' => ucfirst(lang('journals')) . ' | SciELO.org', 'pageDescription' => 'Biblioteca Virtual em Saúde'));
-		$this->PageMetadata->initialize($pageMetadata);
-
-		$breadcrumb = array();
-		$breadcrumbs[] = array('link' => base_url($this->language . '/'), 'link_text' => 'Home');
-		$this->load->vars('breadcrumbs', $breadcrumbs);
+		$this->load_journals_page_metadata();
 
 		$this->load->model('Journals_model');
 
@@ -269,21 +256,19 @@ class Home extends CI_Controller
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
 
-		$journals = $this->Journals_model->list_all_journals(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+		if ($export == 'csv' || $export == 'xls') {
 
-		if ($export == 'csv') {
-
-			$this->load->vars('journals', $journals);
-			$this->load->view('pages/journals-csv');
-			return;
-		} elseif ($export == 'xls') {
+			$journals = $this->Journals_model->list_all_journals(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
 
 			$this->load->vars('journals', $journals);
-			$this->load->view('pages/journals-xls');
-			return;
-		}
+			$this->load->view('pages/journals-'.$export);
 
-		$total_journals = $this->Journals_model->total_journals($status, $search);
+			return;
+		} 
+
+		$publishers = $this->Journals_model->list_all_publishers(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+		$total_publishers = $this->Journals_model->total_publishers($status, $search);
+
 		$journals_links = $this->get_journals_links();
 		$base_url = $journals_links[$this->language]['list-by-publishers'] . '/?';
 
@@ -296,7 +281,7 @@ class Home extends CI_Controller
 		}
 
 		$config['base_url'] = $base_url;
-		$config['total_rows'] = $total_journals;
+		$config['total_rows'] = $total_publishers;
 		$config['per_page'] = SCIELO_JOURNAL_LIMIT;
 		$config['first_link'] = lang('pagination_first_link');
 		$config['last_link'] = lang('pagination_last_link');
@@ -305,15 +290,13 @@ class Home extends CI_Controller
 
 		if ($offset) {
 			$base_url .= '&offset=' . $offset;
-		}
-
+		}		
+		
 		$this->load->vars('base_url', $base_url);
 		$this->load->vars('status', $status);
 		$this->load->vars('search', $search);
-		$this->load->vars('total_journals', $total_journals);
-		$this->load->vars('journals', $journals);
-		$this->load->vars('show_publisher_name', true);
-		$this->load->view('pages/journals');
+		$this->load->vars('publishers', $publishers);
+		$this->load->view('pages/journals-by-publishers');
 	}
 
 	/**
@@ -324,14 +307,8 @@ class Home extends CI_Controller
 	public function list_by_subject_area($id_subject_area, $subject_area)
 	{
 
-		$this->load->model('PageMetadata');
-		$pageMetadata = array('acf' => array('pageTitle' => ucfirst(lang('journals')) . ' | SciELO.org', 'pageDescription' => 'Biblioteca Virtual em Saúde'));
-		$this->PageMetadata->initialize($pageMetadata);
-
-		$breadcrumb = array();
-		$breadcrumbs[] = array('link' => base_url($this->language . '/'), 'link_text' => 'Home');
-		$this->load->vars('breadcrumbs', $breadcrumbs);
-
+		$this->load_journals_page_metadata();
+		
 		$this->load->model('Journals_model');
 
 		$offset = $this->input->get('offset', true);
@@ -383,14 +360,16 @@ class Home extends CI_Controller
 		}
 
 		$subject_area = $this->Journals_model->get_subject_area($id_subject_area);
+		$subject_areas = $this->Journals_model->list_all_subject_areas($this->language);
 
+		$this->load->vars('journals_links', $journals_links);
 		$this->load->vars('subject_area', $subject_area);
+		$this->load->vars('subject_areas', $subject_areas);		
 		$this->load->vars('base_url', $base_url);
 		$this->load->vars('status', $status);
 		$this->load->vars('search', $search);
 		$this->load->vars('total_journals', $total_journals);
 		$this->load->vars('journals', $journals);
-		$this->load->vars('show_publisher_name', false);
 		$this->load->view('pages/journals');
 	}
 
@@ -825,6 +804,22 @@ class Home extends CI_Controller
 		$this->language = $language;
 		delete_cookie('language');
 		set_cookie('language', $this->language, ONE_DAY_TIMEOUT * 30);
+	}
+
+	/**
+	 * Load the page metade and breadcrumb specific for journals URLs. 
+	 * 
+	 * @return void
+	 */
+	private function load_journals_page_metadata()
+	{
+		$this->load->model('PageMetadata');
+		$pageMetadata = array('acf' => array('pageTitle' => ucfirst(lang('journals')) . ' | SciELO.org', 'pageDescription' => 'Biblioteca Virtual em Saúde'));
+		$this->PageMetadata->initialize($pageMetadata);
+
+		$breadcrumb = array();
+		$breadcrumbs[] = array('link' => base_url($this->language . '/'), 'link_text' => 'Home');
+		$this->load->vars('breadcrumbs', $breadcrumbs);
 	}
 
 	/**

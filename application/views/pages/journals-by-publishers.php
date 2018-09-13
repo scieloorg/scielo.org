@@ -23,9 +23,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<?php endforeach; ?>
 						<li>
 							<?= ucfirst(lang('journals')) ?>
-							<?php if (isset($subject_area)) : ?>
-								<?= $subject_area['name_' . $language] ?>
-							<?php endif; ?>
 						</li>
 					</ul>
 				</div>
@@ -35,9 +32,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<div class="col-xs-12 col-sm-8 col-md-9">
 					<h2 class="breadTitle">
 						<?= ucfirst(lang('journals')) ?>
-						<?php if (isset($subject_area)) : ?>
-							<?= $subject_area['name_' . $language] ?>
-						<?php endif; ?>
 					</h2>
 				</div>
 
@@ -53,29 +47,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <section>
 	<div class="container">
-		<?php if (isset($subject_areas)) : ?>			
-		<div class="row row-journal-filter">
-			<div class="col-md-12">
-				<form action="#" id="subject_area_form" class="form-inline">
-					<div class="form-group">
-						<p class="form-control-static"><strong><?= lang('subject') ?>:</strong></p>
-					</div>
-					<div class="form-group">
-						<select id="subject_area" class="form-control" onchange="javascript:window.location=$('#subject_area').val();">
-							<?php foreach ($subject_areas as $_subject_area) : ?>
-							<?php
-								$id_subject_area = $_subject_area['id_subject_area'];
-								$name_url = str_replace(',', '', $_subject_area['name_' . $language]);
-								$name_url = str_replace('+', '-', urlencode(remove_accents(strtolower($name_url))));
-							?>     
-								<option value="<?= $journals_links[$language]['list-by-subject-area'] . '/' . $id_subject_area . '/' . $name_url ?>" <?php if ($subject_area['id_subject_area'] == $id_subject_area) : ?>selected<?php endif; ?>><?= $_subject_area['name_' . $language] ?></option>
-							<?php endforeach; ?>
-						</select>
-					</div>
-				</form>
-			</div>
-		</div>
-		<?php endif; ?>
 		<div class="row row-journal-filter">
 			<div class="col-md-6">
 				<div class="btn-group" data-toggle="buttons">
@@ -105,13 +76,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div class="row">
 			<div class="col-md-12">
 
-				<div class="list-journals">
+				<div class="list-publisher">
+					<hr>
 					<table>
-						<thead>
-							<th>
-								<?= ucfirst(lang('journals')) ?> <small>(total <?= $total_journals ?>)</small>
+						<colgroup>
+							<col width="50%">
+							<col width="50%">
+						</colgroup>	
+						<thead class="hidden-xs">
+							<th class="col-xs-12 col-sm-6 col-md-6">
+								<?= lang('publisher') ?>
 							</th>
-							<th width="30%">
+							<th class="col-xs-12 col-sm-6 col-md-6">
+								<?= ucfirst(lang('journals')) ?>
 								<div class="downloadList">
 									<span><?= lang('list_download') ?></span>
 									<a href="<?= $base_url ?>&export=xls" target="_blank" data-toggle="tooltip" data-placement="auto" title="" data-original-title="<?= lang('export_to_xls_tooltip') ?>" class="glyphBtn downloadXLS showTooltip"></a>
@@ -119,15 +96,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
 								</div>
 							</th>
 						</thead>
+						<thead class="hidden-sm hidden-md hidden-lg">
+							<th class="col-xs-12 col-sm-6 col-md-6">
+								<?= lang('publisher') ?> / <?= ucfirst(lang('journals')) ?>
+								<div class="downloadList">
+									<span><?= lang('list_download') ?></span>
+									<a href="<?= $base_url ?>&export=xls" target="_blank" data-toggle="tooltip" data-placement="auto" title="" data-original-title="<?= lang('export_to_xls_tooltip') ?>" class="glyphBtn downloadXLS showTooltip"></a>
+									<a href="<?= $base_url ?>&export=csv" target="_blank" data-toggle="tooltip" data-placement="auto" title="" data-original-title="<?= lang('export_to_cvs_tooltip') ?>" class="glyphBtn downloadCSV showTooltip"></a>
+								</div>
+							</th>
+						</thead>						
 						<tbody>
-							<?php foreach ($journals as $journal) : ?>
+							<?php foreach ($publishers as $publisher) : ?>
+							<?php
+								$journals = $this->Journals_model->list_all_journals_by_publisher(addslashes($publisher->publisher_name), $this->input->get('status', true));
+							?>
 							<tr>
-								<td colspan="2">
-									<a href="<?= $journal->scielo_url ?>" <?php if ($journal->status == 'deceased') : ?>class="disabled"<?php endif; ?>>
-										<strong class="journalTitle">
+								<td class="col-xs-12 col-sm-6 col-md-6">
+									<strong>
+										<?= $publisher->publisher_name ?>
+									</strong>
+								</td>
+								<td class="col-xs-12 col-sm-6 col-md-6">
+									<?php foreach ($journals as $journal) : ?>
+										<a href="<?= $journal->scielo_url ?>" <?php if ($journal->status == 'deceased') : ?>class="disabled"<?php endif; ?>>
 											<?= $journal->title ?>
-										</strong>
-									</a>
+										</a>
+									<?php endforeach; ?>
 								</td>
 							</tr>
 							<?php endforeach; ?>

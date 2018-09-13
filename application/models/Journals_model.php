@@ -35,7 +35,7 @@ class Journals_model extends CI_Model
     /**
      * Returns the subject area by primary key from the table 'subject_areas' using SQL.
      *
-     * @param   string $id_subject_area
+     * @param   int $id_subject_area
      * @return	array
      */
     public function get_subject_area($id_subject_area)
@@ -95,7 +95,7 @@ class Journals_model extends CI_Model
      *
      * @param   string $status
      * @param   string $search
-     * @return	array
+     * @return	int
      */
     public function total_journals($status = false, $search = false)
     {
@@ -114,6 +114,7 @@ class Journals_model extends CI_Model
     /**
      * Returns the interval list of journals by subject area from the offset position, ordered by title from the table 'journals' using SQL.
      *
+     * @param   int $id_subject_area
      * @param   int $limit
      * @param   int $offset
      * @param   string $status
@@ -146,7 +147,7 @@ class Journals_model extends CI_Model
      *
      * @param   string $status
      * @param   string $search
-     * @return	array
+     * @return	int
      */
     public function total_journals_by_subject_area($id_subject_area, $status = false, $search = false)
     {
@@ -164,6 +165,75 @@ class Journals_model extends CI_Model
         $this->db->join($this->subject_areas_journals_table, $this->journals_table . '.id_journal=' . $this->subject_areas_journals_table . '.id_journal', 'left');
 
         return $this->db->count_all_results($this->journals_table);
+    }
+
+    /**
+     * Returns the list of pubishers from the offset position, ordered by publisher name from the table 'journals' using SQL.
+     *
+     * @param   int $limit
+     * @param   int $offset
+     * @return	array
+     */
+    public function list_all_publishers($limit, $offset, $status = false, $search = false) {
+
+        $this->db->select('publisher_name');
+        $this->db->from($this->journals_table);
+
+        if ($status) {
+            $this->db->where('status', $status);
+        }
+
+        if ($search) {
+            $this->db->like('title', $search);
+        }
+
+        $this->db->limit($limit, $offset);
+        $this->db->group_by('publisher_name');
+        $this->db->order_by('publisher_name', 'ASC');
+
+        return $this->get_results_obj();
+    }
+
+    /**
+     * Returns the total of pubishers from the table 'journals' using SQL.
+     *
+     * @return	int
+     */
+    public function total_publishers($status = false, $search = false) {
+
+        if ($status) {
+            $this->db->where('status', $status);
+        }
+
+        if ($search) {
+            $this->db->like('title', $search);
+        }
+
+        $this->db->group_by('publisher_name');
+
+        return $this->db->count_all_results($this->journals_table);
+    }
+
+    /**
+     * Returns the list of journals by publisher name from the offset position, ordered by title from the table 'journals' using SQL.
+     *
+     * @param   string $publisher_name
+     * @param   string $status
+     * @return	array
+     */
+    public function list_all_journals_by_publisher($publisher_name, $status = false)
+    {
+
+        $this->db->from($this->journals_table);
+        $this->db->where('publisher_name', $publisher_name);
+
+        if ($status) {
+            $this->db->where('status', $status);
+        }
+
+        $this->db->order_by('title', 'ASC');
+
+        return $this->get_results_obj();
     }
 
     /**

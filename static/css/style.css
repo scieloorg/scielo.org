@@ -8880,80 +8880,199 @@ section {
       .row-journal-filter .btn-input {
         display: none; } }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031858}}
-.list-journals table {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031857}}
+.list-journals {
+  padding-bottom: 10rem; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031860}}
+  .list-journals table {
+    width: 100%; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031864}}
+    .list-journals table thead th {
+      background-color: #f8f8f8;
+      border-top: 1px dashed rgba(0, 0, 0, 0.25);
+      text-align: left;
+      padding: 5px 15px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031870}}
+      .list-journals table thead th .downloadList {
+        width: 150px;
+        text-align: right;
+        font-weight: 400;
+        font-size: .8em;
+        color: #b6b3af;
+        float: right; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031878}}
+        .list-journals table thead th .downloadList span {
+          padding-right: .8rem;
+          display: inline-block;
+          line-height: 24px;
+          float: left; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031885}}
+        .list-journals table thead th .downloadList .glyphBtn {
+          opacity: 0.4;
+          float: left;
+          width: 24px;
+          height: 24px;
+          display: inline-block;
+          background: url(../images/ico/button.glyphs.png) no-repeat; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031893}}
+          .list-journals table thead th .downloadList .glyphBtn:hover {
+            opacity: 1; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031896}}
+          .list-journals table thead th .downloadList .glyphBtn.downloadXLS {
+            background-position: center -4240px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031899}}
+          .list-journals table thead th .downloadList .glyphBtn.downloadCSV {
+            background-position: center -820px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031907}}
+    .list-journals table tbody td {
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.25);
+      border-spacing: 0;
+      font-size: .9em;
+      padding: 5px 15px;
+      line-height: 24px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031914}}
+      .list-journals table tbody td:first-child {
+        border-top: 1px dashed rgba(0, 0, 0, 0.15); }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031918}}
+      .list-journals table tbody td a {
+        padding-left: 20px;
+        text-decoration: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031922}}
+        .list-journals table tbody td a::before {
+          position: absolute;
+          font-family: 'Trebuchet MS',Arial;
+          content: '\2219';
+          font-size: 4.5em;
+          margin: -2px 0 0 -20px;
+          color: #569162; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031933}}
+        .list-journals table tbody td a.disabled::before {
+          color: #d92929; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031940}}
+        .list-journals table tbody td a strong.journalTitle {
+          font-size: 1.1em;
+          color: #6789d3; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031950}}
+    .list-journals table tbody tr:hover td {
+      background: #f7f9fd; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031963}}
+.list-publisher hr {
+  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 33%, white 0%);
+  background-position: bottom;
+  background-size: 4px 1px;
+  background-repeat: repeat-x;
+  margin: 0;
+  height: 1px;
+  border: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031972}}
+.list-publisher table {
   width: 100%; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031863}}
-  .list-journals table thead th {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031976}}
+  .list-publisher table thead th {
+    border-spacing: 1 0 0 0;
     background-color: #f8f8f8;
-    border-top: 1px dashed rgba(0, 0, 0, 0.25);
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 33%, white 0%);
+    background-position: bottom;
+    background-size: 4px 1px;
+    background-repeat: repeat-x;
     text-align: left;
-    padding: 5px 15px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031869}}
-    .list-journals table thead th .downloadList {
-      width: 125px;
+    padding: 5px 15px;
+    display: block; }
+    @media (min-width: 768px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031976}}
+      .list-publisher table thead th {
+        display: table-cell; } }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031994}}
+    .list-publisher table thead th .downloadList {
+      width: 150px;
       text-align: right;
       font-weight: 400;
       font-size: .8em;
       color: #b6b3af;
-      float: right; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031878}}
-      .list-journals table thead th .downloadList span {
+      float: right;
+      position: absolute;
+      right: 15px;
+      top: 3px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032005}}
+      .list-publisher table thead th .downloadList span {
         padding-right: .8rem;
         display: inline-block;
         line-height: 24px;
         float: left; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031886}}
-      .list-journals table thead th .downloadList .glyphBtn {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032012}}
+      .list-publisher table thead th .downloadList .glyphBtn {
         opacity: 0.4;
         float: left;
         width: 24px;
         height: 24px;
         display: inline-block;
         background: url(../images/ico/button.glyphs.png) no-repeat; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031895}}
-        .list-journals table thead th .downloadList .glyphBtn:hover {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032020}}
+        .list-publisher table thead th .downloadList .glyphBtn:hover {
           opacity: 1; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031898}}
-        .list-journals table thead th .downloadList .glyphBtn.downloadXLS {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032023}}
+        .list-publisher table thead th .downloadList .glyphBtn.downloadXLS {
           background-position: center -4240px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031901}}
-        .list-journals table thead th .downloadList .glyphBtn.downloadCSV {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032026}}
+        .list-publisher table thead th .downloadList .glyphBtn.downloadCSV {
           background-position: center -820px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031909}}
-  .list-journals table tbody td {
-    border-bottom: 1px dashed rgba(0, 0, 0, 0.25);
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032034}}
+  .list-publisher table tbody td {
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 33%, white 0%);
+    background-position: bottom;
+    background-size: 4px 1px;
+    background-repeat: repeat-x;
     border-spacing: 0;
     font-size: .9em;
     padding: 5px 15px;
-    line-height: 24px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031916}}
-    .list-journals table tbody td:first-child {
-      border-top: 1px dashed rgba(0, 0, 0, 0.15); }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031920}}
-    .list-journals table tbody td a {
+    line-height: 24px;
+    display: block;
+    vertical-align: top; }
+    @media (max-width: 767px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032049}}
+      .list-publisher table tbody td:first-child {
+        background-image: none;
+        padding-bottom: 0; } }
+    @media (min-width: 768px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032034}}
+      .list-publisher table tbody td {
+        display: table-cell; } }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032059}}
+    .list-publisher table tbody td a {
       padding-left: 20px;
-      text-decoration: none; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031924}}
-      .list-journals table tbody td a::before {
+      text-decoration: none;
+      display: block;
+      margin-top: 5px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032065}}
+      .list-publisher table tbody td a:first-child {
+        margin-top: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032068}}
+        .list-publisher table tbody td a:first-child:last-child {
+          margin-bottom: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032072}}
+      .list-publisher table tbody td a:last-child {
+        margin-bottom: 5px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032076}}
+      .list-publisher table tbody td a::before {
         position: absolute;
         font-family: 'Trebuchet MS',Arial;
         content: '\2219';
         font-size: 4.5em;
         margin: -2px 0 0 -20px;
         color: #569162; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031935}}
-      .list-journals table tbody td a.disabled::before {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032087}}
+      .list-publisher table tbody td a.disabled::before {
         color: #d92929; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031942}}
-      .list-journals table tbody td a strong.journalTitle {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032094}}
+      .list-publisher table tbody td a strong.journalTitle {
         font-size: 1.1em;
         color: #6789d3; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031952}}
-  .list-journals table tbody tr:hover td {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032104}}
+  .list-publisher table tbody tr:hover td {
     background: #f7f9fd; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031959}}
-.list-journals .pagination {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000032111}}
+.list-publisher .pagination {
   margin-bottom: 10rem; }
 
 /*# sourceMappingURL=style.css.map */
