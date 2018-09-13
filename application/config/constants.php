@@ -175,6 +175,9 @@ define('SCIELO_BLOG_ES_URL', 'https://blog.scielo.org/es/feed/');
 // URL for the SciELO Collections.
 define('SCIELO_COLLECTIONS_URL', 'http://articlemeta.scielo.org/api/v1/collection/identifiers/');
 
+// SciELO Journals list limit.
+define('SCIELO_JOURNAL_LIMIT', 20);
+
 // API Path to query pages by slug.
 define('SLUG_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/?slug=');
 define('SLUG_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/?filter[meta_key]=_wpglobus_slug_en&filter[meta_value]=');
