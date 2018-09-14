@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </dd>
         </dl>
         <dl>
-            <dt><?= $this->Journals_model->total_journals('current') ?></dt>
+            <dt><?= $total_active_journals ?></dt>
             <dd>
                 <?= strtolower(lang('active_journals')) ?>
             </dd>

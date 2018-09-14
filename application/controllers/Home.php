@@ -59,6 +59,7 @@ class Home extends CI_Controller
 		$this->load_alert();
 		$this->load_collections();
 		$this->load_journals();
+		$this->load_analytics();
 		$this->load_blog_rss_feed();
 		$this->load_twitter();
 		$this->load_tabs();
@@ -175,8 +176,6 @@ class Home extends CI_Controller
 	{
 
 		$this->load_journals_page_metadata();
-		
-		$this->load->model('Journals_model');
 
 		$offset = $this->input->get('offset', true);
 
@@ -244,8 +243,6 @@ class Home extends CI_Controller
 	{
 		$this->load_journals_page_metadata();
 
-		$this->load->model('Journals_model');
-
 		$offset = $this->input->get('offset', true);
 
 		if (!$offset) {
@@ -261,10 +258,10 @@ class Home extends CI_Controller
 			$journals = $this->Journals_model->list_all_journals(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
 
 			$this->load->vars('journals', $journals);
-			$this->load->view('pages/journals-'.$export);
+			$this->load->view('pages/journals-' . $export);
 
 			return;
-		} 
+		}
 
 		$publishers = $this->Journals_model->list_all_publishers(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
 		$total_publishers = $this->Journals_model->total_publishers($status, $search);
@@ -290,8 +287,8 @@ class Home extends CI_Controller
 
 		if ($offset) {
 			$base_url .= '&offset=' . $offset;
-		}		
-		
+		}
+
 		$this->load->vars('base_url', $base_url);
 		$this->load->vars('status', $status);
 		$this->load->vars('search', $search);
@@ -308,8 +305,6 @@ class Home extends CI_Controller
 	{
 
 		$this->load_journals_page_metadata();
-		
-		$this->load->model('Journals_model');
 
 		$offset = $this->input->get('offset', true);
 
@@ -364,7 +359,7 @@ class Home extends CI_Controller
 
 		$this->load->vars('journals_links', $journals_links);
 		$this->load->vars('subject_area', $subject_area);
-		$this->load->vars('subject_areas', $subject_areas);		
+		$this->load->vars('subject_areas', $subject_areas);
 		$this->load->vars('base_url', $base_url);
 		$this->load->vars('status', $status);
 		$this->load->vars('search', $search);
@@ -426,8 +421,6 @@ class Home extends CI_Controller
 			$pageMetadata = $pageMetadata[0];
 		}
 
-		$this->load->model('PageMetadata');
-
 		$this->PageMetadata->initialize($pageMetadata);
 	}
 
@@ -441,8 +434,6 @@ class Home extends CI_Controller
 
 		$alert = $this->get_content_from_cache('alert', FOUR_HOURS_TIMEOUT, ALERT_EN_API_PATH, ALERT_ES_API_PATH, ALERT_API_PATH);
 
-		$this->load->model('Alert');
-
 		$this->Alert->initialize($alert);
 	}
 
@@ -454,20 +445,7 @@ class Home extends CI_Controller
 	private function load_tabs()
 	{
 
-		$total_collections = count($this->Collections->get_journals_list());
-		$this->load->vars('total_collections', $total_collections);
-
-		$total_published_articles = 0;
-
-		foreach ($this->Collections->get_scientific_list() as $scientific) {
-			$total_published_articles += $scientific->document_count;
-		}
-
-		$this->load->vars('total_published_articles', $total_published_articles);
-
 		$tabs = $this->get_content_from_cache('tabs', FOUR_HOURS_TIMEOUT, TABS_EN_API_PATH, TABS_ES_API_PATH, TABS_API_PATH);
-
-		$this->load->model('TabGroup');
 
 		$this->TabGroup->initialize($tabs);
 	}
@@ -482,8 +460,6 @@ class Home extends CI_Controller
 
 		$footer = $this->get_content_from_cache('footer', FOUR_HOURS_TIMEOUT, FOOTER_EN_API_PATH, FOOTER_ES_API_PATH, FOOTER_API_PATH);
 
-		$this->load->model('Footer');
-
 		$this->Footer->initialize($footer);
 	}
 
@@ -497,8 +473,6 @@ class Home extends CI_Controller
 
 		$collections = $this->put_content_in_cache('collections', SCIELO_COLLECTIONS_URL, FOUR_HOURS_TIMEOUT);
 
-		$this->load->model('Collections');
-
 		$this->Collections->initialize($collections);
 	}
 
@@ -511,11 +485,32 @@ class Home extends CI_Controller
 	private function load_journals()
 	{
 
-		$this->load->model('Journals_model');
 		$subject_areas = $this->Journals_model->list_all_subject_areas($this->language);
 
 		$this->load->vars('subject_areas', $subject_areas);
 		$this->load->vars('journals_links', $this->get_journals_links());
+	}
+
+	/**
+	 * Calculate and load the metrics for the analytics tab content to be shown in the tab template.
+	 * 
+	 * @return void
+	 */
+	private function load_analytics()
+	{
+
+		$total_collections = count($this->Collections->get_journals_list());
+		$total_active_journals =  $this->Journals_model->total_journals('current');
+
+		$total_published_articles = 0;
+
+		foreach ($this->Collections->get_scientific_list() as $scientific) {
+			$total_published_articles += $scientific->document_count;
+		}
+
+		$this->load->vars('total_collections', $total_collections);
+		$this->load->vars('total_active_journals', $total_active_journals);
+		$this->load->vars('total_published_articles', $total_published_articles);
 	}
 
 	/**
@@ -824,7 +819,6 @@ class Home extends CI_Controller
 	 */
 	private function load_journals_page_metadata()
 	{
-		$this->load->model('PageMetadata');
 		$pageMetadata = array('acf' => array('pageTitle' => ucfirst(lang('journals')) . ' | SciELO.org', 'pageDescription' => 'Biblioteca Virtual em Saúde'));
 		$this->PageMetadata->initialize($pageMetadata);
 
