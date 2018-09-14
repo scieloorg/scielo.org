@@ -8,6 +8,7 @@ header("Content-Disposition: attachment; filename=journals-{$now}.xls");
     <tr>
         <th><?= lang('journals') ?></th>
         <th>scielo_url</th>
+        <th><?= strtolower(lang('publisher')) ?></th>
     </tr>
     <?php foreach ($journals as $journal) : ?>
         <tr>
@@ -15,6 +16,9 @@ header("Content-Disposition: attachment; filename=journals-{$now}.xls");
         </tr>
         <tr>
             <?= $journal->scielo_url ?>
+        </tr>
+        <tr>
+            <?= $journal->publisher_name ?>
         </tr>
     <?php endforeach; ?>
 </table>

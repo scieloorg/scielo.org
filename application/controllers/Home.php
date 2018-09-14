@@ -454,6 +454,17 @@ class Home extends CI_Controller
 	private function load_tabs()
 	{
 
+		$total_collections = count($this->Collections->get_journals_list());
+		$this->load->vars('total_collections', $total_collections);
+
+		$total_published_articles = 0;
+
+		foreach ($this->Collections->get_scientific_list() as $scientific) {
+			$total_published_articles += $scientific->document_count;
+		}
+
+		$this->load->vars('total_published_articles', $total_published_articles);
+
 		$tabs = $this->get_content_from_cache('tabs', FOUR_HOURS_TIMEOUT, TABS_EN_API_PATH, TABS_ES_API_PATH, TABS_API_PATH);
 
 		$this->load->model('TabGroup');

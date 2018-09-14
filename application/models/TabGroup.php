@@ -151,7 +151,7 @@ class TabGroup
 
                 case 3:
                     $tabContent['ID'] = 'tab-numeros';
-                    $tabContent['content'] = 'temp_content/tab-content-analytics';
+                    $tabContent['content'] = 'templates/analytics';
                     break;
 
                 case 4:

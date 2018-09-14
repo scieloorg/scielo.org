@@ -4,29 +4,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="row">
     <div class="col-sm-3 col-sm-offset-3 col-md-3 col-md-offset-3">
         <dl>
-            <dt>25</dt>
+            <dt><?= $total_collections ?></dt>
             <dd>
-                coleções
+                <?= lang('collections') ?>
             </dd>
         </dl>
         <dl>
-            <dt>1.285</dt>
+            <dt><?= $this->Journals_model->total_journals('current') ?></dt>
             <dd>
-                periódicos ativos
+                <?= strtolower(lang('active_journals')) ?>
             </dd>
         </dl>
     </div>
     <div class="col-md-3">
         <dl>
-            <dt>745 mil</dt>
+            <dt><?= $total_published_articles ?></dt>
             <dd>
-                artigos publicados
-            </dd>
-        </dl>
-        <dl>
-            <dt>16 milhões</dt>
-            <dd>
-                de citações
+                <?= lang('published_articles') ?>
             </dd>
         </dl>
     </div>

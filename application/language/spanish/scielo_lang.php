@@ -55,3 +55,5 @@ $lang['subject'] = 'Tema';
 $lang['export_to_xls_tooltip'] = 'Lista de archivos para Excel';
 $lang['export_to_cvs_tooltip'] = 'Lista en archivo CSV';
 $lang['publisher'] = 'Publicador';
+$lang['collections'] = 'colecciones';
+$lang['published_articles'] = 'revistas publicadas';
