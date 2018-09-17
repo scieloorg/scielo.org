@@ -187,20 +187,18 @@ class Home extends CI_Controller
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
 
-		$journals = $this->Journals_model->list_all_journals(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+		if ($export == 'csv' || $export == 'xls') {
 
-		if ($export == 'csv') {
-
-			$this->load->vars('journals', $journals);
-			$this->load->view('pages/journals-csv');
-			return;
-		} elseif ($export == 'xls') {
+			// Export all journals.
+			$journals = $this->Journals_model->list_all_journals(PHP_INT_MAX, 0, $status, $search);
 
 			$this->load->vars('journals', $journals);
-			$this->load->view('pages/journals-xls');
+			$this->load->view('pages/journals-' . $export);
+
 			return;
 		}
 
+		$journals = $this->Journals_model->list_all_journals(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
 		$total_journals = $this->Journals_model->total_journals($status, $search);
 
 		$journals_links = $this->get_journals_links();
@@ -255,7 +253,8 @@ class Home extends CI_Controller
 
 		if ($export == 'csv' || $export == 'xls') {
 
-			$journals = $this->Journals_model->list_all_journals(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+			// Export all journals.
+			$journals = $this->Journals_model->list_all_journals(PHP_INT_MAX, 0, $status, $search);
 
 			$this->load->vars('journals', $journals);
 			$this->load->view('pages/journals-' . $export);
@@ -316,20 +315,18 @@ class Home extends CI_Controller
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
 
-		$journals = $this->Journals_model->list_all_journals_by_subject_area($id_subject_area, SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+		if ($export == 'csv' || $export == 'xls') {
 
-		if ($export == 'csv') {
-
-			$this->load->vars('journals', $journals);
-			$this->load->view('pages/journals-csv');
-			return;
-		} elseif ($export == 'xls') {
+			// Export all journals.
+			$journals = $this->Journals_model->list_all_journals_by_subject_area($id_subject_area, PHP_INT_MAX, 0, $status, $search);
 
 			$this->load->vars('journals', $journals);
-			$this->load->view('pages/journals-xls');
+			$this->load->view('pages/journals-' . $export);
+
 			return;
 		}
 
+		$journals = $this->Journals_model->list_all_journals_by_subject_area($id_subject_area, SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
 		$total_journals = $this->Journals_model->total_journals_by_subject_area($id_subject_area, $status, $search);
 		$journals_links = $this->get_journals_links();
 		$base_url = $journals_links[$this->language]['list-by-subject-area'] . '/' . $id_subject_area . '/' . $subject_area . '/?';
@@ -500,7 +497,7 @@ class Home extends CI_Controller
 	{
 
 		$total_collections = count($this->Collections->get_journals_list());
-		$total_active_journals =  $this->Journals_model->total_journals('current');
+		$total_active_journals = $this->Journals_model->total_journals('current');
 
 		$total_published_articles = 0;
 
