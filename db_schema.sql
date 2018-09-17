@@ -10,9 +10,9 @@
 /*************************|SUBJECT AREAS|**************************/;
 CREATE TABLE `subject_areas`(
 	`id_subject_area` INTEGER PRIMARY KEY,
-    `name_pt` TEXT,
-    `name_en` TEXT,
-    `name_es` TEXT
+    `name_pt` TEXT COLLATE NOCASE,
+    `name_en` TEXT COLLATE NOCASE,
+    `name_es` TEXT COLLATE NOCASE
 );
 /****************************|END|*********************************/;
 
@@ -21,12 +21,12 @@ CREATE TABLE `journals`(
     `id_journal` INTEGER PRIMARY KEY,
     `acronym` TEXT,
     `publisher_city` TEXT,
-    `publisher_name` TEXT,
+    `publisher_name` TEXT COLLATE NOCASE,
     `publisher_country` TEXT,
     `institutional_url` TEXT,
     `status` TEXT,
     `scielo_url` TEXT,
-    `title` TEXT
+    `title` TEXT COLLATE NOCASE
 );
 /****************************|END|*********************************/;
 
