@@ -110,50 +110,108 @@ if (isset($_SERVER['HTTP_HOST'])) {
     $base_uri = '/';
 }
 
-// Define these values to be used later on
+// Define these values to be used later on.
 define('BASE_URL', $base_url);
 define('BASE_URI', $base_uri);
 define('APPPATH_URI', BASE_URI . APPPATH);
-define('STATIC_ASSETS_PATH', BASE_URL.'static/');
+define('STATIC_ASSETS_PATH', BASE_URL . 'static/');
 
-// API Token
-define('API_USR',''); // @TODO - Define on production
-define('API_PWD',''); // @TODO - Define on production
-define('SALT', ''); // @TODO - Define on production
+// API Token Authentication.
+define('API_USR', getenv('API_USR')); // @TODO - Define on production
+define('API_PWD', getenv('API_PWD')); // @TODO - Define on production
+define('SALT', getenv('SALT')); // @TODO - Define on production
 
-// API Default Path
-define('WORDPRESS_URL', 'http://scielohomolog.parati.ag/scielo-org-adm');
-define('WORDPRESS_API_PATH', WORDPRESS_URL.'/wp-json');
-define('WORDPRESS_API_PATH_EN', WORDPRESS_URL.'/en/wp-json');
-define('WORDPRESS_API_PATH_ES', WORDPRESS_URL.'/es/wp-json');
+// SMPT Authentication credentials.
+define('SCIELO_SMTP_AUTH', getenv('SCIELO_SMTP_AUTH')); // @TODO - Define on production
+define('SMTP_SMTP_SECURE', getenv('SMTP_SMTP_SECURE')); // @TODO - Define on production
+define('SCIELO_SMTP_SERVER', getenv('SCIELO_SMTP_SERVER')); // @TODO - Define on production
+define('SCIELO_SMTP_PORT', getenv('SCIELO_SMTP_PORT')); // @TODO - Define on production
+define('SCIELO_SMTP_USERNAME', getenv('SCIELO_SMTP_USERNAME')); // @TODO - Define on production
+define('SCIELO_SMTP_PASSWORD', getenv('SCIELO_SMTP_PASSWORD')); // @TODO - Define on production
+
+// Twitter API Authentication.
+define('TWITTER_ACCESS_TOKEN', getenv('TWITTER_ACCESS_TOKEN')); // @TODO - Define on production
+define('TWITTER_ACCESS_TOKEN_SECRET', getenv('TWITTER_ACCESS_TOKEN_SECRET')); // @TODO - Define on production
+define('TWITTER_CONSUMER_KEY', getenv('TWITTER_CONSUMER_KEY')); // @TODO - Define on production
+define('TWITTER_CONSUMER_SECRET', getenv('TWITTER_CONSUMER_SECRET')); // @TODO - Define on production
+define('TWITTER_SCREEN_NAME', getenv('TWITTER_SCREEN_NAME')); // @TODO - Define on production
+
+// Google reCAPTCHA key.
+define('GOOGLE_RECAPTCHA_SITE_KEY', getenv('GOOGLE_RECAPTCHA_SITE_KEY')); // @TODO - Define on production
+define('GOOGLE_RECAPTCHA_SERVER_KEY', getenv('GOOGLE_RECAPTCHA_SERVER_KEY')); // @TODO - Define on production
+define('GOOGLE_RECAPTCHA_VERIFY_URL', 'https://www.google.com/recaptcha/api/siteverify');
+
+// API Default Path. Very Important: Remember to add the last slash in this URL.
+define('WORDPRESS_URL', getenv('WORDPRESS_URL')); // @TODO - Define on production
+define('WORDPRESS_API_PATH', WORDPRESS_URL . 'wp-json');
+define('WORDPRESS_API_PATH_EN', WORDPRESS_URL . 'en/wp-json');
+define('WORDPRESS_API_PATH_ES', WORDPRESS_URL . 'es/wp-json');
 define('WORDPRESS_PAGES_API_PATH', '/wp/v2/pages');
+define('WORDPRESS_CONTACT_API_PATH', '/contact-form-7/v1/contact-forms/{ID}/feedback');
 
-// Alert API Path
-define('ALERT_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/103');
-define('ALERT_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/103');
-define('ALERT_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/103');
+// Alert API Path.
+define('ALERT_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/103');
+define('ALERT_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/103');
+define('ALERT_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/103');
 
-// Tabs API Path
-define('TABS_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/80');
-define('TABS_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/80');
-define('TABS_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/80');
+// Tabs API Path.
+define('TABS_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/80');
+define('TABS_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/80');
+define('TABS_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/80');
 
-// Footer API Path
-define('FOOTER_API_PATH', WORDPRESS_API_PATH.WORDPRESS_PAGES_API_PATH.'/126');
-define('FOOTER_EN_API_PATH', WORDPRESS_API_PATH_EN.WORDPRESS_PAGES_API_PATH.'/126');
-define('FOOTER_ES_API_PATH', WORDPRESS_API_PATH_ES.WORDPRESS_PAGES_API_PATH.'/126');
+// Footer API Path.
+define('FOOTER_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/126');
+define('FOOTER_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/126');
+define('FOOTER_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/126');
 
-// URL for the Wordpress Rest API
-define('WP_TOKEN_URL', WORDPRESS_API_PATH.'/jwt-auth/v1/token');
-define('WP_POSTS_URL', WORDPRESS_API_PATH.'/wp/v2/posts');
-define('WP_PAGES_URL', WORDPRESS_API_PATH.'/wp/v2/pages');
-define('WP_CATEGORIES_URL', WORDPRESS_API_PATH.'/wp/v2/categories');
+// URL for the About Rest API
+define('ABOUT_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/93');
+define('ABOUT_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/93');
+define('ABOUT_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/93');
 
-// URL for the SciELO Blog
+// URL for Subpages Rest API
+define('SUBPAGES_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/?parent=pageID&orderby=menu_order&order=asc&per_page=50');
+define('SUBPAGES_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/?parent=pageID&orderby=menu_order&order=asc&per_page=50');
+define('SUBPAGES_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/?parent=pageID&orderby=menu_order&order=asc&per_page=50');
+
+// URL for the Wordpress Rest API.
+define('WP_TOKEN_URL', WORDPRESS_API_PATH . '/jwt-auth/v1/token');
+define('WP_POSTS_URL', WORDPRESS_API_PATH . '/wp/v2/posts');
+define('WP_PAGES_URL', WORDPRESS_API_PATH . '/wp/v2/pages');
+define('WP_CATEGORIES_URL', WORDPRESS_API_PATH . '/wp/v2/categories');
+
+// URL for the SciELO Blog.
 define('SCIELO_BLOG_URL', 'https://blog.scielo.org/feed/');
+define('SCIELO_BLOG_EN_URL', 'https://blog.scielo.org/en/feed/');
+define('SCIELO_BLOG_ES_URL', 'https://blog.scielo.org/es/feed/');
+
+// URL for the SciELO Collections.
+define('SCIELO_COLLECTIONS_URL', 'http://articlemeta.scielo.org/api/v1/collection/identifiers/');
+
+// URL for the SciELO Journals identifiers and the list limit.
+define('SCIELO_JOURNAL_IDENTIFIERS_URL', 'http://articlemeta.scielo.org/api/v1/journal/identifiers/');
+define('SCIELO_JOURNAL_COLLECTION_URL', 'http://articlemeta.scielo.org/api/v1/journal/?collection={collection}&issn={code}&format=scieloorg');
+define('SCIELO_JOURNAL_LIMIT', 20);
+
+// API Path to query pages by slug.
+define('SLUG_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/?slug=');
+define('SLUG_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/?filter[meta_key]=_wpglobus_slug_en&filter[meta_value]=');
+define('SLUG_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/?filter[meta_key]=_wpglobus_slug_es&filter[meta_value]=');
+
+// API Path to callback slugs.
+define('SLUG_CALLBACK_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/?slug=');
+define('SLUG_CALLBACK_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_PATH . '/?slug=');
+
+// Default timeouts for the cache API.
 define('ONE_HOUR_TIMEOUT', (60 * 60));
 define('FOUR_HOURS_TIMEOUT', (ONE_HOUR_TIMEOUT * 4));
 define('ONE_DAY_TIMEOUT', (ONE_HOUR_TIMEOUT * 24));
+define('THIRTY_DAYS_TIMEOUT', ONE_DAY_TIMEOUT * 30);
 
-// We dont need these variables any more
+// Default SciELO website languages.
+define('SCIELO_LANG', 'pt');
+define('SCIELO_EN_LANG', 'en');
+define('SCIELO_ES_LANG', 'es');
+
+// We dont need these variables any more.
 unset($base_uri, $base_url);

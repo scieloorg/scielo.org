@@ -1,173 +1,853 @@
 <?php
+
 /**
- * @license
- * Copyright SciELO - Scientific Electronic Library Online All Rights Reserved.
  * @author
- * SciELO https://www.scielo.org/
+ * SciELO - Scientific Electronic Library Online 
+ * @link 
+ * https://www.scielo.org/
+ * @license
+ * Copyright SciELO All Rights Reserved.
  */
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * Home Class
+ *
+ * This controller handles all the flow of the home and the templates. 
+ *
+ * @category	Controllers
+ * @author		SciELO - Scientific Electronic Library Online 
+ * @link		https://www.scielo.org/
+ */
 class Home extends CI_Controller
 {
 
 	/**
+	 * Define the user language selected.
+	 *
+	 * @var	string
+	 */
+	private $language;
+
+	/**
+	 * Constructor for Home controller.
+	 * Setup the default language and load the others available to the view.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->set_language();
+		$this->load_static_texts_by_language();
+		$this->load_about_link(); // The about link is the same in any page, so I load it here in the constructor.			
+		$this->load_footer(); // The footer is the same in any page, so I load it here in the constructor.	
+	}
+
+	/**
 	 * Index Page for Home controller.
 	 *
-	 * Maps to the following URL
-	 * 		http://your-website-url/home
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://your-website-url/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
+	 * @return void
 	 */
 	public function index()
 	{
-		
-		$posts = $this->get_content_from_cache('posts', WP_POSTS_URL, ONE_HOUR_TIMEOUT);
-		$pages = $this->get_content_from_cache('pages', WP_PAGES_URL, ONE_HOUR_TIMEOUT);
-		$categories = $this->get_content_from_cache('categories', WP_CATEGORIES_URL, ONE_HOUR_TIMEOUT);
 
+		// In the home page the metadata comes from the tabs API return json data.
+		$this->load_page_metadata('pageMetadataHome', TABS_EN_API_PATH, TABS_ES_API_PATH, TABS_API_PATH);
 		$this->load_alert();
-		$this->load_tabs();
+		$this->load_collections();
+		$this->load_journals();
+		$this->load_analytics();
 		$this->load_blog_rss_feed();
-		$this->load_footer();
+		$this->load_twitter();
+		$this->load_tabs();
 
-		$this->load->vars('posts', $posts);
-		$this->load->vars('pages', $pages);
-		$this->load->vars('categories', $categories);
 		$this->load->view('home');
 	}
 
 	/**
-	 * Load from cache and setup the alert to be shown in the template top section.
+	 * Manage all the route for pages, except home, for Home controller.
+	 * Load pages using the slugs passed and the correct template according to the last page type.
+	 * 
+	 * @param  array	$page_slugs The url token identifier for the specifics pages.
+	 * @return void
+	 * @return void
 	 */
-	private function load_alert() {
+	public function page(...$page_slugs)
+	{
 
-		$alert = $this->get_content_from_cache('alert', ALERT_API_PATH, FOUR_HOURS_TIMEOUT);
+		if (!isset($page_slugs) || count($page_slugs) == 0) {
+			redirect('home/page_not_found');
+		}
 
-		// Verify if it is to show the alert or not.
-		$show_alert = (!isset($alert['code']) || $alert['code'] != 'rest_forbidden');
+		// Iterate through the array getting each page by slug and mounting the breadcrumb
+		$breadcrumb = array();
+		$breadcrumbs[] = array('link' => base_url($this->language . '/'), 'link_text' => 'Home');
 
-		if($show_alert) {
+		for ($i = 0; $i < count($page_slugs) - 1; $i++) {
 
-			// Define firt the number of columns to know the size of them int the bootstrap grid and how many content is there.
-			$alert_number_of_columns = $alert['acf']['cols'];
-			$alert_column_size_desktop = "col-xs-12 ";
-			$alert_column_content = array();
+			$page_slug = $page_slugs[$i];
+			$english_url = SLUG_EN_API_PATH . $page_slug;
+			$spanish_url = SLUG_ES_API_PATH . $page_slug;
+			$portuguese_url = SLUG_API_PATH . $page_slug;
 
-			// Get the content of each column.
-			for($i = 1; $i <= $alert_number_of_columns; $i++) {
-				$alert_column_content['column'.$i] = $alert['acf']['column'.$i];
+			$page = $this->get_content_from_cache($page_slug, FOUR_HOURS_TIMEOUT, $english_url, $spanish_url, $portuguese_url, $page_slug);
+
+			// Verify is the first item is an array, because the pages we got by slug come as the first element of an array.
+			if (is_array($page[0])) {
+				$page = $page[0];
 			}
 
-			// Define the size of the grid for each column. Note that it's bootstrap dependent.
-			switch($alert_number_of_columns) {
-				case 1: $alert_column_size_desktop .= "col-sm-10 col-md-10"; break;
-				case 2: $alert_column_size_desktop .= "col-sm-5 col-md-5"; break;
-				case 3: $alert_column_size_desktop .= "col-sm-3 col-md-3"; break;
-				case 4: $alert_column_size_desktop .= "col-sm-2 col-md-2"; break;
-			}
+			$scielo_url = ($this->language == SCIELO_LANG) ? base_url($this->language . '/') : base_url();
+			$link = str_replace(WORDPRESS_URL, $scielo_url, $page['link']);
+			$link_text = $page['title']['rendered'];
 
-			$this->load->vars('alert_number_of_columns', $alert_number_of_columns);
-			$this->load->vars('alert_column_size_desktop', $alert_column_size_desktop);
-			$this->load->vars('alert_column_content', $alert_column_content);
+			$breadcrumbs[] = array('link' => $link, 'link_text' => $link_text);
+		}
 
-			// Check if the link exists to be show as the last column on the alert.
-			$show_alert_link = ( isset($alert['acf']['link']) && isset($alert['acf']['linkText']) );
-			$this->load->vars('show_alert_link', $show_alert_link);
+		$this->load->vars('breadcrumbs', $breadcrumbs);
 
-			if($show_alert_link) {
+		// Get the last page to show the right template.
+		$last_page_slug = $page_slugs[count($page_slugs) - 1];
 
-				// Get the link's content and anchor.
-				$alert_link  = $alert['acf']['link'];
-				$alert_link_text  = $alert['acf']['linkText'];
+		$english_url = SLUG_EN_API_PATH . $last_page_slug;
+		$spanish_url = SLUG_ES_API_PATH . $last_page_slug;
+		$portuguese_url = SLUG_API_PATH . $last_page_slug;
 
-				$this->load->vars('alert_link', $alert_link);
-				$this->load->vars('alert_link_text', $alert_link_text);
-			}
+		$this->load_page_metadata('pageMetadataAbout' . $last_page_slug, $english_url, $spanish_url, $portuguese_url, true, $last_page_slug);
+
+		$page = $this->get_content_from_cache($last_page_slug, FOUR_HOURS_TIMEOUT, $english_url, $spanish_url, $portuguese_url, $last_page_slug);
+
+		// Verify is the first item is an array, because the pages we got by slug come as the first element of an array.
+		if (is_array($page[0])) {
+			$page = $page[0];
 		}
 		
-		$this->load->vars('show_alert', $show_alert);
+		// All the pages use the array, so pass it early.
+		$this->load->vars('page', $page);
+				
+		// Check the template type of each page to load the correspond view		
+		if (empty($page['template'])) {
+
+			$this->load->view('pages/content');
+
+		} elseif ($page['template'] == 'pageModel-menu.php') {
+				
+			// Special attention on the mounting of the breadcrumb
+			// It is menu page type, get all the subpages using the 'id' attribute.
+			$search = 'pageID';
+			$replace = $page['id'];
+			$english_url = str_replace($search, $replace, SUBPAGES_EN_API_PATH);
+			$spanish_url = str_replace($search, $replace, SUBPAGES_ES_API_PATH);
+			$portuguese_url = str_replace($search, $replace, SUBPAGES_API_PATH);
+
+			// List of subpages
+			$subpages = $this->get_content_from_cache('subpages' . $last_page_slug, FOUR_HOURS_TIMEOUT, $english_url, $spanish_url, $portuguese_url);
+
+			$this->load->vars('subpages', $subpages);
+			$this->load->view('pages/menu');
+
+		} elseif ($page['template'] == 'pageModel-accordionContent.php') {
+
+			$this->load->view('pages/accordion');
+
+		} elseif ($page['template'] == 'pageModel-contactForm.php') {
+
+			$this->load->view('pages/contact');
+
+		} elseif ($page['template'] == 'pageModel-bibliography.php') {
+
+			$this->load->view('pages/bibliography');
+
+		} elseif ($page['template'] == 'pageModel-bookList.php') {
+
+			$this->load->view('pages/booklist');
+		}
+	}
+
+	/**
+	 * List all journals by alphabetical order.
+	 *
+	 * @return	void
+	 */
+	public function list_journals_by_alphabetical_order()
+	{
+
+		$this->load_journals_page_metadata();
+
+		$offset = $this->input->get('offset', true);
+
+		if (!$offset) {
+			$offset = 0;
+		}
+
+		$status = $this->input->get('status', true);
+		$search = $this->input->get('search', true);
+		$export = $this->input->get('export', true);
+
+		$journals = $this->Journals_model->list_all_journals(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+
+		if ($export == 'csv') {
+
+			$this->load->vars('journals', $journals);
+			$this->load->view('pages/journals-csv');
+			return;
+		} elseif ($export == 'xls') {
+
+			$this->load->vars('journals', $journals);
+			$this->load->view('pages/journals-xls');
+			return;
+		}
+
+		$total_journals = $this->Journals_model->total_journals($status, $search);
+
+		$journals_links = $this->get_journals_links();
+		$base_url = $journals_links[$this->language]['list-by-alphabetical-order'] . '/?';
+
+		if ($status) {
+			$base_url .= 'status=' . $status;
+		}
+
+		if ($search) {
+			$base_url .= 'search=' . $search;
+		}
+
+		$config['base_url'] = $base_url;
+		$config['total_rows'] = $total_journals;
+		$config['per_page'] = SCIELO_JOURNAL_LIMIT;
+		$config['first_link'] = lang('pagination_first_link');
+		$config['last_link'] = lang('pagination_last_link');
+
+		init_pagination($config);
+
+		if ($offset) {
+			$base_url .= '&offset=' . $offset;
+		}
+
+		$this->load->vars('base_url', $base_url);
+		$this->load->vars('status', $status);
+		$this->load->vars('search', $search);
+		$this->load->vars('total_journals', $total_journals);
+		$this->load->vars('journals', $journals);
+		$this->load->view('pages/journals');
+	}
+
+	/**
+	 * List all journals publishers ordered by name.
+	 *
+	 * @return	void
+	 */
+	public function list_by_publishers()
+	{
+		$this->load_journals_page_metadata();
+
+		$offset = $this->input->get('offset', true);
+
+		if (!$offset) {
+			$offset = 0;
+		}
+
+		$status = $this->input->get('status', true);
+		$search = $this->input->get('search', true);
+		$export = $this->input->get('export', true);
+
+		if ($export == 'csv' || $export == 'xls') {
+
+			$journals = $this->Journals_model->list_all_journals(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+
+			$this->load->vars('journals', $journals);
+			$this->load->view('pages/journals-' . $export);
+
+			return;
+		}
+
+		$publishers = $this->Journals_model->list_all_publishers(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+		$total_publishers = $this->Journals_model->total_publishers($status, $search);
+
+		$journals_links = $this->get_journals_links();
+		$base_url = $journals_links[$this->language]['list-by-publishers'] . '/?';
+
+		if ($status) {
+			$base_url .= 'status=' . $status;
+		}
+
+		if ($search) {
+			$base_url .= 'search=' . $search;
+		}
+
+		$config['base_url'] = $base_url;
+		$config['total_rows'] = $total_publishers;
+		$config['per_page'] = SCIELO_JOURNAL_LIMIT;
+		$config['first_link'] = lang('pagination_first_link');
+		$config['last_link'] = lang('pagination_last_link');
+
+		init_pagination($config);
+
+		if ($offset) {
+			$base_url .= '&offset=' . $offset;
+		}
+
+		$this->load->vars('base_url', $base_url);
+		$this->load->vars('status', $status);
+		$this->load->vars('search', $search);
+		$this->load->vars('publishers', $publishers);
+		$this->load->view('pages/journals-by-publishers');
+	}
+
+	/**
+	 * List all journals by subject area ordered by name.
+	 *
+	 * @return	void
+	 */
+	public function list_by_subject_area($id_subject_area, $subject_area)
+	{
+
+		$this->load_journals_page_metadata();
+
+		$offset = $this->input->get('offset', true);
+
+		if (!$offset) {
+			$offset = 0;
+		}
+
+		$status = $this->input->get('status', true);
+		$search = $this->input->get('search', true);
+		$export = $this->input->get('export', true);
+
+		$journals = $this->Journals_model->list_all_journals_by_subject_area($id_subject_area, SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+
+		if ($export == 'csv') {
+
+			$this->load->vars('journals', $journals);
+			$this->load->view('pages/journals-csv');
+			return;
+		} elseif ($export == 'xls') {
+
+			$this->load->vars('journals', $journals);
+			$this->load->view('pages/journals-xls');
+			return;
+		}
+
+		$total_journals = $this->Journals_model->total_journals_by_subject_area($id_subject_area, $status, $search);
+		$journals_links = $this->get_journals_links();
+		$base_url = $journals_links[$this->language]['list-by-subject-area'] . '/' . $id_subject_area . '/' . $subject_area . '/?';
+
+		if ($status) {
+			$base_url .= 'status=' . $status;
+		}
+
+		if ($search) {
+			$base_url .= 'search=' . $search;
+		}
+
+		$config['base_url'] = $base_url;
+		$config['total_rows'] = $total_journals;
+		$config['per_page'] = SCIELO_JOURNAL_LIMIT;
+		$config['first_link'] = lang('pagination_first_link');
+		$config['last_link'] = lang('pagination_last_link');
+
+		init_pagination($config);
+
+		if ($offset) {
+			$base_url .= '&offset=' . $offset;
+		}
+
+		$subject_area = $this->Journals_model->get_subject_area($id_subject_area);
+		$subject_areas = $this->Journals_model->list_all_subject_areas($this->language);
+
+		$this->load->vars('journals_links', $journals_links);
+		$this->load->vars('subject_area', $subject_area);
+		$this->load->vars('subject_areas', $subject_areas);
+		$this->load->vars('base_url', $base_url);
+		$this->load->vars('status', $status);
+		$this->load->vars('search', $search);
+		$this->load->vars('total_journals', $total_journals);
+		$this->load->vars('journals', $journals);
+		$this->load->view('pages/journals');
+	}
+
+	/**
+	 * The default handler for 404 error.
+	 *
+	 * @return void
+	 */
+	public function page_not_found()
+	{
+
+		// In the page not found the metadata comes from the tabs API return json data.
+		$this->load_page_metadata('pageMetadataHome', TABS_EN_API_PATH, TABS_ES_API_PATH, TABS_API_PATH);
+
+		$this->load->view('page_not_found');
+	}
+
+	/**
+	 * Get the About Page link and text for Home controller.
+	 *
+	 * @return void
+	 */
+	private function load_about_link()
+	{
+
+		// Load the about page content from the json array
+		$about = $this->get_content_from_cache('about', FOUR_HOURS_TIMEOUT, ABOUT_EN_API_PATH, ABOUT_ES_API_PATH, ABOUT_API_PATH);
+
+		$about_url = explode('/', $about['link']);
+		$about_url = $about_url[count($about_url) - 2];
+
+		$about_menu_item = array('link' => base_url($this->language . '/' . $about_url), 'text' => $about['title']['rendered']);
+		$this->load->vars('about_menu_item', $about_menu_item);
+	}
+
+	/**
+	 * Load the page metadata from the cache and pass it to be shown in the template head section.
+	 * 
+	 * @param  int 		$key		    The cache content key to be searched.
+	 * @param  string 	$english_url	The Rest API Service URL to load the content in English.
+	 * @param  string 	$spanish_url	The Rest API Service URL to load the content in Spanish.
+	 * @param  string 	$portuguese_url	The Rest API Service URL to load the content in Portuguese.
+	 * @param  boolean 	$is_slug	    Flag to verify if the page result comes from a query by slug.
+	 * @param  string 	$page_slug	    The page slug to be query by REST API Service.
+	 * @return void
+	 */
+	private function load_page_metadata($key, $english_url, $spanish_url, $portuguese_url, $is_slug = false, $page_slug = null)
+	{
+
+		$pageMetadata = $this->get_content_from_cache($key, FOUR_HOURS_TIMEOUT, $english_url, $spanish_url, $portuguese_url, $page_slug);
+
+		// Verify is the first item is an array, because the pages we got by slug come as the first element of an array.
+		if ($is_slug && is_array($pageMetadata[0])) {
+			$pageMetadata = $pageMetadata[0];
+		}
+
+		$this->PageMetadata->initialize($pageMetadata);
+	}
+
+	/**
+	 * Load from cache and setup the alert to be shown in the template top section.
+	 * 
+	 * @return void
+	 */
+	private function load_alert()
+	{
+
+		$alert = $this->get_content_from_cache('alert', FOUR_HOURS_TIMEOUT, ALERT_EN_API_PATH, ALERT_ES_API_PATH, ALERT_API_PATH);
+
+		$this->Alert->initialize($alert);
 	}
 
 	/**
 	 * Load from cache and setup the tabs to be shown in the template tabs section.
+	 * 
+	 * @return void
 	 */
-	private function load_tabs() {
+	private function load_tabs()
+	{
 
-		$tabs = $this->get_content_from_cache('tabs', TABS_API_PATH, FOUR_HOURS_TIMEOUT);
-		$tab_group = $tabs['acf']['tab_group'];
+		$tabs = $this->get_content_from_cache('tabs', FOUR_HOURS_TIMEOUT, TABS_EN_API_PATH, TABS_ES_API_PATH, TABS_API_PATH);
 
-		// Each tab group is a section on the template (note that the section has a specific CSS class)
-		// First group is the '<section class="collection">'
-		// Second group is the '<section class="blog">'
-
-		// print_r($tab_group);
+		$this->TabGroup->initialize($tabs);
 	}
 
 	/**
 	 * Load from cache and setup the footer (signature and partners) to be shown in the template footer section.
+	 * 
+	 * @return void
 	 */
-	private function load_footer() {
+	private function load_footer()
+	{
 
-		$footer = $this->get_content_from_cache('footer', FOOTER_API_PATH, FOUR_HOURS_TIMEOUT);
+		$footer = $this->get_content_from_cache('footer', FOUR_HOURS_TIMEOUT, FOOTER_EN_API_PATH, FOOTER_ES_API_PATH, FOOTER_API_PATH);
 
-		$scielo_signature = NULL;
-		$scielo_partners = array();
-		$scielo_open_access_declaration = NULL;
-
-		// Iterate through the blocks array getting the signature, partners array and last html content.
-		foreach($footer['acf']['blocks'] as $block) {
-			switch($block['type']){
-				case 1: $scielo_signature = $block['content']; break;
-				case 2: $scielo_partners = $block['partners']; break;
-				case 3: $scielo_open_access_declaration = $block['content']; break;
-			}
-		}
-		
-		$this->load->vars('scielo_signature', $scielo_signature);
-		$this->load->vars('scielo_partners', $scielo_partners);
-		$this->load->vars('scielo_open_access_declaration', $scielo_open_access_declaration);
-	}	
-
-	/**
-	 * Load from cache and parse a XML to be shown in the template blog section.
-	 * Note that this method does not use the 'get_from_wordpress()' function because it loads the content from a RSS Feed.
-	 */
-	private function load_blog_rss_feed() {
-
-		$blog_key = 'blog_posts';
-		$blog_posts = $this->cache->get($blog_key);
-
-		if(is_null($blog_posts)) {
-			$blog_posts = $this->content->get_blog_content();
-			$this->cache->set($blog_key, $blog_posts, ONE_HOUR_TIMEOUT);
-		}
-
-		$this->load->vars($blog_key, simplexml_load_string($blog_posts, 'SimpleXMLElement', LIBXML_NOCDATA));		
+		$this->Footer->initialize($footer);
 	}
 
 	/**
-	 * Verify in the cache if the content exists, if not, load from the API Rest Service URL and put it with the respective timeout.
-	 * After that, returns to the caller the cached content.
-	 * @param $key
-	 * @param $url
-	 * @param $timeout
-	 * @return $cached content
+	 * Load from cache and setup the collections tab content to be shown in the tab template.
+	 * 
+	 * @return void
 	 */
-	private function get_content_from_cache($key, $url, $timeout) {
+	private function load_collections()
+	{
+
+		$collections = $this->put_content_in_cache('collections', SCIELO_COLLECTIONS_URL, FOUR_HOURS_TIMEOUT);
+
+		$this->Collections->initialize($collections);
+	}
+
+	/**
+	 * Load from the database the journals subject areas tab content to be shown in the tab template.
+	 * Create the links for the journals based on the language selected.
+	 * 
+	 * @return void
+	 */
+	private function load_journals()
+	{
+
+		$subject_areas = $this->Journals_model->list_all_subject_areas($this->language);
+
+		$this->load->vars('subject_areas', $subject_areas);
+		$this->load->vars('journals_links', $this->get_journals_links());
+	}
+
+	/**
+	 * Calculate and load the metrics for the analytics tab content to be shown in the tab template.
+	 * 
+	 * @return void
+	 */
+	private function load_analytics()
+	{
+
+		$total_collections = count($this->Collections->get_journals_list());
+		$total_active_journals =  $this->Journals_model->total_journals('current');
+
+		$total_published_articles = 0;
+
+		foreach ($this->Collections->get_scientific_list() as $scientific) {
+			$total_published_articles += $scientific->document_count;
+		}
+
+		$this->load->vars('total_collections', $total_collections);
+		$this->load->vars('total_active_journals', $total_active_journals);
+		$this->load->vars('total_published_articles', $total_published_articles);
+	}
+
+	/**
+	 * Load from cache and parse a XML to be shown in the template blog section.
+	 * Note that this method does not use the 'get_from()' function because it loads the content from a RSS Feed.
+	 * 
+	 * @return void
+	 */
+	private function load_blog_rss_feed()
+	{
+
+		$key = 'blog-';
+
+		$portugueseKey = $key . SCIELO_LANG;
+		$cachedContentPortuguese = $this->put_blog_rss_feed_in_cache($portugueseKey, SCIELO_BLOG_URL, ONE_HOUR_TIMEOUT);
+
+		$englishKey = $key . SCIELO_EN_LANG;
+		$cachedContentEnglish = $this->put_blog_rss_feed_in_cache($englishKey, SCIELO_BLOG_EN_URL, ONE_HOUR_TIMEOUT);
+
+		$spanishKey = $key . SCIELO_ES_LANG;
+		$cachedContentSpanish = $this->put_blog_rss_feed_in_cache($spanishKey, SCIELO_BLOG_ES_URL, ONE_HOUR_TIMEOUT);
+
+		$blog_posts = $this->get_content_by_language($cachedContentPortuguese, $cachedContentEnglish, $cachedContentSpanish);
+
+		$this->load->vars('blog_posts', simplexml_load_string($blog_posts, 'SimpleXMLElement', LIBXML_NOCDATA));
+	}
+
+	/**
+	 * Put the content of the Blog RSS Feed in the cache, and if the content not exists load from the XML RSS URL and put it with the respective timeout.
+	 * After that, returns to the caller the cached content.
+	 * @param  int 		$key     The cache content key to be searched.
+	 * @param  string 	$url     The XML RSS URL to load the content.
+	 * @param  int		$timeout The time before the content expire in the cache.
+	 * @return string
+	 */
+	private function put_blog_rss_feed_in_cache($key, $url, $timeout)
+	{
 
 		$cachedContent = $this->cache->get($key);
 
-		if(is_null($cachedContent)) {
-			$cachedContent = json_decode($this->content->get_from_wordpress($url), TRUE);
-			$this->cache->set($key, $cachedContent, $timeout); 
+		if (is_null($cachedContent)) {
+			$cachedContent = $this->content->get_blog_content($url);
+			$this->cache->set($key, $cachedContent, $timeout);
 		}
 
 		return $cachedContent;
+	}
+
+	/**
+	 * Load the content of the user from the twitter REST API to be show in its respective template.
+	 * 
+	 * @return void
+	 */
+	private function load_twitter()
+	{
+
+		$key = 'tweets';
+		$tweets = $this->cache->get($key);
+
+		if (is_null($tweets)) {
+			$tweets = $this->twitter->get_connection()->get('statuses/user_timeline', ['count' => 10, 'tweet_mode' => 'extended', 'include_entities' => true, 'exclude_replies' => true]);
+			$this->cache->set($key, $tweets, ONE_HOUR_TIMEOUT);
+		}
+
+		$this->load->vars('tweets', $tweets);
+	}
+
+	/**
+	 * Get the cache content for the language selected by the user.
+	 * 
+	 * @param  int 		$key		    The cache content key to be searched.
+	 * @param  int		$timeout	    The time before the content expire in the cache.
+	 * @param  string 	$english_url	The Rest API Service URL to load the content in English.
+	 * @param  string 	$spanish_url	The Rest API Service URL to load the content in Spanish.
+	 * @param  string 	$portuguese_url	The Rest API Service URL to load the content in Portuguese.
+	 * @param  string 	$slug	        If none of the previous URL return the data,try to get by slug with a default URL.
+	 * @return string
+	 */
+	private function get_content_from_cache($key, $timeout, $english_url, $spanish_url, $portuguese_url, $slug = null)
+	{
+
+		$key .= '-';
+		$content = '';
+		$callback = '';
+
+		switch ($this->language) {
+
+			case SCIELO_LANG:
+				$key = $key . SCIELO_LANG;
+				$content = $this->put_content_in_cache($key, $portuguese_url, $timeout);
+				break;
+
+			case SCIELO_EN_LANG:
+				$key = $key . SCIELO_EN_LANG;
+				$content = $this->put_content_in_cache($key, $english_url, $timeout);
+				$callback = SLUG_CALLBACK_EN_API_PATH . $slug;
+				break;
+
+			case SCIELO_ES_LANG:
+				$key = $key . SCIELO_ES_LANG;
+				$content = $this->put_content_in_cache($key, $spanish_url, $timeout);
+				$callback = SLUG_CALLBACK_ES_API_PATH . $slug;
+				break;
+		}
+
+		if (count($content) == 0) {
+			$content = $this->put_content_in_cache($key, $callback, $timeout);
+		}
+
+		if (count($content) == 0) {
+			redirect('home/page_not_found');
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Put the content in the cache, and if the content not exists in the load from the API Rest Service URL
+	 * and put it with the respective timeout.
+	 * After that, returns to the caller the cached content.
+	 * 
+	 * @param  int 		$key     The cache content key to be searched.
+	 * @param  string 	$url     The Rest API Service URL to load the content.
+	 * @param  int		$timeout The time before the content expire in the cache.
+	 * @return string
+	 */
+	private function put_content_in_cache($key, $url, $timeout)
+	{
+
+		$cachedContent = $this->cache->get($key);
+
+		if (is_null($cachedContent) || empty($cachedContent)) {
+			$cachedContent = json_decode($this->content->get_from($url), true);
+			$this->cache->set($key, $cachedContent, $timeout);
+		}
+
+		return $cachedContent;
+	}
+
+	/**
+	 * Returns the variable specific to the language selected by the user.
+	 * 
+	 * @param string $portugueseContent
+	 * @param string $englishContent
+	 * @param string $spanishContent
+	 * @return string
+	 */
+	private function get_content_by_language($portugueseContent, $englishContent, $spanishContent)
+	{
+
+		switch ($this->language) {
+
+			case SCIELO_LANG:
+				return $portugueseContent;
+				break;
+
+			case SCIELO_EN_LANG:
+				return $englishContent;
+				break;
+
+			case SCIELO_ES_LANG:
+				return $spanishContent;
+				break;
+		}
+	}
+
+	/**
+	 * Load the lang files and an array containing the available languages to be show in the templates.
+	 * 
+	 * @return void
+	 */
+	private function load_static_texts_by_language()
+	{
+
+		$language_url = base_url('language');
+		$portuguese = array('link' => $language_url . '/pt', 'language' => 'Português');
+		$english = array('link' => $language_url . '/en', 'language' => 'English');
+		$spanish = array('link' => $language_url . '/es', 'language' => 'Español');
+		$languages_translated_files = array('scielo', 'pagination', 'db', 'email');
+		$available_languages = array();
+
+		switch ($this->language) {
+
+			case SCIELO_LANG:
+				$this->lang->load($languages_translated_files, 'portuguese-brazilian');
+				$available_languages[] = $english;
+				$available_languages[] = $spanish;
+				break;
+
+			case SCIELO_EN_LANG:
+				$this->lang->load($languages_translated_files, 'english');
+				$available_languages[] = $portuguese;
+				$available_languages[] = $spanish;
+				break;
+
+			case SCIELO_ES_LANG:
+				$this->lang->load($languages_translated_files, 'spanish');
+				$available_languages[] = $english;
+				$available_languages[] = $portuguese;
+				break;
+		}
+
+		$this->load->vars('available_languages', $available_languages);
+	}
+
+	/**
+	 * Set default language (english) if none was selected and make it available to all templates. 
+	 * Note that, if a differente language is at the browser url, it has a higher precedence than user location. 
+	 * 
+	 * @return void
+	 */
+	private function set_language()
+	{
+
+		$this->language = get_cookie('language', true);
+
+		// Because the webite could be deploy in a server subfolder we remove the base_uri.
+		$language_url = str_replace(BASE_URI, '', $_SERVER['REQUEST_URI']);
+		$language_url = substr($language_url, 0, 2);
+		
+		// Verify if the language is set in the cookie.
+		if (isset($this->language) && !empty($this->language)) {
+
+			$this->set_language_if_in_URL($language_url, SCIELO_LANG);
+			$this->set_language_if_in_URL($language_url, SCIELO_ES_LANG);
+			$this->set_language_if_in_URL($language_url, SCIELO_EN_LANG);
+
+		} else {
+
+			// If the language is at the browser URL, it has a higher precedence than user location. 
+			if (!$this->set_language_if_equal_to($language_url)) {
+
+				// The language isn't in the browser URL, so we get the user location, if it's not one of the tree languages, set it to english (default). 
+				$language_location = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+
+				if (!$this->set_language_if_equal_to($language_location)) {
+					$this->set_language_cookie(SCIELO_EN_LANG);
+				}
+			}
+		}
+
+		$this->load->vars('language', $this->language);
+	}
+
+	/**
+	 * Set language if in the URL. 
+	 * 
+	 * @param  string	$language_url
+	 * @param  string	$language
+	 * @return void
+	 */
+	private function set_language_if_in_URL($language_url, $language)
+	{
+
+		if ($language_url == $language && $this->language != $language) {
+
+			$this->set_language_cookie($language);
+		}
+	}
+
+	/**
+	 * Set language if it's equal to the parameter passed or return FALSE. 
+	 * 
+	 * @param  string	$language
+	 * @return boolean
+	 */
+	private function set_language_if_equal_to($language)
+	{
+
+		switch ($language) {
+
+			case SCIELO_LANG:
+				$this->set_language_cookie(SCIELO_LANG);
+				return true;
+
+			case SCIELO_ES_LANG:
+				$this->set_language_cookie(SCIELO_ES_LANG);
+				return true;
+
+			case SCIELO_EN_LANG:
+				$this->set_language_cookie(SCIELO_EN_LANG);
+				return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Set language in the cookie for 30 days. 
+	 * 
+	 * @param  string	$language
+	 * @return void
+	 */
+	private function set_language_cookie($language)
+	{
+
+		$this->language = $language;
+		delete_cookie('language');
+		set_cookie('language', $this->language, ONE_DAY_TIMEOUT * 30);
+	}
+
+	/**
+	 * Load the page metade and breadcrumb specific for journals URLs. 
+	 * 
+	 * @return void
+	 */
+	private function load_journals_page_metadata()
+	{
+		$pageMetadata = array('acf' => array('pageTitle' => ucfirst(lang('journals')) . ' | SciELO.org', 'pageDescription' => 'Biblioteca Virtual em Saúde'));
+		$this->PageMetadata->initialize($pageMetadata);
+
+		$breadcrumb = array();
+		$breadcrumbs[] = array('link' => base_url($this->language . '/'), 'link_text' => 'Home');
+		$this->load->vars('breadcrumbs', $breadcrumbs);
+	}
+
+	/**
+	 * Returns the journals links for each language. 
+	 * 
+	 * @return array
+	 */
+	private function get_journals_links()
+	{
+
+		$journals_links = array();
+		$journals_links['pt']['list-by-alphabetical-order'] = base_url($this->language . '/periodicos/listar-por-ordem-alfabetica');
+		$journals_links['en']['list-by-alphabetical-order'] = base_url($this->language . '/journals/list-by-alphabetical-order');
+		$journals_links['es']['list-by-alphabetical-order'] = base_url($this->language . '/revistas/listar-por-orden-alfabetico');
+
+		$journals_links['pt']['list-by-publishers'] = base_url($this->language . '/periodicos/listar-por-publicador');
+		$journals_links['en']['list-by-publishers'] = base_url($this->language . '/journals/list-by-publishers');
+		$journals_links['es']['list-by-publishers'] = base_url($this->language . '/revistas/listar-por-el-publicador');
+
+		$journals_links['pt']['list-by-subject-area'] = base_url($this->language . '/periodicos/listar-por-assunto');
+		$journals_links['en']['list-by-subject-area'] = base_url($this->language . '/journals/list-by-subject-area');
+		$journals_links['es']['list-by-subject-area'] = base_url($this->language . '/revistas/listar-por-tema');
+
+		return $journals_links;
 	}
 }

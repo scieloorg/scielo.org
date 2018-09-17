@@ -50,5 +50,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'home';
-$route['404_override'] = '';
+$route['404_override'] = 'home/page_not_found';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['pt/periodicos/listar-por-ordem-alfabetica'] = 'home/list_journals_by_alphabetical_order';
+$route['en/journals/list-by-alphabetical-order'] = 'home/list_journals_by_alphabetical_order';
+$route['es/revistas/listar-por-orden-alfabetico'] = 'home/list_journals_by_alphabetical_order';
+
+$route['pt/periodicos/listar-por-publicador'] = 'home/list_by_publishers';
+$route['en/journals/list-by-publishers'] = 'home/list_by_publishers';
+$route['es/revistas/listar-por-el-publicador'] = 'home/list_by_publishers';
+
+$route['pt/periodicos/listar-por-assunto/(:num)/(:any)'] = 'home/list_by_subject_area/$1/$2';
+$route['en/journals/list-by-subject-area/(:num)/(:any)'] = 'home/list_by_subject_area/$1/$2';
+$route['es/revistas/listar-por-tema/(:num)/(:any)'] = 'home/list_by_subject_area/$1/$2';
+
+$route['pt/(.+)'] = 'home/page/$1';
+$route['en/(.+)'] = 'home/page/$1';
+$route['es/(.+)'] = 'home/page/$1';
+
+$route['pt/'] = 'home/index';
+$route['en/'] = 'home/index';
+$route['es/'] = 'home/index';
+
+$route['pt'] = 'home/index';
+$route['en'] = 'home/index';
+$route['es'] = 'home/index';
+

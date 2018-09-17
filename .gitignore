@@ -1,11 +1,13 @@
 .DS_Store
 
-application/cache/*
+application/cache/*/Files
 !application/cache/index.html
+!application/cache/database/data.db
 
 application/logs/*
 !application/logs/index.html
 
+#application/config/database.php
 !application/*/.htaccess
 
 composer.lock
