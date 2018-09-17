@@ -67,13 +67,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <script>
 $(function() {
 	
-	// Include the reCaptcha script if there is a div with class "wpcf7-recaptcha".
-	if($('.wpcf7-recaptcha').length > 0) {
-		var script = document.createElement('script');
-		script.src = 'https://www.google.com/recaptcha/api.js';
-		$('head').append(script);
-	}
-
 	// Remove form actual 'action' attribute and replace it because we register for the onsubmit event.
 	$('form').attr('action', 'javascript:void(0);');
 

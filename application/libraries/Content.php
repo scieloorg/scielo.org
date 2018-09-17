@@ -46,7 +46,7 @@ class Content
         return $data;
     }
 
-    public function get_from_wordpress($url, $use_token = false)
+    public function get_from($url, $use_token = false)
     {
 
         $headers = array();
@@ -73,7 +73,7 @@ class Content
         return $data;
     }
 
-    public function send_post_request_to_wordpress($url, $post_data, $use_token = false)
+    public function send_post_request_to($url, $post_data, $use_token = false)
     {
         $headers = array();
 

@@ -85,6 +85,7 @@ class Journals_model extends CI_Model
         }
 
         $this->db->limit($limit, $offset);
+        $this->db->group_by('title');
         $this->db->order_by('title', 'ASC');
 
         return $this->get_results_obj();
@@ -107,6 +108,8 @@ class Journals_model extends CI_Model
         if ($search) {
             $this->db->like('title', $search);
         }
+
+        $this->db->group_by('title');
 
         return $this->db->count_all_results($this->journals_table);
     }
@@ -137,6 +140,7 @@ class Journals_model extends CI_Model
         }
 
         $this->db->limit($limit, $offset);
+        $this->db->group_by('title');
         $this->db->order_by('title', 'ASC');
 
         return $this->get_results_obj();
@@ -163,6 +167,7 @@ class Journals_model extends CI_Model
         }
 
         $this->db->join($this->subject_areas_journals_table, $this->journals_table . '.id_journal=' . $this->subject_areas_journals_table . '.id_journal', 'left');
+        $this->db->group_by('title');
 
         return $this->db->count_all_results($this->journals_table);
     }
@@ -231,6 +236,7 @@ class Journals_model extends CI_Model
             $this->db->where('status', $status);
         }
 
+        $this->db->group_by('title');
         $this->db->order_by('title', 'ASC');
 
         return $this->get_results_obj();

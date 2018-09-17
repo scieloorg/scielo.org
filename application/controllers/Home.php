@@ -515,7 +515,7 @@ class Home extends CI_Controller
 
 	/**
 	 * Load from cache and parse a XML to be shown in the template blog section.
-	 * Note that this method does not use the 'get_from_wordpress()' function because it loads the content from a RSS Feed.
+	 * Note that this method does not use the 'get_from()' function because it loads the content from a RSS Feed.
 	 * 
 	 * @return void
 	 */
@@ -643,7 +643,7 @@ class Home extends CI_Controller
 		$cachedContent = $this->cache->get($key);
 
 		if (is_null($cachedContent) || empty($cachedContent)) {
-			$cachedContent = json_decode($this->content->get_from_wordpress($url), true);
+			$cachedContent = json_decode($this->content->get_from($url), true);
 			$this->cache->set($key, $cachedContent, $timeout);
 		}
 
@@ -689,25 +689,25 @@ class Home extends CI_Controller
 		$portuguese = array('link' => $language_url . '/pt', 'language' => 'Português');
 		$english = array('link' => $language_url . '/en', 'language' => 'English');
 		$spanish = array('link' => $language_url . '/es', 'language' => 'Español');
-
+		$languages_translated_files = array('scielo', 'pagination', 'db', 'email');
 		$available_languages = array();
 
 		switch ($this->language) {
 
 			case SCIELO_LANG:
-				$this->lang->load(array('scielo', 'pagination', 'db'), 'portuguese-brazilian');
+				$this->lang->load($languages_translated_files, 'portuguese-brazilian');
 				$available_languages[] = $english;
 				$available_languages[] = $spanish;
 				break;
 
 			case SCIELO_EN_LANG:
-				$this->lang->load(array('scielo', 'pagination', 'db'), 'english');
+				$this->lang->load($languages_translated_files, 'english');
 				$available_languages[] = $portuguese;
 				$available_languages[] = $spanish;
 				break;
 
 			case SCIELO_ES_LANG:
-				$this->lang->load(array('scielo', 'pagination', 'db'), 'spanish');
+				$this->lang->load($languages_translated_files, 'spanish');
 				$available_languages[] = $english;
 				$available_languages[] = $portuguese;
 				break;

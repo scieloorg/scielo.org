@@ -24,7 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<li>
 							<?= ucfirst(lang('journals')) ?>
 							<?php if (isset($subject_area)) : ?>
-								<?= $subject_area['name_' . $language] ?>
+								: <?= $subject_area['name_' . $language] ?>
 							<?php endif; ?>
 						</li>
 					</ul>
@@ -36,7 +36,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<h2 class="breadTitle">
 						<?= ucfirst(lang('journals')) ?>
 						<?php if (isset($subject_area)) : ?>
-							<?= $subject_area['name_' . $language] ?>
+							: <?= $subject_area['name_' . $language] ?>
 						<?php endif; ?>
 					</h2>
 				</div>
@@ -106,6 +106,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="col-md-12">
 
 				<div class="list-journals">
+					<hr>
 					<table>
 						<thead>
 							<th>

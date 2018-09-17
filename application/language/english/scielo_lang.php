@@ -11,7 +11,7 @@
  * Copyright SciELO All Rights Reserved.
  */
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 $lang['read_more_text'] = 'Read more';
 $lang['twitter_text'] = 'Follow us on <strong>Twitter @RedeSciELO</strong>';
@@ -57,3 +57,18 @@ $lang['export_to_cvs_tooltip'] = 'List in CSV file';
 $lang['publisher'] = 'Publisher';
 $lang['collections'] = 'collections';
 $lang['published_articles'] = 'published articles';
+$lang['share_page_email'] = 'Send page by e-mail';
+$lang['your_email'] = 'Your e-mail';
+$lang['your_email_invalid'] = 'Invalid email.';
+$lang['to_email'] = 'To';
+$lang['to_email_invalid'] = 'Invalid e-mail address.';
+$lang['to_email_help_text'] = 'Use; (semicolon) to enter more emails.';
+$lang['update_subject_and_comments'] = 'Change subject and comments';
+$lang['email_subject'] = 'Subject';
+$lang['email_comment'] = 'Comment';
+$lang['remove_subject_and_comments'] = 'Remove subject and comments';
+$lang['send_email_button'] = 'Send';
+$lang['message_title'] = 'Message';
+$lang['message_success'] = 'Email successfully sent.';
+$lang['share_email_subject'] = 'Link sharing SciELO';
+$lang['share_email_body'] = 'The user your_email shares this link: share_url, from SciELO<br>';

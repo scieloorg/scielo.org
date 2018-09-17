@@ -117,19 +117,32 @@ define('APPPATH_URI', BASE_URI . APPPATH);
 define('STATIC_ASSETS_PATH', BASE_URL . 'static/');
 
 // API Token Authentication.
-define('API_USR', ''); // @TODO - Define on production
-define('API_PWD', ''); // @TODO - Define on production
-define('SALT', ''); // @TODO - Define on production
+define('API_USR', getenv('API_USR')); // @TODO - Define on production
+define('API_PWD', getenv('API_PWD')); // @TODO - Define on production
+define('SALT', getenv('SALT')); // @TODO - Define on production
+
+// SMPT Authentication credentials.
+define('SCIELO_SMTP_AUTH', getenv('SCIELO_SMTP_AUTH')); // @TODO - Define on production
+define('SMTP_SMTP_SECURE', getenv('SMTP_SMTP_SECURE')); // @TODO - Define on production
+define('SCIELO_SMTP_SERVER', getenv('SCIELO_SMTP_SERVER')); // @TODO - Define on production
+define('SCIELO_SMTP_PORT', getenv('SCIELO_SMTP_PORT')); // @TODO - Define on production
+define('SCIELO_SMTP_USERNAME', getenv('SCIELO_SMTP_USERNAME')); // @TODO - Define on production
+define('SCIELO_SMTP_PASSWORD', getenv('SCIELO_SMTP_PASSWORD')); // @TODO - Define on production
 
 // Twitter API Authentication.
-define('TWITTER_ACCESS_TOKEN', ''); // @TODO - Define on production
-define('TWITTER_ACCESS_TOKEN_SECRET', ''); // @TODO - Define on production
-define('TWITTER_CONSUMER_KEY', ''); // @TODO - Define on production
-define('TWITTER_CONSUMER_SECRET', ''); // @TODO - Define on production
-define('TWITTER_SCREEN_NAME', ''); // @TODO - Define on production
+define('TWITTER_ACCESS_TOKEN', getenv('TWITTER_ACCESS_TOKEN')); // @TODO - Define on production
+define('TWITTER_ACCESS_TOKEN_SECRET', getenv('TWITTER_ACCESS_TOKEN_SECRET')); // @TODO - Define on production
+define('TWITTER_CONSUMER_KEY', getenv('TWITTER_CONSUMER_KEY')); // @TODO - Define on production
+define('TWITTER_CONSUMER_SECRET', getenv('TWITTER_CONSUMER_SECRET')); // @TODO - Define on production
+define('TWITTER_SCREEN_NAME', getenv('TWITTER_SCREEN_NAME')); // @TODO - Define on production
+
+// Google reCAPTCHA key.
+define('GOOGLE_RECAPTCHA_SITE_KEY', getenv('GOOGLE_RECAPTCHA_SITE_KEY')); // @TODO - Define on production
+define('GOOGLE_RECAPTCHA_SERVER_KEY', getenv('GOOGLE_RECAPTCHA_SERVER_KEY')); // @TODO - Define on production
+define('GOOGLE_RECAPTCHA_VERIFY_URL', 'https://www.google.com/recaptcha/api/siteverify');
 
 // API Default Path. Very Important: Remember to add the last slash in this URL.
-define('WORDPRESS_URL', ''); // @TODO - Define on production
+define('WORDPRESS_URL', getenv('WORDPRESS_URL')); // @TODO - Define on production
 define('WORDPRESS_API_PATH', WORDPRESS_URL . 'wp-json');
 define('WORDPRESS_API_PATH_EN', WORDPRESS_URL . 'en/wp-json');
 define('WORDPRESS_API_PATH_ES', WORDPRESS_URL . 'es/wp-json');
@@ -175,7 +188,9 @@ define('SCIELO_BLOG_ES_URL', 'https://blog.scielo.org/es/feed/');
 // URL for the SciELO Collections.
 define('SCIELO_COLLECTIONS_URL', 'http://articlemeta.scielo.org/api/v1/collection/identifiers/');
 
-// SciELO Journals list limit.
+// URL for the SciELO Journals identifiers and the list limit.
+define('SCIELO_JOURNAL_IDENTIFIERS_URL', 'http://articlemeta.scielo.org/api/v1/journal/identifiers/');
+define('SCIELO_JOURNAL_COLLECTION_URL', 'http://articlemeta.scielo.org/api/v1/journal/?collection={collection}&issn={code}&format=scieloorg');
 define('SCIELO_JOURNAL_LIMIT', 20);
 
 // API Path to query pages by slug.
@@ -191,6 +206,7 @@ define('SLUG_CALLBACK_ES_API_PATH', WORDPRESS_API_PATH_ES . WORDPRESS_PAGES_API_
 define('ONE_HOUR_TIMEOUT', (60 * 60));
 define('FOUR_HOURS_TIMEOUT', (ONE_HOUR_TIMEOUT * 4));
 define('ONE_DAY_TIMEOUT', (ONE_HOUR_TIMEOUT * 24));
+define('THIRTY_DAYS_TIMEOUT', ONE_DAY_TIMEOUT * 30);
 
 // Default SciELO website languages.
 define('SCIELO_LANG', 'pt');
