@@ -242,7 +242,7 @@ class Cache_util extends CI_Controller
 
 		// Delete 'subject_areas_journals' table data.
 		$this->db->query('DELETE FROM subject_areas_journals;');
-		// Delete 'subject_areas' table.
+		// Delete 'subject_areas' table data.
 		$this->db->query('DELETE FROM subject_areas;');
 		// Delete 'journals' table data.
 		$this->db->query('DELETE FROM journals;');

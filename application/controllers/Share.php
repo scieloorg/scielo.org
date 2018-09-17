@@ -26,6 +26,8 @@ class Share extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+
+        $this->load_translated_texts_by_language();
     }
 
     /**
@@ -85,6 +87,34 @@ class Share extends CI_Controller
 
             $mail->send();
         }
+    }
+
+    /**
+     * Load the lang file containing translated texts.
+     * Note that it has less logic than the similar function in the Home controller.
+     * 
+     * @return void
+     */
+    private function load_translated_texts_by_language()
+    {
+
+        $language = get_cookie('language', true);
+
+        switch ($language) {
+
+            case SCIELO_LANG:
+                $this->lang->load('scielo', 'portuguese-brazilian');
+                break;
+
+            case SCIELO_EN_LANG:
+                $this->lang->load('scielo', 'english');
+                break;
+
+            case SCIELO_ES_LANG:
+                $this->lang->load('scielo', 'spanish');
+                break;
+        }
+
     }
 }
 	
