@@ -236,13 +236,27 @@ class Cache_util extends CI_Controller
 		}
 
 		$this->cache->set('last_clean_database_cache', date('Y-m-d\TH:i:sO'), THIRTY_DAYS_TIMEOUT);
+
+		// Start Transaction
+		$this->db->query('BEGIN TRANSACTION;');
+
 		// Delete 'subject_areas_journals' table data.
+		$this->db->query('DELETE FROM subject_areas_journals;');
 		// Delete 'subject_areas' table.
+		$this->db->query('DELETE FROM subject_areas;');
 		// Delete 'journals' table data.
+		$this->db->query('DELETE FROM journals;');
 
 		// Run all the SQL queries in the arrays.
-		// print_r($subject_areas_sql_array);
-		// print_r($journals_sql_array);
+		foreach ($subject_areas_sql_array as $subject_areas_sql) {
+			$this->db->query($subject_areas_sql);
+		}
 
+		foreach ($journals_sql_array as $journals_sql) {
+			$this->db->query($journals_sql);
+		}
+
+		// Commit
+		$this->db->query('COMMIT;');
 	}
 }
