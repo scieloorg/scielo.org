@@ -81,12 +81,12 @@ class Journals_model extends CI_Model
         }
 
         if ($search) {
-            $this->db->like('title', $search);
+            $this->db->like('title_search', remove_accents($search));
         }
 
         $this->db->limit($limit, $offset);
-        $this->db->group_by('title');
-        $this->db->order_by('title', 'ASC');
+        $this->db->group_by('title_search');
+        $this->db->order_by('title_search', 'ASC');
 
         return $this->get_results_obj();
     }
@@ -106,10 +106,10 @@ class Journals_model extends CI_Model
         }
 
         if ($search) {
-            $this->db->like('title', $search);
+            $this->db->like('title_search', remove_accents($search));
         }
 
-        $this->db->group_by('title');
+        $this->db->group_by('title_search');
 
         return $this->db->count_all_results($this->journals_table);
     }
@@ -136,12 +136,12 @@ class Journals_model extends CI_Model
         }
 
         if ($search) {
-            $this->db->like('title', $search);
+            $this->db->like('title_search', remove_accents($search));
         }
 
         $this->db->limit($limit, $offset);
-        $this->db->group_by('title');
-        $this->db->order_by('title', 'ASC');
+        $this->db->group_by('title_search');
+        $this->db->order_by('title_search', 'ASC');
 
         return $this->get_results_obj();
     }
@@ -149,6 +149,7 @@ class Journals_model extends CI_Model
     /**
      * Returns the total of journals by subject area  from the table 'journals' using SQL.
      *
+     * @param   int $id_subject_area
      * @param   string $status
      * @param   string $search
      * @return	int
@@ -163,11 +164,11 @@ class Journals_model extends CI_Model
         }
 
         if ($search) {
-            $this->db->like('title', $search);
+            $this->db->like('title_search', remove_accents($search));
         }
 
         $this->db->join($this->subject_areas_journals_table, $this->journals_table . '.id_journal=' . $this->subject_areas_journals_table . '.id_journal', 'left');
-        $this->db->group_by('title');
+        $this->db->group_by('title_search');
 
         return $this->db->count_all_results($this->journals_table);
     }
@@ -177,6 +178,8 @@ class Journals_model extends CI_Model
      *
      * @param   int $limit
      * @param   int $offset
+     * @param   string $status
+     * @param   string $search
      * @return	array
      */
     public function list_all_publishers($limit, $offset, $status = false, $search = false) {
@@ -190,7 +193,7 @@ class Journals_model extends CI_Model
 
         if ($search) {
             $this->db->like('publisher_name', $search);
-            $this->db->or_like('title', $search);
+            $this->db->or_like('title_search', remove_accents($search));
         }
 
         $this->db->limit($limit, $offset);
@@ -203,6 +206,8 @@ class Journals_model extends CI_Model
     /**
      * Returns the total of pubishers from the table 'journals' using SQL.
      *
+     * @param   string $status
+     * @param   string $search
      * @return	int
      */
     public function total_publishers($status = false, $search = false) {
@@ -213,7 +218,7 @@ class Journals_model extends CI_Model
 
         if ($search) {
             $this->db->like('publisher_name', $search);
-            $this->db->or_like('title', $search);
+            $this->db->or_like('title_search', remove_accents($search));
         }
 
         $this->db->group_by('publisher_name');
@@ -238,8 +243,8 @@ class Journals_model extends CI_Model
             $this->db->where('status', $status);
         }
 
-        $this->db->group_by('title');
-        $this->db->order_by('title', 'ASC');
+        $this->db->group_by('title_search');
+        $this->db->order_by('title_search', 'ASC');
 
         return $this->get_results_obj();
     }

@@ -52,7 +52,7 @@ class Cache_util extends CI_Controller
 			$date2 = new DateTime();
 
 			$diff = $date2->diff($date1); // Get DateInterval Object
-
+			
 			// Verify if it pass than 30 days since the last processing.
 			if ($diff->format('%d') > 30) {
 
@@ -187,7 +187,7 @@ class Cache_util extends CI_Controller
 
 			$code = $object['code'];
 			$journal = $this->cache->get($code);
-			$journals_sql_array[] = "INSERT INTO journals(`id_journal`, `acronym`, `publisher_city`, `publisher_name`, `publisher_country`, `institutional_url`, `status`, `scielo_url`, `title`) VALUES(" . ++$key . ", \"" . $journal['acronym'] . "\", \"" . str_replace("\"", "", $journal['publisher_city']) . "\", \"" . str_replace("\"", "", $journal['publisher_name'][0]) . "\", \"" . str_replace("\"", "", $journal['publisher_country'][1]) . "\", \"" . $journal['institutional_url'] . "\", \"" . $journal['status'] . "\", \"" . $journal['scielo_url'] . "\", \"" . str_replace("\"", "", $journal['title']) . "\");";
+			$journals_sql_array[] = "INSERT INTO `journals`(`id_journal`, `acronym`, `publisher_city`, `publisher_name`, `publisher_country`, `institutional_url`, `status`, `scielo_url`, `title`, `title_search`) VALUES(" . ++$key . ", \"" . $journal['acronym'] . "\", \"" . str_replace("\"", "", $journal['publisher_city']) . "\", \"" . str_replace("\"", "", $journal['publisher_name'][0]) . "\", \"" . str_replace("\"", "", $journal['publisher_country'][1]) . "\", \"" . $journal['institutional_url'] . "\", \"" . $journal['status'] . "\", \"" . $journal['scielo_url'] . "\", \"" . str_replace("\"", "", $journal['title']) . "\", \"" . str_replace("\"", "", remove_accents($journal['title'])) . "\");";
 
 			if (!empty($journal['subject_areas'])) {
 
