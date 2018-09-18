@@ -64,10 +64,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<select id="subject_area" class="form-control" onchange="javascript:window.location=$('#subject_area').val();">
 							<?php foreach ($subject_areas as $_subject_area) : ?>
 							<?php
-								$id_subject_area = $_subject_area['id_subject_area'];
-								$name_url = str_replace(',', '', $_subject_area['name_' . $language]);
-								$name_url = str_replace('+', '-', urlencode(remove_accents(strtolower($name_url))));
-							?>     
+						$id_subject_area = $_subject_area['id_subject_area'];
+						$name_url = str_replace(',', '', $_subject_area['name_' . $language]);
+						$name_url = str_replace('+', '-', urlencode(remove_accents(strtolower($name_url))));
+						?>     
 								<option value="<?= $journals_links[$language]['list-by-subject-area'] . '/' . $id_subject_area . '/' . $name_url ?>" <?php if ($subject_area['id_subject_area'] == $id_subject_area) : ?>selected<?php endif; ?>><?= $_subject_area['name_' . $language] ?></option>
 							<?php endforeach; ?>
 						</select>
@@ -97,7 +97,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			</div>
 			<div class="col-md-6">
 				<form action="<?= current_url() ?>">
-					<input type="text" name="search" id="search" value="<?= $search ?>" class="form-control collectionSearch" placeholder="<?= lang('search_journals_placeholder') ?>">
+					<input type="text" name="search" id="search" value="<?= $search ?>" class="form-control collectionSearch" placeholder="<?= lang('search_journals_placeholder') ?>" autofocus>
 					<button type="submit" class="btn btn-default btn-input"></button>
 				</form>
 			</div>
@@ -121,17 +121,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							</th>
 						</thead>
 						<tbody>
-							<?php foreach ($journals as $journal) : ?>
-							<tr>
-								<td colspan="2">
-									<a href="<?= $journal->scielo_url ?>" <?php if ($journal->status == 'deceased') : ?>class="disabled"<?php endif; ?>>
+							<?php if (empty($journals)) : ?>
+								<tr>
+									<td colspan="2">
 										<strong class="journalTitle">
-											<?= $journal->title ?>
+											<?= lang('no_journals_found_message') ?>
 										</strong>
-									</a>
-								</td>
-							</tr>
-							<?php endforeach; ?>
+									</td>
+								</tr>
+							<?php else : ?>
+								<?php foreach ($journals as $journal) : ?>
+								<tr>
+									<td colspan="2">
+										<a href="<?= $journal->scielo_url ?>" <?php if ($journal->status == 'deceased') : ?>class="disabled"<?php endif; ?>>
+											<strong class="journalTitle">
+												<?= $journal->title ?>
+											</strong>
+										</a>
+									</td>
+								</tr>
+								<?php endforeach; ?>
+							<?php endif; ?>
 						</tbody>
 					</table>
 					<nav aria-label="Page navigation example">

@@ -72,3 +72,4 @@ $lang['message_title'] = 'Message';
 $lang['message_success'] = 'Email successfully sent.';
 $lang['share_email_subject'] = 'Link sharing SciELO';
 $lang['share_email_body'] = 'The user your_email shares this link: share_url, from SciELO<br>';
+$lang['no_journals_found_message'] = 'No journal found.';

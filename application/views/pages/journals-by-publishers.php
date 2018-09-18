@@ -68,7 +68,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			</div>
 			<div class="col-md-6">
 				<form action="<?= current_url() ?>">
-					<input type="text" name="search" id="search" value="<?= $search ?>" class="form-control collectionSearch" placeholder="<?= lang('search_journals_placeholder') ?>">
+					<input type="text" name="search" id="search" value="<?= $search ?>" class="form-control collectionSearch" placeholder="<?= lang('search_journals_placeholder') ?>" autofocus>
 					<button type="submit" class="btn btn-default btn-input"></button>
 				</form>
 			</div>
@@ -107,25 +107,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							</th>
 						</thead>						
 						<tbody>
-							<?php foreach ($publishers as $publisher) : ?>
-							<?php
-								$journals = $this->Journals_model->list_all_journals_by_publisher(addslashes($publisher->publisher_name), $this->input->get('status', true));
-							?>
-							<tr>
-								<td class="col-xs-12 col-sm-6 col-md-6">
-									<strong>
-										<?= $publisher->publisher_name ?>
-									</strong>
-								</td>
-								<td class="col-xs-12 col-sm-6 col-md-6">
-									<?php foreach ($journals as $journal) : ?>
-										<a href="<?= $journal->scielo_url ?>" <?php if ($journal->status == 'deceased') : ?>class="disabled"<?php endif; ?>>
-											<?= $journal->title ?>
-										</a>
-									<?php endforeach; ?>
-								</td>
-							</tr>
-							<?php endforeach; ?>
+							<?php if (empty($publishers)) : ?>
+								<tr>
+									<td colspan="2">
+										<strong class="journalTitle">
+											<?= lang('no_journals_found_message') ?>
+										</strong>
+									</td>
+								</tr>
+							<?php else : ?>
+								<?php foreach ($publishers as $publisher) : ?>
+								<?php
+									$journals = $this->Journals_model->list_all_journals_by_publisher(addslashes($publisher->publisher_name), $this->input->get('status', true));
+								?>
+								<tr>
+									<td class="col-xs-12 col-sm-6 col-md-6">
+										<strong>
+											<?= $publisher->publisher_name ?>
+										</strong>
+									</td>
+									<td class="col-xs-12 col-sm-6 col-md-6">
+										<?php foreach ($journals as $journal) : ?>
+											<a href="<?= $journal->scielo_url ?>" <?php if ($journal->status == 'deceased') : ?>class="disabled"<?php endif; ?>>
+												<?= $journal->title ?>
+											</a>
+										<?php endforeach; ?>
+									</td>
+								</tr>
+								<?php endforeach; ?>
+							<?php endif; ?>
 						</tbody>
 					</table>
 					<nav aria-label="Page navigation example">

@@ -189,7 +189,8 @@ class Journals_model extends CI_Model
         }
 
         if ($search) {
-            $this->db->like('title', $search);
+            $this->db->like('publisher_name', $search);
+            $this->db->or_like('title', $search);
         }
 
         $this->db->limit($limit, $offset);
@@ -211,7 +212,8 @@ class Journals_model extends CI_Model
         }
 
         if ($search) {
-            $this->db->like('title', $search);
+            $this->db->like('publisher_name', $search);
+            $this->db->or_like('title', $search);
         }
 
         $this->db->group_by('publisher_name');
