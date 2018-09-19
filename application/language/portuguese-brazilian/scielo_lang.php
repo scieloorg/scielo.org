@@ -73,3 +73,4 @@ $lang['message_success'] = 'Email enviado com sucesso.';
 $lang['share_email_subject'] = 'Compartilhamento de link SciELO';
 $lang['share_email_body'] = 'O usuário your_email compartilha este link: share_url, da SciELO<br>';
 $lang['no_journals_found_message'] = 'Nenhum periódico encontrado.';
+$lang['analytics_button_text'] = 'Veja mais dados no';
