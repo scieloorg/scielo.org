@@ -38,7 +38,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<input type="hidden" name="page" id="page" value="1">
 
 			<div class="search-box">
-				<input type="text" name="q" placeholder="<?= lang('search_placeholder') ?>">
+				<input type="text" name="q" placeholder="<?= lang('search_placeholder') ?>" autofocus>
 				<a href="javascript:$('#searchForm').submit();" class="btn btn-default btn-input"></a>
 				<a href="https://search.scielo.org/"><?= lang('search_link_text') ?></a>
 			</div>
