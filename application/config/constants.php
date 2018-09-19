@@ -193,6 +193,10 @@ define('SCIELO_JOURNAL_IDENTIFIERS_URL', 'http://articlemeta.scielo.org/api/v1/j
 define('SCIELO_JOURNAL_COLLECTION_URL', 'http://articlemeta.scielo.org/api/v1/journal/?collection={collection}&issn={code}&format=scieloorg');
 define('SCIELO_JOURNAL_LIMIT', 20);
 
+// URL for SciELO search and advance search form action.
+define('SCIELO_SEARCH_URL', 'https://search.scielo.org/');
+define('SCIELO_ADVANCED_SEARCH_URL', 'https://search.scielo.org/?q=*:*&lang=pt&count=15&from=0&output=site&sort=&format=summary&fb=&page=1&q=*&lang=pt&page=1');
+
 // API Path to query pages by slug.
 define('SLUG_API_PATH', WORDPRESS_API_PATH . WORDPRESS_PAGES_API_PATH . '/?slug=');
 define('SLUG_EN_API_PATH', WORDPRESS_API_PATH_EN . WORDPRESS_PAGES_API_PATH . '/?filter[meta_key]=_wpglobus_slug_en&filter[meta_value]=');
