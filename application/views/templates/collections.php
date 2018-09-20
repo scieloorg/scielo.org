@@ -22,7 +22,7 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                  <dd class="flag-<?= $journal->code ?>">
                     <a href="http://<?= $journal->domain ?>">
                         <h4><?= $journal->name[$lang_index] ?></h4>
-                        <span><?php if (array_key_exists('current', $journal->journal_count)): ?><?= $journal->journal_count['current'] ?> <?= lang('journals') ?> •<?php endif; ?> <?= $journal->document_count ?> <?= lang('articles') ?></span>
+                        <span><?php if (array_key_exists('current', $journal->journal_count)): ?><?= $journal->journal_count['current'] ?> <?= lang('journals') ?> •<?php endif; ?> <?php if(!empty($journal->document_count)):?><?= $journal->document_count ?> <?= lang('articles') ?><?php endif;?></span>
                     </a>
                 </dd>
             <?php endforeach; ?>
@@ -32,7 +32,7 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                 <dd class="flag-<?= $development->code ?>">
                     <a href="http://<?= $development->domain ?>">
                         <h4><?= $development->name[$lang_index] ?></h4>
-                        <span><?= !is_null($development->document_count) ? $development->document_count : '0' ?> <?= lang('titles') ?> • <?= $key ?> <?= lang('open_access') ?></span>
+                        <span><?php if (array_key_exists('current', $development->journal_count)): ?><?= $development->journal_count['current'] ?> <?= lang('journals') ?> •<?php endif; ?> <?php if(!empty($development->document_count)):?><?= $development->document_count ?> <?= lang('articles') ?><?php endif;?></span>
                     </a>
                 </dd>
             <?php endforeach; ?>
@@ -42,7 +42,7 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                 <dd class="scielo-books">
                     <a href="http://<?= $discontinued->domain ?>">
                         <h4><?= $discontinued->name[$lang_index] ?></h4>
-                        <span><?= !is_null($discontinued->document_count) ? $discontinued->document_count : '0' ?> <?= lang('titles') ?> • <?= $key ?> <?= lang('open_access') ?></span>
+                        <span><?php if (array_key_exists('deceased', $discontinued->journal_count)): ?><?= $discontinued->journal_count['deceased'] ?> <?= lang('journals') ?> •<?php endif; ?> <?php if(!empty($discontinued->document_count)):?><?= $discontinued->document_count ?> <?= lang('articles') ?><?php endif;?></span>
                     </a>
                 </dd>
             <?php endforeach; ?>
@@ -52,7 +52,7 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                 <dd class="scielo-books">
                     <a href="http://<?= $scientific->domain ?>">
                         <h4><?= $scientific->name[$lang_index] ?></h4>
-                        <span><?= !is_null($scientific->document_count) ? $scientific->document_count : '0' ?> <?= lang('titles') ?> • <?= $key ?> <?= lang('open_access') ?></span>
+                        <span><?php if (array_key_exists('current', $scientific->journal_count)): ?><?= $scientific->journal_count['current'] ?> <?= lang('journals') ?> •<?php endif; ?> <?php if(!empty($scientific->document_count)):?><?= $scientific->document_count ?> <?= lang('articles') ?><?php endif;?></span>
                     </a>
                 </dd>
             <?php endforeach; ?>
