@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+
+  webapp:
+      image: scieloorg/scielo.org:stable
+      restart: always
+      hostname: scielo_org_webapp
+      ports:
+          - "80:80"
+      environment:
+          # API Token Authentication.
+          - API_USR=
+          - API_PWD=
+          - SALT=
+
+          # SMPT Authentication credentials.
+          - SCIELO_SMTP_AUTH=false
+          - SMTP_SMTP_SECURE=
+          - SCIELO_SMTP_SERVER=
+          - SCIELO_SMTP_PORT=
+          - SCIELO_SMTP_USERNAME=
+          - SCIELO_SMTP_PASSWORD=
+
+          # Twitter API Authentication.
+          - TWITTER_ACCESS_TOKEN=
+          - TWITTER_ACCESS_TOKEN_SECRET=
+          - TWITTER_CONSUMER_KEY=
+          - TWITTER_CONSUMER_SECRET=
+          - TWITTER_SCREEN_NAME=RedeSciELO
+
+          # Google reCAPTCHA key.
+          - GOOGLE_RECAPTCHA_SITE_KEY=
+          - GOOGLE_RECAPTCHA_SERVER_KEY=
+          - GOOGLE_RECAPTCHA_VERIFY_URL=https://www.google.com/recaptcha/api/siteverify
+
+          # API Default Path. Very Important: Remember to add the last slash in this URL.
+          - WORDPRESS_URL=
