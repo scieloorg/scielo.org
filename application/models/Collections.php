@@ -67,14 +67,23 @@ class Collections
     private $discontinued_list = array();
 
     /**
+     * The user language selected.
+     *
+     * @var	string
+     */
+    private $language;
+
+    /**
      * Gets the about json array and call other setup methods.
      *
      * @param   array  $collection_json The rest API service data converted in an array.
      * @return	void
      */
-    public function initialize($collection_json)
+    public function initialize($collection_json, $language)
     {
         $this->collection_json = $collection_json;
+
+        $this->language = $language;
 
         $this->set_collection_lists();
     }
@@ -98,7 +107,9 @@ class Collections
     public function get_journals_list()
     {
 
-        return $this->journals_list;
+        ksort($this->journals_list);
+
+        return ($this->journals_list);
     }
 
     /**
@@ -109,7 +120,9 @@ class Collections
     public function get_development_list()
     {
 
-        return $this->development_list;
+        ksort($this->development_list);
+
+        return ($this->development_list);
     }
 
     /**
@@ -120,7 +133,9 @@ class Collections
     public function get_scientific_list()
     {
 
-        return $this->scientific_list;
+        ksort($this->scientific_list);
+
+        return ($this->scientific_list);
     }
 
     /**
@@ -130,8 +145,9 @@ class Collections
      */
     public function get_discontinued_list()
     {
+        ksort($this->discontinued_list);
 
-        return $this->discontinued_list;
+        return ($this->discontinued_list);
     }
 
     /**
@@ -147,25 +163,27 @@ class Collections
 
             if ($collection['type'] == 'journals') {
 
+                $index = $collection['name'][$this->language];
+
                 if ($collection['is_active']) {
 
                     switch ($collection['status']) {
 
-                        case 'certified': // Section 'Coleções certificadas'                        
-                            $this->journals_list[] = (object)$collection;
+                        case 'certified': // Section 'Coleções certificadas'  
+                            $this->journals_list[$index] = (object)$collection;
                             break;
 
                         case 'diffusion': // Section 'Coleção de divulgação científica'
-                            $this->scientific_list[] = (object)$collection;
+                            $this->scientific_list[$index] = (object)$collection;
                             break;
 
                         case 'development': // Section 'Coleção em desenvolvimento'
-                            $this->development_list[] = (object)$collection;
+                            $this->development_list[$index] = (object)$collection;
                             break;
                     }
 
                 } else {
-                    $this->discontinued_list[] = (object)$collection;
+                    $this->discontinued_list[$index] = (object)$collection;
                 }
 
             } elseif ($collection['type'] == 'books') {

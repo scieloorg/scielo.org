@@ -470,7 +470,7 @@ class Home extends CI_Controller
 
 		$collections = $this->put_content_in_cache('collections', SCIELO_COLLECTIONS_URL, FOUR_HOURS_TIMEOUT);
 
-		$this->Collections->initialize($collections);
+		$this->Collections->initialize($collections, $this->language);
 	}
 
 	/**
