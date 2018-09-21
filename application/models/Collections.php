@@ -162,10 +162,6 @@ class Collections
                         case 'development': // Section 'Coleção em desenvolvimento'
                             $this->development_list[] = (object)$collection;
                             break;
-
-                        case 'books': // Section 'Scielo Livros'
-                            $this->books_list[] = (object)$collection;
-                            break;
                     }
 
                 } else {
