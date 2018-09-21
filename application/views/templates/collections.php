@@ -12,7 +12,6 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                 <dd class="scielo-books">
                     <a href="http://<?= $book->domain ?>">
                         <h4><?= $book->name[$lang_index] ?></h4>
-                        <span><?= !is_null($book->document_count) ? $book->document_count : '0' ?> <?= lang('titles') ?> • <?= $key ?> <?= lang('open_access') ?></span>
                     </a>
                 </dd>
             <?php endforeach; ?> 
