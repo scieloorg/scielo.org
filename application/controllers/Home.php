@@ -692,18 +692,21 @@ class Home extends CI_Controller
 		switch ($this->language) {
 
 			case SCIELO_LANG:
+				setlocale(LC_ALL, 'pt_BR.UTF8');
 				$this->lang->load($languages_translated_files, 'portuguese-brazilian');
 				$available_languages[] = $english;
 				$available_languages[] = $spanish;
 				break;
 
 			case SCIELO_EN_LANG:
+				setlocale(LC_ALL, 'en_US.UTF8');
 				$this->lang->load($languages_translated_files, 'english');
 				$available_languages[] = $portuguese;
 				$available_languages[] = $spanish;
 				break;
 
 			case SCIELO_ES_LANG:
+				setlocale(LC_ALL, 'es_ES.UTF-8');
 				$this->lang->load($languages_translated_files, 'spanish');
 				$available_languages[] = $english;
 				$available_languages[] = $portuguese;

@@ -107,7 +107,7 @@ class Collections
     public function get_journals_list()
     {
 
-        ksort($this->journals_list);
+        ksort($this->journals_list, SORT_LOCALE_STRING);
 
         return ($this->journals_list);
     }
@@ -120,7 +120,7 @@ class Collections
     public function get_development_list()
     {
 
-        ksort($this->development_list);
+        ksort($this->development_list, SORT_LOCALE_STRING);
 
         return ($this->development_list);
     }
@@ -133,7 +133,7 @@ class Collections
     public function get_scientific_list()
     {
 
-        ksort($this->scientific_list);
+        ksort($this->scientific_list, SORT_LOCALE_STRING);
 
         return ($this->scientific_list);
     }
@@ -145,7 +145,7 @@ class Collections
      */
     public function get_discontinued_list()
     {
-        ksort($this->discontinued_list);
+        ksort($this->discontinued_list, SORT_LOCALE_STRING);
 
         return ($this->discontinued_list);
     }
