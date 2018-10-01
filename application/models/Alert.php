@@ -190,7 +190,7 @@ class Alert
 	 */
     private function set_visibility()
     {
-        $this->show = (!isset($alert['code']) || $alert['code'] != 'rest_forbidden');
+        $this->show = (!isset($this->alert_json['code']) || $this->alert_json['code'] != 'rest_forbidden');
     }
 
     /**
