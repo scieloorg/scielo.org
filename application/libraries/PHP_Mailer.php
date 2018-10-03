@@ -10,6 +10,9 @@
  */
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 /**
  * PHP_MAiler Class
  *
@@ -24,7 +27,9 @@ class PHP_Mailer
 
     public function __construct()
     {
-        require_once(BASEPATH . "../phpmailer/PHPMailerAutoload.php");
+        require BASEPATH . '../PHPMailer-6.0.5/src/Exception.php';
+        require BASEPATH . '../PHPMailer-6.0.5/src/PHPMailer.php';
+        require BASEPATH . '../PHPMailer-6.0.5/src/SMTP.php';
     }
 
 }
