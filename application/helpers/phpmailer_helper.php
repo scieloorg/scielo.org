@@ -22,11 +22,11 @@ if (!function_exists('get_phpmailer')) {
     function get_phpmailer()
     {
 
-        $mail = new PHPMailer();
-        $mail->IsSMTP();
-        $mail->IsHTML(true);
+        $mail = new PHPMailer\PHPMailer\PHPMailer;
+        $mail->isSMTP();
+        $mail->isHTML(true);
 
-        $mail->SMTPDebug = 0;
+        $mail->SMTPDebug = 2;
         $mail->Debugoutput = 'html';
         $mail->SMTPAuth = SCIELO_SMTP_AUTH;  // enable SMTP authentication
         $mail->SMTPSecure = SMTP_SMTP_SECURE; // Use tls
