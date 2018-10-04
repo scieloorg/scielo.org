@@ -3,7 +3,9 @@ version: '2'
 services:
 
   webapp:
-      image: scieloorg/scielo.org:stable
+      build:
+          context: .
+          dockerfile: ./Dockerfile
       restart: always
       hostname: scielo_org_webapp
       ports:
