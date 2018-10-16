@@ -209,7 +209,7 @@ class Home extends CI_Controller
 		}
 
 		if ($search) {
-			$base_url .= 'search=' . $search;
+			$base_url .= '&search=' . $search;
 		}
 
 		$config['base_url'] = $base_url;
@@ -273,7 +273,7 @@ class Home extends CI_Controller
 		}
 
 		if ($search) {
-			$base_url .= 'search=' . $search;
+			$base_url .= '&search=' . $search;
 		}
 
 		$config['base_url'] = $base_url;
@@ -336,7 +336,7 @@ class Home extends CI_Controller
 		}
 
 		if ($search) {
-			$base_url .= 'search=' . $search;
+			$base_url .= '&search=' . $search;
 		}
 
 		$config['base_url'] = $base_url;
