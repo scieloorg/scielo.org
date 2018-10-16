@@ -187,7 +187,7 @@ class Home extends CI_Controller
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
 
-		if ($export == 'csv' || $export == 'xls') {
+		if ($export == 'csv') {
 
 			// Export all journals.
 			$journals = $this->Journals_model->list_all_journals(PHP_INT_MAX, 0, $status, $search);
@@ -209,7 +209,7 @@ class Home extends CI_Controller
 		}
 
 		if ($search) {
-			$base_url .= 'search=' . $search;
+			$base_url .= '&search=' . $search;
 		}
 
 		$config['base_url'] = $base_url;
@@ -251,7 +251,7 @@ class Home extends CI_Controller
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
 
-		if ($export == 'csv' || $export == 'xls') {
+		if ($export == 'csv') {
 
 			// Export all journals.
 			$journals = $this->Journals_model->list_all_journals(PHP_INT_MAX, 0, $status, $search);
@@ -273,7 +273,7 @@ class Home extends CI_Controller
 		}
 
 		if ($search) {
-			$base_url .= 'search=' . $search;
+			$base_url .= '&search=' . $search;
 		}
 
 		$config['base_url'] = $base_url;
@@ -315,7 +315,7 @@ class Home extends CI_Controller
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
 
-		if ($export == 'csv' || $export == 'xls') {
+		if ($export == 'csv') {
 
 			// Export all journals.
 			$journals = $this->Journals_model->list_all_journals_by_subject_area($id_subject_area, PHP_INT_MAX, 0, $status, $search);
@@ -336,7 +336,7 @@ class Home extends CI_Controller
 		}
 
 		if ($search) {
-			$base_url .= 'search=' . $search;
+			$base_url .= '&search=' . $search;
 		}
 
 		$config['base_url'] = $base_url;
@@ -501,8 +501,8 @@ class Home extends CI_Controller
 
 		$total_published_articles = 0;
 
-		foreach ($this->Collections->get_scientific_list() as $scientific) {
-			$total_published_articles += $scientific->document_count;
+		foreach ($this->Collections->get_others_list() as $other) {
+			$total_published_articles += $other->document_count;
 		}
 
 		$this->load->vars('total_collections', $total_collections);

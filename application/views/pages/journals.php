@@ -115,7 +115,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<th width="30%">
 								<div class="downloadList">
 									<span><?= lang('list_download') ?></span>
-									<a href="<?= $base_url ?>&export=xls" target="_blank" data-toggle="tooltip" data-placement="auto" title="" data-original-title="<?= lang('export_to_xls_tooltip') ?>" class="glyphBtn downloadXLS showTooltip"></a>
 									<a href="<?= $base_url ?>&export=csv" target="_blank" data-toggle="tooltip" data-placement="auto" title="" data-original-title="<?= lang('export_to_cvs_tooltip') ?>" class="glyphBtn downloadCSV showTooltip"></a>
 								</div>
 							</th>
@@ -155,21 +154,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </section>
 
 <!-- footer -->
-<?php $this->load->view('templates/footer'); ?>
+<?php 
+$this->load->view('templates/footer');
+$this->load->view('templates/journals-query-filter'); 
+?>
 <!-- ./footer -->
 
-<script>
-  var current_url = '<?= current_url() ?>';
 
-  $('#query_filter_all').on('change', function () {
-    window.location = current_url;
-  });
-
-  $('#query_filter_current').on('change', function () {
-    window.location = current_url + '?status=current';
-  });
-
-  $('#query_filter_deceased').on('change', function () {
-    window.location = current_url + '?status=deceased';
-  })
-</script>
