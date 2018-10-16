@@ -46,11 +46,11 @@ class Collections
     private $books_list = array();
 
     /**
-     * List of all the data used in the collections scientific section.
+     * List of all the data used in the others collections section.
      *
      * @var	array
      */
-    private $scientific_list = array();
+    private $others_list = array();
 
     /**
      * List of all the data used in the collections journals section.
@@ -126,16 +126,16 @@ class Collections
     }
 
     /**
-     * Returns the scientific list.
+     * Returns the others list.
      *
      * @return	array
      */
-    public function get_scientific_list()
+    public function get_others_list()
     {
 
-        ksort($this->scientific_list, SORT_LOCALE_STRING);
+        ksort($this->others_list, SORT_LOCALE_STRING);
 
-        return ($this->scientific_list);
+        return ($this->others_list);
     }
 
     /**
@@ -173,8 +173,8 @@ class Collections
                             $this->journals_list[$index] = (object)$collection;
                             break;
 
-                        case 'diffusion': // Section 'Coleção de divulgação científica'
-                            $this->scientific_list[$index] = (object)$collection;
+                        case 'diffusion': // Section 'Outras'
+                            $this->others_list[$index] = (object)$collection;
                             break;
 
                         case 'development': // Section 'Coleção em desenvolvimento'
