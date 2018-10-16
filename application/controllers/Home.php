@@ -209,7 +209,7 @@ class Home extends CI_Controller
 		}
 
 		if ($search) {
-			$base_url .= 'search=' . $search;
+			$base_url .= '&search=' . $search;
 		}
 
 		$config['base_url'] = $base_url;
@@ -273,7 +273,7 @@ class Home extends CI_Controller
 		}
 
 		if ($search) {
-			$base_url .= 'search=' . $search;
+			$base_url .= '&search=' . $search;
 		}
 
 		$config['base_url'] = $base_url;
@@ -336,7 +336,7 @@ class Home extends CI_Controller
 		}
 
 		if ($search) {
-			$base_url .= 'search=' . $search;
+			$base_url .= '&search=' . $search;
 		}
 
 		$config['base_url'] = $base_url;
@@ -501,8 +501,8 @@ class Home extends CI_Controller
 
 		$total_published_articles = 0;
 
-		foreach ($this->Collections->get_scientific_list() as $scientific) {
-			$total_published_articles += $scientific->document_count;
+		foreach ($this->Collections->get_others_list() as $other) {
+			$total_published_articles += $other->document_count;
 		}
 
 		$this->load->vars('total_collections', $total_collections);

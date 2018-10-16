@@ -118,8 +118,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<?php else : ?>
 								<?php foreach ($publishers as $publisher) : ?>
 								<?php
-									$journals = $this->Journals_model->list_all_journals_by_publisher(addslashes($publisher->publisher_name), $this->input->get('status', true));
-								?>
+							$journals = $this->Journals_model->list_all_journals_by_publisher(addslashes($publisher->publisher_name), $this->input->get('status', true));
+							?>
 								<tr>
 									<td class="col-xs-12 col-sm-6 col-md-6">
 										<strong>
@@ -149,21 +149,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </section>
 
 <!-- footer -->
-<?php $this->load->view('templates/footer'); ?>
+<?php 
+$this->load->view('templates/footer');
+$this->load->view('templates/journals-query-filter');
+?>
 <!-- ./footer -->
-
-<script>
-  var current_url = '<?= current_url() ?>';
-
-  $('#query_filter_all').on('change', function () {
-    window.location = current_url;
-  });
-
-  $('#query_filter_current').on('change', function () {
-    window.location = current_url + '?status=current';
-  });
-
-  $('#query_filter_deceased').on('change', function () {
-    window.location = current_url + '?status=deceased';
-  })
-</script>

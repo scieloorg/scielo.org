@@ -155,21 +155,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </section>
 
 <!-- footer -->
-<?php $this->load->view('templates/footer'); ?>
+<?php 
+$this->load->view('templates/footer');
+$this->load->view('templates/journals-query-filter'); 
+?>
 <!-- ./footer -->
 
-<script>
-  var current_url = '<?= current_url() ?>';
 
-  $('#query_filter_all').on('change', function () {
-    window.location = current_url;
-  });
-
-  $('#query_filter_current').on('change', function () {
-    window.location = current_url + '?status=current';
-  });
-
-  $('#query_filter_deceased').on('change', function () {
-    window.location = current_url + '?status=deceased';
-  })
-</script>
