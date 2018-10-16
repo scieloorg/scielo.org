@@ -15,7 +15,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 $lang['read_more_text'] = 'Read more';
 $lang['twitter_text'] = 'Follow us on <strong>Twitter @RedeSciELO</strong>';
-$lang['search_placeholder'] = 'Search articles...';
+$lang['search_placeholder'] = 'Search articles: Enter one or more words';
 $lang['search_link_text'] = 'Advanced Search';
 $lang['ebook_pdf'] = 'PDF Book';
 $lang['ebook_epub'] = 'ePUB Book';
