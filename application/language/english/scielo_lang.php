@@ -52,7 +52,6 @@ $lang['deceaseds'] = 'Discontinued';
 $lang['search_journals_placeholder'] = 'Enter one or more words to filter the list';
 $lang['list_download'] = 'download list';
 $lang['subject'] = 'Subject';
-$lang['export_to_xls_tooltip'] = 'List in file for Excel';
 $lang['export_to_cvs_tooltip'] = 'List in CSV file';
 $lang['publisher'] = 'Publisher';
 $lang['collections'] = 'collections';
