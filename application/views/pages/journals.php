@@ -97,6 +97,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			</div>
 			<div class="col-md-6">
 				<form action="<?= current_url() ?>">
+					<input type="hidden" name="limit" value="<?= $this->input->get('limit', true) ?>">
 					<input type="text" name="search" id="search" value="<?= $search ?>" class="form-control collectionSearch" placeholder="<?= lang('search_journals_placeholder') ?>" autofocus>
 					<button type="submit" class="btn btn-default btn-input"></button>
 				</form>
@@ -143,9 +144,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<?php endif; ?>
 						</tbody>
 					</table>
-					<nav aria-label="Page navigation example">
-						<?= $this->pagination->create_links(); ?>
-					</nav>
+					<div class="row">
+						<div class="col-md-6">
+							<nav aria-label="Page navigation example">
+								<?= $this->pagination->create_links(); ?>
+							</nav>
+						</div>
+						<div class="col-md-6 text-right">
+							<?php if (!empty($journals)) : ?>
+								<?php $this->load->view('templates/journals-filter-limit'); ?>
+							<?php endif; ?>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

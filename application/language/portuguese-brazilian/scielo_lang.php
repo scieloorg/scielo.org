@@ -73,3 +73,5 @@ $lang['share_email_subject'] = 'Compartilhamento de link SciELO';
 $lang['share_email_body'] = 'O usuário your_email compartilha este link: share_url, da SciELO<br>';
 $lang['no_journals_found_message'] = 'Nenhum periódico encontrado.';
 $lang['analytics_button_text'] = 'Veja mais dados no';
+$lang['journals_page_limit'] = 'Exibindo';
+$lang['journals_items_by_page'] = 'itens por página';
