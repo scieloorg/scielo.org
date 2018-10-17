@@ -183,6 +183,12 @@ class Home extends CI_Controller
 			$offset = 0;
 		}
 
+		$limit = $this->input->get('limit', true);
+
+		if (!$limit) {
+			$limit = SCIELO_JOURNAL_LIMIT;
+		}
+
 		$status = $this->input->get('status', true);
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
@@ -198,14 +204,14 @@ class Home extends CI_Controller
 			return;
 		}
 
-		$journals = $this->Journals_model->list_all_journals(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+		$journals = $this->Journals_model->list_all_journals($limit, $offset, $status, $search);
 		$total_journals = $this->Journals_model->total_journals($status, $search);
 
 		$journals_links = $this->get_journals_links();
-		$base_url = $journals_links[$this->language]['list-by-alphabetical-order'] . '/?';
+		$base_url = $journals_links[$this->language]['list-by-alphabetical-order'] . "/?limit={$limit}";
 
 		if ($status) {
-			$base_url .= 'status=' . $status;
+			$base_url .= '&status=' . $status;
 		}
 
 		if ($search) {
@@ -214,7 +220,7 @@ class Home extends CI_Controller
 
 		$config['base_url'] = $base_url;
 		$config['total_rows'] = $total_journals;
-		$config['per_page'] = SCIELO_JOURNAL_LIMIT;
+		$config['per_page'] = $limit;
 		$config['first_link'] = lang('pagination_first_link');
 		$config['last_link'] = lang('pagination_last_link');
 
@@ -247,6 +253,12 @@ class Home extends CI_Controller
 			$offset = 0;
 		}
 
+		$limit = $this->input->get('limit', true);
+
+		if (!$limit) {
+			$limit = SCIELO_JOURNAL_LIMIT;
+		}
+
 		$status = $this->input->get('status', true);
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
@@ -262,14 +274,14 @@ class Home extends CI_Controller
 			return;
 		}
 
-		$publishers = $this->Journals_model->list_all_publishers(SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+		$publishers = $this->Journals_model->list_all_publishers($limit, $offset, $status, $search);
 		$total_publishers = $this->Journals_model->total_publishers($status, $search);
 
 		$journals_links = $this->get_journals_links();
-		$base_url = $journals_links[$this->language]['list-by-publishers'] . '/?';
+		$base_url = $journals_links[$this->language]['list-by-publishers'] . "/?limit={$limit}";
 
 		if ($status) {
-			$base_url .= 'status=' . $status;
+			$base_url .= '&status=' . $status;
 		}
 
 		if ($search) {
@@ -278,7 +290,7 @@ class Home extends CI_Controller
 
 		$config['base_url'] = $base_url;
 		$config['total_rows'] = $total_publishers;
-		$config['per_page'] = SCIELO_JOURNAL_LIMIT;
+		$config['per_page'] = $limit;
 		$config['first_link'] = lang('pagination_first_link');
 		$config['last_link'] = lang('pagination_last_link');
 
@@ -311,6 +323,12 @@ class Home extends CI_Controller
 			$offset = 0;
 		}
 
+		$limit = $this->input->get('limit', true);
+
+		if (!$limit) {
+			$limit = SCIELO_JOURNAL_LIMIT;
+		}
+
 		$status = $this->input->get('status', true);
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
@@ -326,13 +344,13 @@ class Home extends CI_Controller
 			return;
 		}
 
-		$journals = $this->Journals_model->list_all_journals_by_subject_area($id_subject_area, SCIELO_JOURNAL_LIMIT, $offset, $status, $search);
+		$journals = $this->Journals_model->list_all_journals_by_subject_area($id_subject_area, $limit, $offset, $status, $search);
 		$total_journals = $this->Journals_model->total_journals_by_subject_area($id_subject_area, $status, $search);
 		$journals_links = $this->get_journals_links();
-		$base_url = $journals_links[$this->language]['list-by-subject-area'] . '/' . $id_subject_area . '/' . $subject_area . '/?';
+		$base_url = $journals_links[$this->language]['list-by-subject-area'] . '/' . $id_subject_area . '/' . $subject_area . "/?limit={$limit}";
 
 		if ($status) {
-			$base_url .= 'status=' . $status;
+			$base_url .= '&status=' . $status;
 		}
 
 		if ($search) {
@@ -341,7 +359,7 @@ class Home extends CI_Controller
 
 		$config['base_url'] = $base_url;
 		$config['total_rows'] = $total_journals;
-		$config['per_page'] = SCIELO_JOURNAL_LIMIT;
+		$config['per_page'] = $limit;
 		$config['first_link'] = lang('pagination_first_link');
 		$config['last_link'] = lang('pagination_last_link');
 

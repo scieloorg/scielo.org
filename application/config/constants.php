@@ -191,7 +191,7 @@ define('SCIELO_COLLECTIONS_URL', 'http://articlemeta.scielo.org/api/v1/collectio
 // URL for the SciELO Journals identifiers and the list limit.
 define('SCIELO_JOURNAL_IDENTIFIERS_URL', 'http://articlemeta.scielo.org/api/v1/journal/identifiers/');
 define('SCIELO_JOURNAL_COLLECTION_URL', 'http://articlemeta.scielo.org/api/v1/journal/?collection={collection}&issn={code}&format=scieloorg');
-define('SCIELO_JOURNAL_LIMIT', 20);
+define('SCIELO_JOURNAL_LIMIT', 50);
 
 // URL for SciELO search and advance search form action.
 define('SCIELO_SEARCH_URL', 'https://search.scielo.org/');
