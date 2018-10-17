@@ -8898,7 +8898,7 @@ section {
         display: none; } }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/html\/scielo-codeigniter\/static\/sass\/style\.scss}line{font-family:\000031883}}
-.list-journals .journals-limit, .list-publisher .publishers-limit {
+.list-journals .journals-limit, .list-publisher .journals-limit {
   display: inline-block;
   padding-left: 0;
   margin: 20px 0;

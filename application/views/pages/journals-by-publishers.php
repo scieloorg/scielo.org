@@ -145,17 +145,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</div>
 						<div class="col-md-6 text-right">
 							<?php if (!empty($publishers)) : ?>
-								<form class="form-inline">
-									<div class="form-group">
-										<label for="limit">Exibindo</label>
-										<select name="limit" id="limit" class="form-control publishers-limit">
-											<option value="50">50</option>
-											<option value="100">100</option>
-											<option value="200">200</option>
-										</select>
-										<label for="limit">itens por página</label>
-									</div>
-								</form>	
+								<?php $this->load->view('templates/journals-filter-limit'); ?>
 							<?php endif; ?>						
 						</div>
 					</div>
