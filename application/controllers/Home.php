@@ -187,7 +187,7 @@ class Home extends CI_Controller
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
 
-		if ($export == 'csv' || $export == 'xls') {
+		if ($export == 'csv') {
 
 			// Export all journals.
 			$journals = $this->Journals_model->list_all_journals(PHP_INT_MAX, 0, $status, $search);
@@ -251,7 +251,7 @@ class Home extends CI_Controller
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
 
-		if ($export == 'csv' || $export == 'xls') {
+		if ($export == 'csv') {
 
 			// Export all journals.
 			$journals = $this->Journals_model->list_all_journals(PHP_INT_MAX, 0, $status, $search);
@@ -315,7 +315,7 @@ class Home extends CI_Controller
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
 
-		if ($export == 'csv' || $export == 'xls') {
+		if ($export == 'csv') {
 
 			// Export all journals.
 			$journals = $this->Journals_model->list_all_journals_by_subject_area($id_subject_area, PHP_INT_MAX, 0, $status, $search);

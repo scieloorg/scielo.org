@@ -7,15 +7,6 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
 <div class="row">
     <div class="col-sm-12 col-md-12">
         <dl>
-            <dt><h3><?= lang('books_list') ?></h3></dt>
-            <?php foreach ($this->Collections->get_books_list() as $key => $book) : ?>
-                <dd class="scielo-books scielo-books-no-data">
-                    <a href="http://<?= $book->domain ?>">
-                        <h4><?= $book->name[$lang_index] ?></h4>
-                    </a>
-                </dd>
-            <?php endforeach; ?> 
-
             <dt><h3><?= lang('journals_list') ?></h3></dt>
             <?php foreach ($this->Collections->get_journals_list() as $key => $journal) : ?>
             <?php
@@ -61,17 +52,26 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                 </dd>
             <?php endforeach; ?>
 
-            <dt><h3><?= lang('scientific_list') ?></h3></dt>
-            <?php foreach ($this->Collections->get_scientific_list() as $key => $scientific) : ?>
+            <dt><h3><?= lang('books') ?></h3></dt>
+            <?php foreach ($this->Collections->get_books_list() as $key => $book) : ?>
+                <dd class="scielo-books scielo-books-no-data">
+                    <a href="http://<?= $book->domain ?>">
+                        <h4><?= $book->name[$lang_index] ?></h4>
+                    </a>
+                </dd>
+            <?php endforeach; ?> 
+
+            <dt><h3><?= lang('others') ?></h3></dt>
+            <?php foreach ($this->Collections->get_others_list() as $key => $other) : ?>
             <?php
-            $has_journal_count = array_key_exists('current', $scientific->journal_count);
-            $has_document_count = !empty($scientific->document_count);
+            $has_journal_count = array_key_exists('current', $other->journal_count);
+            $has_document_count = !empty($other->document_count);
             $scielo_books_no_data_css = (!$has_journal_count && !$has_document_count) ? 'scielo-books-no-data' : null;
             ?>
                 <dd class="scielo-books <?= $scielo_books_no_data_css ?>">
-                    <a href="http://<?= $scientific->domain ?>">
-                        <h4><?= $scientific->name[$lang_index] ?></h4>
-                        <span><?php if ($has_journal_count) : ?><?= $scientific->journal_count['current'] ?> <?= lang('journals') ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $scientific->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
+                    <a href="http://<?= $other->domain ?>">
+                        <h4><?= $other->name[$lang_index] ?></h4>
+                        <span><?php if ($has_journal_count) : ?><?= $other->journal_count['current'] ?> <?= lang('journals') ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $other->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
                     </a>
                 </dd>
             <?php endforeach; ?>
