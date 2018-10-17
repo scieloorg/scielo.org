@@ -1,19 +1,17 @@
 <script>
-
   var current_url = '<?= current_url() ?>';
-  
+  var search = '<?= $this->input->get('search', true) ?>'; 	
+    
   $('#query_filter_all').on('change', function () {
-    query_filter(current_url, '', '');
+    query_filter(current_url, '', search);
   });
 
   $('#query_filter_current').on('change', function () {
-	var search = '<?= $this->input->get('search', true) ?>'; 
-	query_filter(current_url, 'current', search);	
+    query_filter(current_url, 'current', search);	
   });
 
   $('#query_filter_deceased').on('change', function () {
-    var search = '<?= $this->input->get('search', true) ?>'; 	
-	query_filter(current_url, 'deceased', search);
+    query_filter(current_url, 'deceased', search);
   })
 
   function query_filter(current_url, status, search) {
