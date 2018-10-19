@@ -13,13 +13,13 @@
 
   $('#query_filter_deceased').on('change', function () {
     query_filter(current_url, 'deceased', search, limit);
-  })
+  });
 
   $('#limit').on('change', function () {
     var status = '<?= $this->input->get('status', true) ?>';
     limit = $(this).val(); 
     query_filter(current_url, status, search, limit);
-  })
+  });
 
   function query_filter(current_url, status, search, limit) {
 
