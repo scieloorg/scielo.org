@@ -3,11 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 
 <!-- header -->
-<?php $this->load->view('templates/header'); ?>
+<?php $this->load->view('partials/header'); ?>
 <!-- ./header -->
 
 <!-- alert -->
-<?php $this->load->view('templates/alert'); ?>
+<?php $this->load->view('partials/alert'); ?>
 <!-- ./alert -->
 
 <div class="container">
@@ -47,11 +47,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<!-- ./capa -->
 
 	<!-- tabs -->
-	<?php $this->load->view('templates/tabs'); ?>
+	<?php $this->load->view('partials/tabs'); ?>
 	<!-- ./tabs -->
 	
 </div>
 
 <!-- footer -->
-<?php $this->load->view('templates/footer'); ?>
+<?php $this->load->view('partials/footer'); ?>
 <!-- ./footer -->

@@ -132,4 +132,4 @@ $autoload['language'] = array('scielo');
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('PageMetadata', 'Journals_model', 'Alert', 'TabGroup', 'Footer', 'Collections');
+$autoload['model'] = array('PageMetadata', 'Journals', 'Alert', 'TabGroup', 'Footer', 'Collections');

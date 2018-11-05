@@ -75,3 +75,6 @@ $lang['no_journals_found_message'] = 'Ninguna revista encontrada.';
 $lang['analytics_button_text'] = 'Ver más datos en';
 $lang['journals_page_limit'] = 'Viendo';
 $lang['journals_items_by_page'] = 'items por página';
+$lang['filter_by_letter'] = 'Filtrar por:';
+$lang['select_letter'] = 'Seleccionar';
+$lang['letter'] = 'Letra';

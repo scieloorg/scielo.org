@@ -75,3 +75,6 @@ $lang['no_journals_found_message'] = 'Nenhum periódico encontrado.';
 $lang['analytics_button_text'] = 'Veja mais dados no';
 $lang['journals_page_limit'] = 'Exibindo';
 $lang['journals_items_by_page'] = 'itens por página';
+$lang['filter_by_letter'] = 'Filtrar por:';
+$lang['select_letter'] = 'Selecione';
+$lang['letter'] = 'Letra';

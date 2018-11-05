@@ -141,27 +141,27 @@ class TabGroup
             switch ($tab_content_type) {
                 case 1:
                     $tabContent['ID'] = 'tab-colecoes';
-                    $tabContent['content'] = 'templates/collections';
+                    $tabContent['content'] = 'partials/collections';
                     break;
 
                 case 2:
                     $tabContent['ID'] = 'tab-periodicos';
-                    $tabContent['content'] = 'templates/journals';
+                    $tabContent['content'] = 'partials/journals';
                     break;
 
                 case 3:
                     $tabContent['ID'] = 'tab-numeros';
-                    $tabContent['content'] = 'templates/analytics';
+                    $tabContent['content'] = 'partials/analytics';
                     break;
 
                 case 4:
                     $tabContent['ID'] = 'tab-blog';
-                    $tabContent['content'] = 'templates/blog';
+                    $tabContent['content'] = 'partials/blog';
                     break;
 
                 case 5:
                     $tabContent['ID'] = 'tab-twitter';
-                    $tabContent['content'] = 'templates/twitter';
+                    $tabContent['content'] = 'partials/twitter';
                     break;
 
                 default:

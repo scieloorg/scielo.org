@@ -75,3 +75,6 @@ $lang['no_journals_found_message'] = 'No journal found.';
 $lang['analytics_button_text'] = 'See more data on';
 $lang['journals_page_limit'] = 'Showing';
 $lang['journals_items_by_page'] = 'items per page';
+$lang['filter_by_letter'] = 'Filter by:';
+$lang['select_letter'] = 'Select';
+$lang['letter'] = 'Letter';

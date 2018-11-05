@@ -12,7 +12,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
- * Journals_model Class
+ * Journals Class
  *
  * This class define a public api for running queries against the local database.
  *
@@ -20,7 +20,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @author		SciELO - Scientific Electronic Library Online 
  * @link		https://www.scielo.org/
  */
-class Journals_model extends CI_Model
+class Journals extends CI_Model
 {
 
     private $subject_areas_table = 'subject_areas';
@@ -69,9 +69,10 @@ class Journals_model extends CI_Model
      * @param   int $offset
      * @param   string $status
      * @param   string $search
+     * @param   string $letter
      * @return	array
      */
-    public function list_all_journals($limit, $offset, $status = false, $search = false)
+    public function list_all_journals($limit, $offset, $status = false, $search = false, $letter = false)
     {
 
         $this->db->from($this->journals_table);
@@ -82,6 +83,10 @@ class Journals_model extends CI_Model
 
         if ($search) {
             $this->db->like('title_search', remove_accents($search));
+        }
+
+        if ($letter) {
+            $this->db->like('title_search', $letter, 'after');
         }
 
         $this->db->limit($limit, $offset);
@@ -96,9 +101,10 @@ class Journals_model extends CI_Model
      *
      * @param   string $status
      * @param   string $search
+     * @param   string $letter
      * @return	int
      */
-    public function total_journals($status = false, $search = false)
+    public function total_journals($status = false, $search = false, $letter = false)
     {
 
         if ($status) {
@@ -107,6 +113,10 @@ class Journals_model extends CI_Model
 
         if ($search) {
             $this->db->like('title_search', remove_accents($search));
+        }
+
+        if ($letter) {
+            $this->db->like('title_search', $letter, 'after');
         }
 
         $this->db->group_by('title_search');
@@ -122,9 +132,10 @@ class Journals_model extends CI_Model
      * @param   int $offset
      * @param   string $status
      * @param   string $search
+     * @param   string $letter
      * @return	array
      */
-    public function list_all_journals_by_subject_area($id_subject_area, $limit, $offset, $status = false, $search = false)
+    public function list_all_journals_by_subject_area($id_subject_area, $limit, $offset, $status = false, $search = false, $letter = false)
     {
 
         $this->db->from($this->journals_table);
@@ -137,6 +148,10 @@ class Journals_model extends CI_Model
 
         if ($search) {
             $this->db->like('title_search', remove_accents($search));
+        }
+
+        if ($letter) {
+            $this->db->like('title_search', $letter, 'after');
         }
 
         $this->db->limit($limit, $offset);
@@ -152,9 +167,10 @@ class Journals_model extends CI_Model
      * @param   int $id_subject_area
      * @param   string $status
      * @param   string $search
+     * @param   string $letter
      * @return	int
      */
-    public function total_journals_by_subject_area($id_subject_area, $status = false, $search = false)
+    public function total_journals_by_subject_area($id_subject_area, $status = false, $search = false, $letter = false)
     {
 
         $this->db->where('id_subject_area', $id_subject_area);
@@ -165,6 +181,10 @@ class Journals_model extends CI_Model
 
         if ($search) {
             $this->db->like('title_search', remove_accents($search));
+        }
+
+        if ($letter) {
+            $this->db->like('title_search', $letter, 'after');
         }
 
         $this->db->join($this->subject_areas_journals_table, $this->journals_table . '.id_journal=' . $this->subject_areas_journals_table . '.id_journal', 'left');
@@ -180,11 +200,12 @@ class Journals_model extends CI_Model
      * @param   int $offset
      * @param   string $status
      * @param   string $search
+     * @param   string $letter
      * @return	array
      */
-    public function list_all_publishers($limit, $offset, $status = false, $search = false) {
+    public function list_all_publishers($limit, $offset, $status = false, $search = false, $letter = false) {
 
-        $this->db->select('publisher_name');
+        $this->db->select('trim(publisher_name) as publisher_name');
         $this->db->from($this->journals_table);
 
         if ($status) {
@@ -196,9 +217,13 @@ class Journals_model extends CI_Model
             $this->db->or_like('title_search', remove_accents($search));
         }
 
+        if ($letter) {
+            $this->db->like('publisher_name', $letter, 'after');
+        }
+
         $this->db->limit($limit, $offset);
         $this->db->group_by('publisher_name');
-        $this->db->order_by('publisher_name', 'ASC');
+        $this->db->order_by('trim(publisher_name)', 'ASC');
 
         return $this->get_results_obj();
     }
@@ -208,9 +233,10 @@ class Journals_model extends CI_Model
      *
      * @param   string $status
      * @param   string $search
+     * @param   string $letter
      * @return	int
      */
-    public function total_publishers($status = false, $search = false) {
+    public function total_publishers($status = false, $search = false, $letter = false) {
 
         if ($status) {
             $this->db->where('status', $status);
@@ -219,6 +245,10 @@ class Journals_model extends CI_Model
         if ($search) {
             $this->db->like('publisher_name', $search);
             $this->db->or_like('title_search', remove_accents($search));
+        }
+
+        if ($letter) {
+            $this->db->like('publisher_name', $letter, 'after');
         }
 
         $this->db->group_by('publisher_name');

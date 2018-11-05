@@ -1,4 +1,6 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
 $now = gmdate("D-d-M-Y-H:i:s");
 header("Content-Type: application/octet-stream");
 header("Content-Disposition: attachment; filename=journals-{$now}.csv");
