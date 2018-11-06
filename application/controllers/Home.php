@@ -73,7 +73,6 @@ class Home extends CI_Controller
 	 * 
 	 * @param  array	$page_slugs The url token identifier for the specifics pages.
 	 * @return void
-	 * @return void
 	 */
 	public function page(...$page_slugs)
 	{
@@ -127,6 +126,9 @@ class Home extends CI_Controller
 		
 		// All the pages use the array, so pass it early.
 		$this->load->vars('page', $page);
+
+		// Create actual page links
+		$this->create_available_page_links();
 				
 		// Check the template type of each page to load the correspond view		
 		if (empty($page['template'])) {
@@ -192,11 +194,12 @@ class Home extends CI_Controller
 		$status = $this->input->get('status', true);
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
+		$letter = $this->input->get('letter', true);
 
 		if ($export == 'csv') {
 
 			// Export all journals.
-			$journals = $this->Journals_model->list_all_journals(PHP_INT_MAX, 0, $status, $search);
+			$journals = $this->Journals->list_all_journals(PHP_INT_MAX, 0, $status, $search, $letter);
 
 			$this->load->vars('journals', $journals);
 			$this->load->view('pages/journals-' . $export);
@@ -204,8 +207,8 @@ class Home extends CI_Controller
 			return;
 		}
 
-		$journals = $this->Journals_model->list_all_journals($limit, $offset, $status, $search);
-		$total_journals = $this->Journals_model->total_journals($status, $search);
+		$journals = $this->Journals->list_all_journals($limit, $offset, $status, $search, $letter);
+		$total_journals = $this->Journals->total_journals($status, $search, $letter);
 
 		$journals_links = $this->get_journals_links();
 		$base_url = $journals_links[$this->language]['list-by-alphabetical-order'] . "/?limit={$limit}";
@@ -218,21 +221,16 @@ class Home extends CI_Controller
 			$base_url .= '&search=' . $search;
 		}
 
-		$config['base_url'] = $base_url;
-		$config['total_rows'] = $total_journals;
-		$config['per_page'] = $limit;
-		$config['first_link'] = lang('pagination_first_link');
-		$config['last_link'] = lang('pagination_last_link');
-
-		init_pagination($config);
-
-		if ($offset) {
-			$base_url .= '&offset=' . $offset;
+		if ($letter) {
+			$base_url .= '&letter=' . $letter;
 		}
+
+		$base_url = $this->config_journals_pagination($base_url, $total_journals, $limit, $offset);
 
 		$this->load->vars('base_url', $base_url);
 		$this->load->vars('status', $status);
 		$this->load->vars('search', $search);
+		$this->load->vars('letter', $letter);
 		$this->load->vars('total_journals', $total_journals);
 		$this->load->vars('journals', $journals);
 		$this->load->view('pages/journals');
@@ -262,11 +260,12 @@ class Home extends CI_Controller
 		$status = $this->input->get('status', true);
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
+		$letter = $this->input->get('letter', true);
 
 		if ($export == 'csv') {
 
 			// Export all journals.
-			$journals = $this->Journals_model->list_all_journals(PHP_INT_MAX, 0, $status, $search);
+			$journals = $this->Journals->list_all_journals(PHP_INT_MAX, 0, $status, $search, $letter);
 
 			$this->load->vars('journals', $journals);
 			$this->load->view('pages/journals-' . $export);
@@ -274,8 +273,8 @@ class Home extends CI_Controller
 			return;
 		}
 
-		$publishers = $this->Journals_model->list_all_publishers($limit, $offset, $status, $search);
-		$total_publishers = $this->Journals_model->total_publishers($status, $search);
+		$publishers = $this->Journals->list_all_publishers($limit, $offset, $status, $search, $letter);
+		$total_publishers = $this->Journals->total_publishers($status, $search, $letter);
 
 		$journals_links = $this->get_journals_links();
 		$base_url = $journals_links[$this->language]['list-by-publishers'] . "/?limit={$limit}";
@@ -288,21 +287,16 @@ class Home extends CI_Controller
 			$base_url .= '&search=' . $search;
 		}
 
-		$config['base_url'] = $base_url;
-		$config['total_rows'] = $total_publishers;
-		$config['per_page'] = $limit;
-		$config['first_link'] = lang('pagination_first_link');
-		$config['last_link'] = lang('pagination_last_link');
-
-		init_pagination($config);
-
-		if ($offset) {
-			$base_url .= '&offset=' . $offset;
+		if ($letter) {
+			$base_url .= '&letter=' . $letter;
 		}
+
+		$base_url = $this->config_journals_pagination($base_url, $total_publishers, $limit, $offset);
 
 		$this->load->vars('base_url', $base_url);
 		$this->load->vars('status', $status);
 		$this->load->vars('search', $search);
+		$this->load->vars('letter', $letter);
 		$this->load->vars('publishers', $publishers);
 		$this->load->view('pages/journals-by-publishers');
 	}
@@ -332,11 +326,12 @@ class Home extends CI_Controller
 		$status = $this->input->get('status', true);
 		$search = $this->input->get('search', true);
 		$export = $this->input->get('export', true);
+		$letter = $this->input->get('letter', true);
 
 		if ($export == 'csv') {
 
 			// Export all journals.
-			$journals = $this->Journals_model->list_all_journals_by_subject_area($id_subject_area, PHP_INT_MAX, 0, $status, $search);
+			$journals = $this->Journals->list_all_journals_by_subject_area($id_subject_area, PHP_INT_MAX, 0, $status, $search, $letter);
 
 			$this->load->vars('journals', $journals);
 			$this->load->view('pages/journals-' . $export);
@@ -344,8 +339,8 @@ class Home extends CI_Controller
 			return;
 		}
 
-		$journals = $this->Journals_model->list_all_journals_by_subject_area($id_subject_area, $limit, $offset, $status, $search);
-		$total_journals = $this->Journals_model->total_journals_by_subject_area($id_subject_area, $status, $search);
+		$journals = $this->Journals->list_all_journals_by_subject_area($id_subject_area, $limit, $offset, $status, $search, $letter);
+		$total_journals = $this->Journals->total_journals_by_subject_area($id_subject_area, $status, $search, $letter);
 		$journals_links = $this->get_journals_links();
 		$base_url = $journals_links[$this->language]['list-by-subject-area'] . '/' . $id_subject_area . '/' . $subject_area . "/?limit={$limit}";
 
@@ -357,20 +352,14 @@ class Home extends CI_Controller
 			$base_url .= '&search=' . $search;
 		}
 
-		$config['base_url'] = $base_url;
-		$config['total_rows'] = $total_journals;
-		$config['per_page'] = $limit;
-		$config['first_link'] = lang('pagination_first_link');
-		$config['last_link'] = lang('pagination_last_link');
-
-		init_pagination($config);
-
-		if ($offset) {
-			$base_url .= '&offset=' . $offset;
+		if ($letter) {
+			$base_url .= '&letter=' . $letter;
 		}
 
-		$subject_area = $this->Journals_model->get_subject_area($id_subject_area);
-		$subject_areas = $this->Journals_model->list_all_subject_areas($this->language);
+		$base_url = $this->config_journals_pagination($base_url, $total_journals, $limit, $offset);
+
+		$subject_area = $this->Journals->get_subject_area($id_subject_area);
+		$subject_areas = $this->Journals->list_all_subject_areas($this->language);
 
 		$this->load->vars('journals_links', $journals_links);
 		$this->load->vars('subject_area', $subject_area);
@@ -378,6 +367,7 @@ class Home extends CI_Controller
 		$this->load->vars('base_url', $base_url);
 		$this->load->vars('status', $status);
 		$this->load->vars('search', $search);
+		$this->load->vars('letter', $letter);
 		$this->load->vars('total_journals', $total_journals);
 		$this->load->vars('journals', $journals);
 		$this->load->view('pages/journals');
@@ -395,6 +385,33 @@ class Home extends CI_Controller
 		$this->load_page_metadata('pageMetadataHome', TABS_EN_API_PATH, TABS_ES_API_PATH, TABS_API_PATH);
 
 		$this->load->view('page_not_found');
+	}
+
+	/**
+	 * Private method to configure and initialize journals pages pagination.
+	 *
+	 * @param  string 	$base_url The base url for the pagination links.
+	 * @param  string 	$total	  The total of records for the page count.
+	 * @param  string   $limit 	  The total of itens per page.
+	 * @param  string   $offset   The records start position.
+	 * @return string
+	 */
+	private function config_journals_pagination($base_url, $total, $limit, $offset)
+	{
+
+		$config['base_url'] = $base_url;
+		$config['total_rows'] = $total;
+		$config['per_page'] = $limit;
+		$config['first_link'] = lang('pagination_first_link');
+		$config['last_link'] = lang('pagination_last_link');
+
+		init_pagination($config);
+
+		if ($offset) {
+			$base_url .= '&offset=' . $offset;
+		}
+
+		return $base_url;
 	}
 
 	/**
@@ -500,7 +517,7 @@ class Home extends CI_Controller
 	private function load_journals()
 	{
 
-		$subject_areas = $this->Journals_model->list_all_subject_areas($this->language);
+		$subject_areas = $this->Journals->list_all_subject_areas($this->language);
 
 		$this->load->vars('subject_areas', $subject_areas);
 		$this->load->vars('journals_links', $this->get_journals_links());
@@ -515,7 +532,7 @@ class Home extends CI_Controller
 	{
 
 		$total_collections = count($this->Collections->get_journals_list());
-		$total_active_journals = $this->Journals_model->total_journals('current');
+		$total_active_journals = $this->Journals->total_journals('current');
 
 		$total_published_articles = 0;
 
@@ -854,18 +871,83 @@ class Home extends CI_Controller
 	{
 
 		$journals_links = array();
-		$journals_links['pt']['list-by-alphabetical-order'] = base_url($this->language . '/periodicos/listar-por-ordem-alfabetica');
-		$journals_links['en']['list-by-alphabetical-order'] = base_url($this->language . '/journals/list-by-alphabetical-order');
-		$journals_links['es']['list-by-alphabetical-order'] = base_url($this->language . '/revistas/listar-por-orden-alfabetico');
 
-		$journals_links['pt']['list-by-publishers'] = base_url($this->language . '/periodicos/listar-por-publicador');
-		$journals_links['en']['list-by-publishers'] = base_url($this->language . '/journals/list-by-publishers');
-		$journals_links['es']['list-by-publishers'] = base_url($this->language . '/revistas/listar-por-el-publicador');
+		$list_by_alphabetical_order = 'list-by-alphabetical-order';
+		$journals_links[SCIELO_LANG][$list_by_alphabetical_order] = base_url($this->language . '/periodicos/listar-por-ordem-alfabetica');
+		$journals_links[SCIELO_EN_LANG][$list_by_alphabetical_order] = base_url($this->language . '/journals/list-by-alphabetical-order');
+		$journals_links[SCIELO_ES_LANG][$list_by_alphabetical_order] = base_url($this->language . '/revistas/listar-por-orden-alfabetico');
 
-		$journals_links['pt']['list-by-subject-area'] = base_url($this->language . '/periodicos/listar-por-assunto');
-		$journals_links['en']['list-by-subject-area'] = base_url($this->language . '/journals/list-by-subject-area');
-		$journals_links['es']['list-by-subject-area'] = base_url($this->language . '/revistas/listar-por-tema');
+		$list_by_publishers = 'list-by-publishers';
+		$journals_links[SCIELO_LANG][$list_by_publishers] = base_url($this->language . '/periodicos/listar-por-publicador');
+		$journals_links[SCIELO_EN_LANG][$list_by_publishers] = base_url($this->language . '/journals/list-by-publishers');
+		$journals_links[SCIELO_ES_LANG][$list_by_publishers] = base_url($this->language . '/revistas/listar-por-el-publicador');
+
+		$list_by_subject_area = 'list-by-subject-area';
+		$journals_links[SCIELO_LANG][$list_by_subject_area] = base_url($this->language . '/periodicos/listar-por-assunto');
+		$journals_links[SCIELO_EN_LANG][$list_by_subject_area] = base_url($this->language . '/journals/list-by-subject-area');
+		$journals_links[SCIELO_ES_LANG][$list_by_subject_area] = base_url($this->language . '/revistas/listar-por-tema');
 
 		return $journals_links;
+	}
+
+	/**
+	 * Make requests to wordpress api and get the links for other languages using the actual page slug. 
+	 * 
+	 * @return void
+	 */
+	private function create_available_page_links()
+	{
+
+		$actual_slug = str_replace(base_url($this->language . '/'), "", current_url());
+
+		$actual_slug = explode('/', $actual_slug);
+		$actual_slug = $actual_slug[count($actual_slug) - 1];
+		$actual_page = '';
+
+		switch ($this->language) {
+
+			case SCIELO_LANG:
+				$actual_page = $this->put_content_in_cache("actual_page_pt{$actual_slug}", SLUG_API_PATH . $actual_slug, ONE_DAY_TIMEOUT);
+				break;
+
+			case SCIELO_ES_LANG:
+				$actual_page = $this->put_content_in_cache("actual_page_es{$actual_slug}", SLUG_ES_API_PATH . $actual_slug, ONE_DAY_TIMEOUT);
+				break;
+
+			case SCIELO_EN_LANG:
+				$actual_page = $this->put_content_in_cache("actual_page_en{$actual_slug}", SLUG_EN_API_PATH . $actual_slug, ONE_DAY_TIMEOUT);
+				break;
+		}
+
+		$slug = $actual_page[0]['slug'];
+
+		$page_pt = $this->put_content_in_cache("page_pt{$slug}", SLUG_API_PATH . $slug, ONE_DAY_TIMEOUT);
+		$portuguese = array('link' => str_replace(WORDPRESS_URL, base_url(SCIELO_LANG . '/'), $page_pt[0]['link']), 'language' => 'Português');
+
+		$page_en = $this->put_content_in_cache("page_en{$slug}", SLUG_CALLBACK_EN_API_PATH . $slug, ONE_DAY_TIMEOUT);
+		$english = array('link' => str_replace(WORDPRESS_URL, base_url(), $page_en[0]['link']), 'language' => 'English');
+
+		$page_es = $this->put_content_in_cache("page_es{$slug}", SLUG_CALLBACK_ES_API_PATH . $slug, ONE_DAY_TIMEOUT);
+		$spanish = array('link' => str_replace(WORDPRESS_URL, base_url(), $page_es[0]['link']), 'language' => 'Español');
+
+		switch ($this->language) {
+
+			case SCIELO_LANG:
+				$available_languages[] = $english;
+				$available_languages[] = $spanish;
+				break;
+
+			case SCIELO_EN_LANG:
+				$available_languages[] = $portuguese;
+				$available_languages[] = $spanish;
+				break;
+
+			case SCIELO_ES_LANG:
+				$available_languages[] = $english;
+				$available_languages[] = $portuguese;
+				break;
+		}
+
+		$this->load->vars('available_languages', $available_languages);
 	}
 }
