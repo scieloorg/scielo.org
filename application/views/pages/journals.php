@@ -104,6 +104,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="col-md-6">
 				<form action="<?= current_url() ?>">
 					<input type="hidden" name="limit" value="<?= $this->input->get('limit', true) ?>">
+					<input type="hidden" name="letter" value="<?= $this->input->get('letter', true) ?>">
 					<input type="text" name="search" id="search" value="<?= $search ?>" class="form-control collectionSearch" placeholder="<?= lang('search_journals_placeholder') ?>" autofocus>
 					<button type="submit" class="btn btn-default btn-input"></button>
 				</form>

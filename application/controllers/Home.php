@@ -126,6 +126,9 @@ class Home extends CI_Controller
 		
 		// All the pages use the array, so pass it early.
 		$this->load->vars('page', $page);
+
+		// Create actual page links
+		$this->create_available_page_links();
 				
 		// Check the template type of each page to load the correspond view		
 		if (empty($page['template'])) {
@@ -885,5 +888,66 @@ class Home extends CI_Controller
 		$journals_links[SCIELO_ES_LANG][$list_by_subject_area] = base_url($this->language . '/revistas/listar-por-tema');
 
 		return $journals_links;
+	}
+
+	/**
+	 * Make requests to wordpress api and get the links for other languages using the actual page slug. 
+	 * 
+	 * @return void
+	 */
+	private function create_available_page_links()
+	{
+
+		$actual_slug = str_replace(base_url($this->language . '/'), "", current_url());
+
+		$actual_slug = explode('/', $actual_slug);
+		$actual_slug = $actual_slug[count($actual_slug) - 1];
+		$actual_page = '';
+
+		switch ($this->language) {
+
+			case SCIELO_LANG:
+				$actual_page = $this->put_content_in_cache("actual_page_pt{$actual_slug}", SLUG_API_PATH . $actual_slug, ONE_DAY_TIMEOUT);
+				break;
+
+			case SCIELO_ES_LANG:
+				$actual_page = $this->put_content_in_cache("actual_page_es{$actual_slug}", SLUG_ES_API_PATH . $actual_slug, ONE_DAY_TIMEOUT);
+				break;
+
+			case SCIELO_EN_LANG:
+				$actual_page = $this->put_content_in_cache("actual_page_en{$actual_slug}", SLUG_EN_API_PATH . $actual_slug, ONE_DAY_TIMEOUT);
+				break;
+		}
+
+		$slug = $actual_page[0]['slug'];
+
+		$page_pt = $this->put_content_in_cache("page_pt{$slug}", SLUG_API_PATH . $slug, ONE_DAY_TIMEOUT);
+		$portuguese = array('link' => str_replace(WORDPRESS_URL, base_url(SCIELO_LANG . '/'), $page_pt[0]['link']), 'language' => 'Português');
+
+		$page_en = $this->put_content_in_cache("page_en{$slug}", SLUG_CALLBACK_EN_API_PATH . $slug, ONE_DAY_TIMEOUT);
+		$english = array('link' => str_replace(WORDPRESS_URL, base_url(), $page_en[0]['link']), 'language' => 'English');
+
+		$page_es = $this->put_content_in_cache("page_es{$slug}", SLUG_CALLBACK_ES_API_PATH . $slug, ONE_DAY_TIMEOUT);
+		$spanish = array('link' => str_replace(WORDPRESS_URL, base_url(), $page_es[0]['link']), 'language' => 'Español');
+
+		switch ($this->language) {
+
+			case SCIELO_LANG:
+				$available_languages[] = $english;
+				$available_languages[] = $spanish;
+				break;
+
+			case SCIELO_EN_LANG:
+				$available_languages[] = $portuguese;
+				$available_languages[] = $spanish;
+				break;
+
+			case SCIELO_ES_LANG:
+				$available_languages[] = $english;
+				$available_languages[] = $portuguese;
+				break;
+		}
+
+		$this->load->vars('available_languages', $available_languages);
 	}
 }

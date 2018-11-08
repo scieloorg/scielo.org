@@ -61,18 +61,24 @@ if (!function_exists('create_letter_filter')) {
     /**
      * Creates the button group with alphabet letters for filtering.
      *
-     * @param   string    $url The url of each button link in the group.
+     * @param   string    $url The URL of each button link in the group.
      * @return  string
      */
     function create_letter_filter($url)
     {
+
+        $CI = &get_instance();
+
+        $status = $CI->input->get('status', true);
+        $search = $CI->input->get('search', true);
+        $limit = $CI->input->get('limit', true);
 
         $html = '';
         // Uses the ascii table from the 65 (A) to 90 (Z) position.
         for ($i = 65; $i <= 90; $i++) {
             $letter = chr($i);
 
-            $html .= '<button type="button" class="btn btn-sm btn-default ' . is_letter_selected($letter) . '" onclick="javascript:window.location=\'' . $url . '/?letter=' . $letter . '\'">' . $letter . '</button>';
+            $html .= '<button type="button" class="btn btn-sm btn-default ' . is_letter_selected($letter) . '" onclick="javascript:query_filter(\'' . $url . '\', \'' . $status . '\', \'' . $search . '\', \'' . $letter . '\', \'' . $limit . '\');">' . $letter . '</button>';
         }
 
         return $html;
