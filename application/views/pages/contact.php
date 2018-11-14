@@ -3,11 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 
 <!-- header -->
-<?php $this->load->view('templates/header'); ?>
+<?php $this->load->view('partials/header'); ?>
 <!-- ./header -->
 
 <!-- language-menu -->
-<?php $this->load->view('templates/language-menu'); ?>
+<?php $this->load->view('partials/language-menu'); ?>
 <!-- ./language-menu -->
 
 <section>
@@ -34,7 +34,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-3">
 					<!-- share -->
-					<?php $this->load->view('templates/share'); ?>
+					<?php $this->load->view('partials/share'); ?>
 					<!-- ./share -->
 				</div>
 			</div>
@@ -61,7 +61,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </section>
 
 <!-- footer -->
-<?php $this->load->view('templates/footer'); ?>
+<?php $this->load->view('partials/footer'); ?>
 <!-- ./footer -->
 
 <script>

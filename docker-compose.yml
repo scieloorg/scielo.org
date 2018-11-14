@@ -31,6 +31,10 @@ services:
           - TWITTER_CONSUMER_SECRET=
           - TWITTER_SCREEN_NAME=RedeSciELO
 
+          # Google Client API Key.
+          - GOOGLE_CLIENT_API_APPNAME=
+          - GOOGLE_CLIENT_API_KEY=
+
           # Google reCAPTCHA key.
           - GOOGLE_RECAPTCHA_SITE_KEY=
           - GOOGLE_RECAPTCHA_SERVER_KEY=

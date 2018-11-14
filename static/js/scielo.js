@@ -98,8 +98,8 @@ var scieloLib = {
 		});
 
 		//fecha menu share
-		$(document).on('click', function (e) {    
-		    if (!$(e.target).closest('.dropdown-toggle').length) $('.menu-share').hide();
+		$(document).on('click', function (e) {
+			if (!$(e.target).closest('.dropdown-toggle').length) $('.menu-share').hide();
 		});
 
 		// Fecha o alert notification ao clicar no X
@@ -114,6 +114,7 @@ var scieloLib = {
 		var TAB_BLOG = $("#tab-blog");
 		var SLIDER_BLOG = $(".slider-blog");
 		var SLIDER_TWITTER = $(".slider-twitter");
+		var SLIDER_YOUTUBE_VIDEOS = $(".slider-youtube-videos");
 		var ROW_TAB_MOBILE = $(".row-tab-mobile");
 		var ROW_TAB_DESK = $(".row-tab-desk");
 
@@ -144,7 +145,7 @@ var scieloLib = {
 			ROW_TAB_MOBILE.hide();
 			ROW_TAB_DESK.show();
 
-			if (scieloLib.IsDesktop){
+			if (scieloLib.IsDesktop) {
 				$(".showTooltip").tooltip();
 			}
 		}
@@ -201,6 +202,8 @@ var scieloLib = {
 			var tabID = $(e.target).attr('href');
 			var isTabTwitter = (tabID == '#tab-twitter');
 			var isTabBlog = (tabID == '#tab-blog');
+			var isTabBlog = (tabID == '#tab-blog');
+			var isTabYoutubeVideos = (tabID == '#tab-youtube-videos');
 
 			// Se for a tab do twitter, ativa o slider do twitter
 			if (isTabTwitter) {
@@ -220,6 +223,16 @@ var scieloLib = {
 				}
 
 				scieloLib.InitializeSlickTo(SLIDER_BLOG);
+			}
+
+			// Se for a tab do youtube, ativa o slider do youtube
+			if (isTabYoutubeVideos) {
+
+				if (scieloLib.IsSlickInitializedTo(SLIDER_YOUTUBE_VIDEOS)) {
+					scieloLib.UnInitializeSlickTo(SLIDER_YOUTUBE_VIDEOS);
+				}
+
+				scieloLib.InitializeSlickTo(SLIDER_YOUTUBE_VIDEOS);
 			}
 		});
 	}

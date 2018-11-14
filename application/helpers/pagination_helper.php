@@ -2,8 +2,8 @@
 
 /**
  * @author
- * SciELO - Scientific Electronic Library Online 
- * @link 
+ * SciELO - Scientific Electronic Library Online
+ * @link
  * https://www.scielo.org/
  * @license
  * Copyright SciELO All Rights Reserved.
@@ -12,6 +12,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 if (!function_exists('init_pagination')) {
 
+    /**
+     * Initialize the codeigniter pagination library.
+     *
+     * @param    array    $config Part of the configs from the controller.
+     * @return    void
+     */
     function init_pagination($config)
     {
 
@@ -48,4 +54,85 @@ if (!function_exists('init_pagination')) {
         $CI->pagination->initialize($config);
     }
 
+}
+
+if (!function_exists('create_letter_filter')) {
+
+    /**
+     * Creates the button group with alphabet letters for filtering.
+     *
+     * @param   string    $url The URL of each button link in the group.
+     * @return  string
+     */
+    function create_letter_filter($url)
+    {
+
+        $CI = &get_instance();
+
+        $status = $CI->input->get('status', true);
+        $matching = $CI->input->get('matching', true);
+        $search = $CI->input->get('search', true);
+        $limit = $CI->input->get('limit', true);
+
+        $html = '';
+        // Uses the ascii table from the 65 (A) to 90 (Z) position.
+        for ($i = 65; $i <= 90; $i++) {
+            $letter = chr($i);
+
+            $html .= '<button type="button" class="btn btn-sm btn-default ' . is_letter_selected($letter) . '" onclick="javascript:query_filter(\'' . $url . '\', \'' . $status . '\', \'' . $matching . '\', \'' . $search . '\', \'' . $letter . '\', \'' . $limit . '\');">' . $letter . '</button>';
+        }
+
+        return $html;
+    }
+}
+
+if (!function_exists('is_letter_selected')) {
+
+    /**
+     * Verify and return the class for the active letter.
+     *
+     * @param   string  $letter  The letter to compare with the one (GET parameter).
+     * @return  string
+     */
+    function is_letter_selected($letter)
+    {
+
+        $CI = &get_instance();
+
+        if ($CI->input->get('letter') == $letter) {
+            return "btn-primary";
+        }
+    }
+}
+
+if (!function_exists('create_last_letter_html')) {
+
+    /**
+     * Create a block of html with letter of the list itens in the table.
+     *
+     * @param   string  $last_letter  The last letter to compare with the current one.
+     * @param   string  $text         The text to extract the first letter.
+     * @return  string
+     */
+    function create_last_letter_html(&$last_letter, $text)
+    {
+
+        $current_letter = strtoupper(substr(trim($text), 0, 1));
+
+        $html = '';
+
+        if ($last_letter !== $current_letter) {
+            $last_letter = $current_letter;
+
+            $html = '<tr class="separator-by-letter">
+                        <td colspan="2">
+                            <strong id="letter-' . $last_letter . '">
+                            ' . $last_letter . '
+                            </strong>
+                        </td>
+                    </tr>';
+        }
+
+        return $html;
+    }
 }

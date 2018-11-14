@@ -141,6 +141,10 @@ define('GOOGLE_RECAPTCHA_SITE_KEY', getenv('GOOGLE_RECAPTCHA_SITE_KEY')); // @TO
 define('GOOGLE_RECAPTCHA_SERVER_KEY', getenv('GOOGLE_RECAPTCHA_SERVER_KEY')); // @TODO - Define on production
 define('GOOGLE_RECAPTCHA_VERIFY_URL', 'https://www.google.com/recaptcha/api/siteverify');
 
+// Google Client API Key
+define('GOOGLE_CLIENT_API_APPNAME', getenv('GOOGLE_CLIENT_API_APPNAME')); // @TODO - Define on production
+define('GOOGLE_CLIENT_API_KEY', getenv('GOOGLE_CLIENT_API_KEY')); // @TODO - Define on production
+
 // API Default Path. Very Important: Remember to add the last slash in this URL.
 define('WORDPRESS_URL', getenv('WORDPRESS_URL')); // @TODO - Define on production
 define('WORDPRESS_API_PATH', WORDPRESS_URL . 'wp-json');
@@ -216,6 +220,9 @@ define('THIRTY_DAYS_TIMEOUT', ONE_DAY_TIMEOUT * 30);
 define('SCIELO_LANG', 'pt');
 define('SCIELO_EN_LANG', 'en');
 define('SCIELO_ES_LANG', 'es');
+
+// Define youtube SciELO chanel.
+define('SCIELO_YOUTUBE_CHANNEL', 'RedeSciELO');
 
 // We dont need these variables any more.
 unset($base_uri, $base_url);

@@ -3,11 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 
 <!-- header -->
-<?php $this->load->view('templates/header'); ?>
+<?php $this->load->view('partials/header'); ?>
 <!-- ./header -->
 
 <!-- language-menu -->
-<?php $this->load->view('templates/language-menu'); ?>
+<?php $this->load->view('partials/language-menu'); ?>
 <!-- ./language-menu -->
 
 <section>
@@ -43,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 				<div class="col-xs-12 col-sm-4 col-md-3">
 					<!-- share -->
-					<?php $this->load->view('templates/share'); ?>
+					<?php $this->load->view('partials/share'); ?>
 					<!-- ./share -->
 				</div>
 			</div>
@@ -79,7 +79,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div class="row row-journal-filter">
 			<div class="col-md-6">
 				<div class="btn-group" data-toggle="buttons">
-					<label class="btn <?php if (!$status) : ?>active<?php endif; ?>">
+					<label class="btn <?php if (!$status && !$letter) : ?>active<?php endif; ?>">
 						<input type="radio" autocomplete="off" name="query_filter" id="query_filter_all" value="all">
 						<?= lang('all') ?>
 					</label>
@@ -92,22 +92,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<input type="radio" autocomplete="off" name="query_filter" id="query_filter_deceased" value="deceased">
 						<span class="lbl-nao-corrente hidden-xs"><?= lang('deceased_journals') ?></span>
 						<span class="lbl-nao-corrente hidden-sm hidden-md hidden-lg"><?= lang('deceaseds') ?></span>
+					</label>	
+					<?php if ($letter != '') : ?>
+					<label class="btn <?php if (!$status) : ?>active<?php endif; ?>">
+						<input type="radio" autocomplete="off" name="letter_filter" id="letter_filter" value="<?= $letter ?>">
+						<?= lang('letter') . ' ' . $letter ?>
 					</label>
+					<?php endif; ?>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<form action="<?= current_url() ?>">
-					<input type="hidden" name="limit" value="<?= $this->input->get('limit', true) ?>">
-					<input type="text" name="search" id="search" value="<?= $search ?>" class="form-control collectionSearch" placeholder="<?= lang('search_journals_placeholder') ?>" autofocus>
-					<button type="submit" class="btn btn-default btn-input"></button>
-				</form>
+				<?php $this->load->view('partials/journals-search-form'); ?>
 			</div>
 		</div>
 		<div class="row">
+
 			<div class="col-md-12">
 
 				<div class="list-journals">
 					<hr>
+					<?php $this->load->view('partials/journals-letter-filter'); ?>		
 					<table>
 						<thead>
 							<th>
@@ -121,6 +125,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							</th>
 						</thead>
 						<tbody>
+							
 							<?php if (empty($journals)) : ?>
 								<tr>
 									<td colspan="2">
@@ -130,7 +135,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									</td>
 								</tr>
 							<?php else : ?>
-								<?php foreach ($journals as $journal) : ?>
+							<?php 
+						$last_letter = '';
+						foreach ($journals as $journal) :
+							$last_letter_html = create_last_letter_html($last_letter, $journal->title_search);
+						?>
+								<?= $last_letter_html ?>
 								<tr>
 									<td colspan="2">
 										<a href="<?= $journal->scielo_url ?>" <?php if ($journal->status == 'deceased') : ?>class="disabled"<?php endif; ?>>
@@ -144,17 +154,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<?php endif; ?>
 						</tbody>
 					</table>
-					<div class="row">
-						<div class="col-md-6">
-							<nav aria-label="Page navigation example">
-								<?= $this->pagination->create_links(); ?>
-							</nav>
-						</div>
-						<div class="col-md-6 text-right">
-							<?php if (!empty($journals)) : ?>
-								<?php $this->load->view('templates/journals-filter-limit'); ?>
-							<?php endif; ?>
-						</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6 col-md-6">
+						<nav aria-label="Page navigation example">
+							<?= $this->pagination->create_links(); ?>
+						</nav>
+					</div>
+					<div class="col-sm-6 col-md-6 text-right">
+						<?php if (!empty($journals)) : ?>
+							<?php $this->load->view('partials/journals-filter-limit'); ?>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>
@@ -165,8 +175,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <!-- footer -->
 <?php 
-$this->load->view('templates/footer');
-$this->load->view('templates/journals-query-filter'); 
+$this->load->view('partials/footer');
+$this->load->view('partials/journals-query-filter');
 ?>
 <!-- ./footer -->
 
