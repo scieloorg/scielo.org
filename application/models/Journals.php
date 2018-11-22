@@ -68,26 +68,17 @@ class Journals extends CI_Model
      * @param   int $limit
      * @param   int $offset
      * @param   string $status
+     * @param   string $matching
      * @param   string $search
      * @param   string $letter
      * @return	array
      */
-    public function list_all_journals($limit, $offset, $status = false, $search = false, $letter = false)
+    public function list_all_journals($limit, $offset, $status = false, $matching = false, $search = false, $letter = false)
     {
 
         $this->db->from($this->journals_table);
 
-        if ($status) {
-            $this->db->where('status', $status);
-        }
-
-        if ($search) {
-            $this->db->like('title_search', remove_accents($search));
-        }
-
-        if ($letter) {
-            $this->db->like('title_search', $letter, 'after');
-        }
+        $this->add_journals_query_parameters($status, $matching, $search, $letter);
 
         $this->db->limit($limit, $offset);
         $this->db->group_by('title_search');
@@ -100,11 +91,31 @@ class Journals extends CI_Model
      * Returns the total of journals from the table 'journals' using SQL.
      *
      * @param   string $status
+     * @param   string $matching
      * @param   string $search
      * @param   string $letter
      * @return	int
      */
-    public function total_journals($status = false, $search = false, $letter = false)
+    public function total_journals($status = false, $matching = false, $search = false, $letter = false)
+    {
+
+        $this->add_journals_query_parameters($status, $matching, $search, $letter);
+
+        $this->db->group_by('title_search');
+
+        return $this->db->count_all_results($this->journals_table);
+    }
+
+    /**
+     * Add parameters to the query for 'journals' table using SQL.
+     *
+     * @param   string $status
+     * @param   string $matching
+     * @param   string $search
+     * @param   string $letter
+     * @return	void
+     */
+    private function add_journals_query_parameters($status = false, $matching = false, $search = false, $letter = false)
     {
 
         if ($status) {
@@ -112,16 +123,24 @@ class Journals extends CI_Model
         }
 
         if ($search) {
-            $this->db->like('title_search', remove_accents($search));
+            switch ($matching) {
+                case 'contains':
+                    $this->db->like('title_search', remove_accents($search));
+                    break;
+
+                case 'extact_title':
+                    $this->db->where('title_search', remove_accents($search));
+                    break;
+
+                case 'starts_with':
+                    $this->db->like('title_search', remove_accents($search), 'after');
+                    break;
+            }
         }
 
         if ($letter) {
             $this->db->like('title_search', $letter, 'after');
         }
-
-        $this->db->group_by('title_search');
-
-        return $this->db->count_all_results($this->journals_table);
     }
 
     /**
@@ -131,29 +150,19 @@ class Journals extends CI_Model
      * @param   int $limit
      * @param   int $offset
      * @param   string $status
+     * @param   string $matching
      * @param   string $search
      * @param   string $letter
      * @return	array
      */
-    public function list_all_journals_by_subject_area($id_subject_area, $limit, $offset, $status = false, $search = false, $letter = false)
+    public function list_all_journals_by_subject_area($id_subject_area, $limit, $offset, $status = false, $matching = false, $search = false, $letter = false)
     {
 
         $this->db->from($this->journals_table);
         $this->db->join($this->subject_areas_journals_table, $this->journals_table . '.id_journal=' . $this->subject_areas_journals_table . '.id_journal', 'left');
-        $this->db->where('id_subject_area', $id_subject_area);
-
-        if ($status) {
-            $this->db->where('status', $status);
-        }
-
-        if ($search) {
-            $this->db->like('title_search', remove_accents($search));
-        }
-
-        if ($letter) {
-            $this->db->like('title_search', $letter, 'after');
-        }
-
+        
+        $this->add_journals_by_subject_area_query_parameters($id_subject_area, $status, $matching, $search, $letter);
+        
         $this->db->limit($limit, $offset);
         $this->db->group_by('title_search');
         $this->db->order_by('title_search', 'ASC');
@@ -166,11 +175,33 @@ class Journals extends CI_Model
      *
      * @param   int $id_subject_area
      * @param   string $status
+     * @param   string $matching
      * @param   string $search
      * @param   string $letter
      * @return	int
      */
-    public function total_journals_by_subject_area($id_subject_area, $status = false, $search = false, $letter = false)
+    public function total_journals_by_subject_area($id_subject_area, $status = false, $matching = false, $search = false, $letter = false)
+    {
+
+        $this->add_journals_by_subject_area_query_parameters($id_subject_area, $status, $matching, $search, $letter);
+        
+        $this->db->join($this->subject_areas_journals_table, $this->journals_table . '.id_journal=' . $this->subject_areas_journals_table . '.id_journal', 'left');
+        $this->db->group_by('title_search');
+
+        return $this->db->count_all_results($this->journals_table);
+    }
+
+    /**
+     * Add parameters to filter journals by subject area from the table 'journals' using SQL.
+     *
+     * @param   int $id_subject_area
+     * @param   string $status
+     * @param   string $matching
+     * @param   string $search
+     * @param   string $letter
+     * @return	void
+     */
+    private function add_journals_by_subject_area_query_parameters($id_subject_area, $status = false, $matching = false, $search = false, $letter = false)
     {
 
         $this->db->where('id_subject_area', $id_subject_area);
@@ -180,17 +211,24 @@ class Journals extends CI_Model
         }
 
         if ($search) {
-            $this->db->like('title_search', remove_accents($search));
+            switch ($matching) {
+                case 'contains':
+                    $this->db->like('title_search', remove_accents($search));
+                    break;
+
+                case 'extact_title':
+                    $this->db->where('title_search', remove_accents($search));
+                    break;
+
+                case 'starts_with':
+                    $this->db->like('title_search', remove_accents($search), 'after');
+                    break;
+            }
         }
 
         if ($letter) {
             $this->db->like('title_search', $letter, 'after');
         }
-
-        $this->db->join($this->subject_areas_journals_table, $this->journals_table . '.id_journal=' . $this->subject_areas_journals_table . '.id_journal', 'left');
-        $this->db->group_by('title_search');
-
-        return $this->db->count_all_results($this->journals_table);
     }
 
     /**
@@ -199,11 +237,13 @@ class Journals extends CI_Model
      * @param   int $limit
      * @param   int $offset
      * @param   string $status
+     * @param   string $matching
      * @param   string $search
      * @param   string $letter
      * @return	array
      */
-    public function list_all_publishers($limit, $offset, $status = false, $search = false, $letter = false) {
+    public function list_all_publishers($limit, $offset, $status = false, $matching = false, $search = false, $letter = false)
+    {
 
         $this->db->select('trim(publisher_name) as publisher_name');
         $this->db->from($this->journals_table);
@@ -213,8 +253,22 @@ class Journals extends CI_Model
         }
 
         if ($search) {
-            $this->db->like('publisher_name', $search);
-            $this->db->or_like('title_search', remove_accents($search));
+            switch ($matching) {
+                case 'contains':
+                    $this->db->like('publisher_name', $search);
+                    $this->db->or_like('title_search', remove_accents($search));
+                    break;
+
+                case 'extact_title':
+                    $this->db->where('title_search', remove_accents($search));
+                    $this->db->or_where('title_search', remove_accents($search));
+                    break;
+
+                case 'starts_with':
+                    $this->db->like('publisher_name', $search, 'after');
+                    $this->db->or_like('title_search', remove_accents($search), 'after');
+                    break;
+            }
         }
 
         if ($letter) {
@@ -236,15 +290,30 @@ class Journals extends CI_Model
      * @param   string $letter
      * @return	int
      */
-    public function total_publishers($status = false, $search = false, $letter = false) {
+    public function total_publishers($status = false, $matching = false, $search = false, $letter = false)
+    {
 
         if ($status) {
             $this->db->where('status', $status);
         }
 
         if ($search) {
-            $this->db->like('publisher_name', $search);
-            $this->db->or_like('title_search', remove_accents($search));
+            switch ($matching) {
+                case 'contains':
+                    $this->db->like('publisher_name', $search);
+                    $this->db->or_like('title_search', remove_accents($search));
+                    break;
+
+                case 'extact_title':
+                    $this->db->where('title_search', remove_accents($search));
+                    $this->db->or_where('title_search', remove_accents($search));
+                    break;
+
+                case 'starts_with':
+                    $this->db->like('publisher_name', $search, 'after');
+                    $this->db->or_like('title_search', remove_accents($search), 'after');
+                    break;
+            }
         }
 
         if ($letter) {

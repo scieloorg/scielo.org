@@ -70,6 +70,7 @@ if (!function_exists('create_letter_filter')) {
         $CI = &get_instance();
 
         $status = $CI->input->get('status', true);
+        $matching = $CI->input->get('matching', true);
         $search = $CI->input->get('search', true);
         $limit = $CI->input->get('limit', true);
 
@@ -78,7 +79,7 @@ if (!function_exists('create_letter_filter')) {
         for ($i = 65; $i <= 90; $i++) {
             $letter = chr($i);
 
-            $html .= '<button type="button" class="btn btn-sm btn-default ' . is_letter_selected($letter) . '" onclick="javascript:query_filter(\'' . $url . '\', \'' . $status . '\', \'' . $search . '\', \'' . $letter . '\', \'' . $limit . '\');">' . $letter . '</button>';
+            $html .= '<button type="button" class="btn btn-sm btn-default ' . is_letter_selected($letter) . '" onclick="javascript:query_filter(\'' . $url . '\', \'' . $status . '\', \'' . $matching . '\', \'' . $search . '\', \'' . $letter . '\', \'' . $limit . '\');">' . $letter . '</button>';
         }
 
         return $html;
