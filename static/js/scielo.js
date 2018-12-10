@@ -63,6 +63,11 @@ var scieloLib = {
 			$("html").addClass("lt-ie9");
 		}
 	},
+	SetMatching: function(label, matching) {
+
+		$('#matchingButton').html(label + ' <span class="caret"></span>');
+		$('#matching').val(matching);
+	},
 	InitializeSlickTo: function (selector) {
 		selector.slick({
 			dots: false,
