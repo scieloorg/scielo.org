@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <form action="<?= $journals_links[$language]['list-by-alphabetical-order'] ?>">
                     <input type="hidden" name="matching" id="matching" value="contains">
                     <div class="input-group">
-                        <input type="text" name="search" id="search" class="form-control">
+                        <input type="text" name="search" id="search" class="form-control" placeholder="<?=lang('search_journals_tab_placeholder')?>">
                         <div class="input-group-btn">
                             <button type="button" id="matchingButton" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <?=lang('contains')?> <span class="caret"></span>
