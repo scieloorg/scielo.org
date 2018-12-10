@@ -89,7 +89,7 @@ var scieloLib = {
 		scieloLib.SetScreen();
 
 		//abre menu share
-		$(".dropdown-toggle").click(function (e) {
+		$("#dropdown-menu-share").click(function (e) {
 
 			var t = $(this);
 
