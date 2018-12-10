@@ -11,13 +11,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="input-group">
                         <input type="text" name="search" id="search" class="form-control">
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" id="matchingButton" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <?=lang('contains')?> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="javascript:$('#matching').val('contains');"><?=lang('contains')?></a></li>
-                                <li><a href="javascript:$('#matching').val('extact_title');"><?=lang('extact_title')?></a></li>
-                                <li><a href="javascript:$('#matching').val('starts_with');"><?=lang('starts_with')?></a></li>
+                                <li><a href="javascript:scieloLib.SetMatching('<?=lang('contains')?>', 'contains');"><?=lang('contains')?></a></li>
+                                <li><a href="javascript:scieloLib.SetMatching('<?=lang('extact_title')?>', 'extact_title');"><?=lang('extact_title')?></a></li>
+                                <li><a href="javascript:scieloLib.SetMatching('<?=lang('starts_with')?>', 'starts_with');"><?=lang('starts_with')?></a></li>
                             </ul>
                         </div><!-- /input-group-btn -->
                     </div><!-- /input-group -->
