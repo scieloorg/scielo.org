@@ -25,6 +25,7 @@ $lang['download'] = 'Baixar';
 $lang['titles'] = 'títulos';
 $lang['articles'] = 'artigos';
 $lang['open_access'] = 'em acesso aberto';
+$lang['journals_singular'] = 'periódico';
 $lang['journals'] = 'periódicos';
 $lang['books'] = 'Livros';
 $lang['journals_list'] = 'Periódicos';

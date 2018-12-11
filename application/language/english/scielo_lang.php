@@ -25,6 +25,7 @@ $lang['download'] = 'Download';
 $lang['titles'] = 'titles';
 $lang['articles'] = 'articles';
 $lang['open_access'] = 'in open access';
+$lang['journals_singular'] = 'journal';
 $lang['journals'] = 'journals';
 $lang['books'] = 'Books';
 $lang['journals_list'] = 'Journals';

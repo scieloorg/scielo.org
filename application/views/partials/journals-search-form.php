@@ -1,3 +1,6 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+?>
 <form action="<?=current_url()?>">
     <input type="hidden" name="limit" value="<?=$this->input->get('limit', true)?>">
     <input type="hidden" name="letter" value="<?=$this->input->get('letter', true)?>">
