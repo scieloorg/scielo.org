@@ -35,7 +35,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </a>
         </li>
         <li>
-            <a href="" class="dropdown-toggle showTooltip" data-toggle="tooltip" data-placement="auto" title="<?= lang('other_social_networks') ?>">
+            <a href="" id="dropdown-menu-share" class="dropdown-toggle showTooltip" data-toggle="tooltip" data-placement="auto" title="<?= lang('other_social_networks') ?>">
                 <span class="glyphBtn otherNetworks"></span>
             </a>
             <div class="menu-share">

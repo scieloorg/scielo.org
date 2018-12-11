@@ -20,7 +20,7 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                 <?php endif;?>
                 <a href="http://<?= $journal->domain ?>">
                     <h4><?= $journal->name[$lang_index] ?></h4>
-                    <span><?php if ($has_journal_count) : ?><?= $journal->journal_count['current'] ?> <?= lang('journals') ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $journal->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
+                    <span><?php if ($has_journal_count) : ?><?= $journal->journal_count['current'] ?> <?= pluralize($journal->journal_count['current'], lang('journals_singular'), lang('journals')) ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $journal->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
                 </a>
             </dd>
             <?php endforeach; ?>
@@ -38,7 +38,7 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                     <?php endif;?>
                     <a href="http://<?= $development->domain ?>">
                         <h4><?= $development->name[$lang_index] ?></h4>
-                        <span><?php if ($has_journal_count) : ?><?= $development->journal_count['current'] ?> <?= lang('journals') ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $development->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
+                        <span><?php if ($has_journal_count) : ?><?= $development->journal_count['current'] ?> <?= pluralize($development->journal_count['current'], lang('journals_singular'), lang('journals')) ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $development->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
                     </a>
                 </dd>
             <?php endforeach; ?>
@@ -56,7 +56,7 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                     <?php endif;?>
                     <a href="http://<?= $discontinued->domain ?>">
                         <h4><?= $discontinued->name[$lang_index] ?></h4>
-                        <span><?php if ($has_journal_count) : ?><?= $discontinued->journal_count['deceased'] ?> <?= lang('journals') ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $discontinued->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
+                        <span><?php if ($has_journal_count) : ?><?= $discontinued->journal_count['deceased'] ?> <?= pluralize($discontinued->journal_count['deceased'], lang('journals_singular'), lang('journals')) ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $discontinued->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
                     </a>
                 </dd>
             <?php endforeach; ?>
@@ -88,7 +88,7 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                     <?php endif;?>
                     <a href="http://<?= $other->domain ?>">
                         <h4><?= $other->name[$lang_index] ?></h4>
-                        <span><?php if ($has_journal_count) : ?><?= $other->journal_count['current'] ?> <?= lang('journals') ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $other->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
+                        <span><?php if ($has_journal_count) : ?><?= $other->journal_count['current'] ?> <?= pluralize($other->journal_count['current'], lang('journals_singular'), lang('journals')) ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $other->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
                     </a>
                 </dd>
             <?php endforeach; ?>

@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     preg_match("'<p><strong>Por(.*?)<\/strong><\/p>'", $content, $author);
 
     // @TODO - Feed RSS em inglês e espanhol não possui imagens de conteúdo.
-    $img = array_key_exists('src', $img) ?  $img['src'] : get_static_image_path('blog/post1.png');
+    $img = array_key_exists('src', $img) ?  $img['src'] : get_static_image_path('placeholder.jpg');
 
     ?>
     <div class="col-xs-12 col-md-4">

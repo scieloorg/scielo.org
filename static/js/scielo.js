@@ -63,6 +63,11 @@ var scieloLib = {
 			$("html").addClass("lt-ie9");
 		}
 	},
+	SetMatching: function(label, matching) {
+
+		$('#matchingButton').html(label + ' <span class="caret"></span>');
+		$('#matching').val(matching);
+	},
 	InitializeSlickTo: function (selector) {
 		selector.slick({
 			dots: false,
@@ -89,7 +94,7 @@ var scieloLib = {
 		scieloLib.SetScreen();
 
 		//abre menu share
-		$(".dropdown-toggle").click(function (e) {
+		$("#dropdown-menu-share").click(function (e) {
 
 			var t = $(this);
 
