@@ -13,7 +13,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         if(isset($tweet->entities->media[0]->media_url)){
             $media_url = $tweet->entities->media[0]->media_url;
         }else{
-            $media_url = get_static_image_path('blog/post1.png');
+            $media_url = get_static_image_path('placeholder.jpg');
         }
     ?>
     <div class="col-xs-12 col-md-4">

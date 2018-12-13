@@ -7,25 +7,39 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <dt><h3><?= lang('search_journals') ?></h3></dt>
             <dd class="search-periodicos">
                 <form action="<?= $journals_links[$language]['list-by-alphabetical-order'] ?>">
-                    <input type="text" name="search" id="search">
-                    <button type="submit" class="btn btn-default btn-input"></button>
+                    <input type="hidden" name="matching" id="matching" value="contains">
+                    <div class="input-group">
+                        <input type="text" name="search" id="search" class="form-control" placeholder="<?=lang('search_journals_tab_placeholder')?>">
+                        <div class="input-group-btn">
+                            <button type="button" id="matchingButton" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <?=lang('contains')?> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="javascript:scieloLib.SetMatching('<?=lang('contains')?>', 'contains');"><?=lang('contains')?></a></li>
+                                <li><a href="javascript:scieloLib.SetMatching('<?=lang('extact_title')?>', 'extact_title');"><?=lang('extact_title')?></a></li>
+                                <li><a href="javascript:scieloLib.SetMatching('<?=lang('starts_with')?>', 'starts_with');"><?=lang('starts_with')?></a></li>
+                            </ul>
+                        </div><!-- /input-group-btn -->
+                    </div><!-- /input-group -->
+                
                 </form>
             </dd>
         </dl>
-        <dl>
-            <dt><h3><?= lang('journals_by_alphabetical_order') ?></h3></dt>
+    </div>
+    <div class="col-md-2">
+       <dl>
+            <dt><h3><?= lang('list_journals') ?></h3></dt>
             <dd class="text">
                 <a href="<?= $journals_links[$language]['list-by-alphabetical-order'] ?>"><?= lang('list_journals_by_alphabetical_order') ?></a>
             </dd>
-        </dl>
-        <dl>
-            <dt><h3><?= lang('by_publisher') ?></h3></dt>
             <dd class="text">
                 <a href="<?= $journals_links[$language]['list-by-publishers'] ?>"><?= lang('publisher_list') ?></a>
             </dd>
         </dl>
+    </div>
+    <div class="col-md-10">
         <dl>
-            <dt><h3><?= lang('by_subject') ?></h3></dt>
+            <dt><h3><?= lang('list_journals_by_subject') ?></h3></dt>
             <dd class="text">
                 <a href="<?= $journals_links[$language]['list-by-alphabetical-order'] ?>"><?= lang('all') ?></a>
             </dd>
@@ -42,3 +56,4 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </dl>
     </div>
 </div>
+
