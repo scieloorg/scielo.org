@@ -192,16 +192,13 @@ class Home extends CI_Controller
 			$limit = SCIELO_JOURNAL_LIMIT;
 		}
 
-		$status = $this->input->get('status', true);
-		$matching = $this->input->get('matching', true);
-		$search = $this->input->get('search', true);
+		$params = $this->get_journals_params();
 		$export = $this->input->get('export', true);
-		$letter = $this->input->get('letter', true);
 
 		if ($export == 'csv') {
 
 			// Export all journals.
-			$journals = $this->Journals->list_all_journals(PHP_INT_MAX, 0, $status, $matching, $search, $letter);
+			$journals = $this->Journals->list_all_journals(PHP_INT_MAX, 0, $params['status'], $params['matching'], $params['search'], $params['letter']);
 
 			$this->load->vars('journals', $journals);
 			$this->load->view('pages/journals-' . $export);
@@ -209,39 +206,53 @@ class Home extends CI_Controller
 			return;
 		}
 
-		$journals = $this->Journals->list_all_journals($limit, $offset, $status, $matching, $search, $letter);
-		$total_journals = $this->Journals->total_journals($status, $matching, $search, $letter);
+		$journals = $this->Journals->list_all_journals($limit, $offset, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		$total_journals = $this->Journals->total_journals($params['status'], $params['matching'], $params['search'], $params['letter']);
 
 		$journals_links = $this->get_journals_links();
 		$base_url = $journals_links[$this->language]['list-by-alphabetical-order'] . "/?limit={$limit}";
-
-		if ($status) {
-			$base_url .= '&status=' . $status;
-		}
-
-		if ($matching) {
-			$base_url .= '&matching=' . $matching;
-		}
-
-		if ($search) {
-			$base_url .= '&search=' . $search;
-		}
-
-		if ($letter) {
-			$base_url .= '&letter=' . $letter;
-		}
-
+		$base_url = $this->add_params_to_base_url($base_url, $params['status'], $params['matching'], $params['search'], $params['letter']);
 		$base_url = $this->config_journals_pagination($base_url, $total_journals, $limit, $offset);
 
-		$this->translate_journals_link('list-by-alphabetical-order', $limit, $status, $matching, $search, $letter, $offset);
+		$this->translate_journals_link('list-by-alphabetical-order', $limit, $params['status'], $params['matching'], $params['search'], $params['letter'], $offset);
 
+		$this->load->vars($params);
 		$this->load->vars('base_url', $base_url);
-		$this->load->vars('status', $status);
-		$this->load->vars('search', $search);
-		$this->load->vars('letter', $letter);
+		$this->load->vars('limit', $limit);
 		$this->load->vars('total_journals', $total_journals);
 		$this->load->vars('journals', $journals);
 		$this->load->view('pages/journals');
+	}
+
+	/**
+	 * List all journals by alphabetical order printing the html template.
+	 *
+	 * @return	void
+	 */
+	public function list_journals_by_alphabetical_order_ajax()
+	{
+
+		$offset = 0;
+
+		$limit = $this->input->get('limit', true);
+
+		if (!$limit) {
+			$limit = SCIELO_JOURNAL_LIMIT;
+		}
+
+		$params = $this->get_journals_params();
+
+		$journals = $this->Journals->list_all_journals($limit, $offset, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		$total_journals = $this->Journals->total_journals($params['status'], $params['matching'], $params['search'], $params['letter']);
+
+		$journals_links = $this->get_journals_links();
+		$base_url = $journals_links[$this->language]['list-by-alphabetical-order'] . "/?limit={$limit}";
+		$base_url = $this->add_params_to_base_url($base_url, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		$base_url = $this->config_journals_pagination($base_url, $total_journals, $limit, $offset);
+
+		$html = $this->load->view('partials/journals-table.php', array('total_journals' => $total_journals, 'journals' => $journals, 'base_url' => $base_url), true);
+
+		print $html;
 	}
 
 	/**
@@ -265,16 +276,13 @@ class Home extends CI_Controller
 			$limit = SCIELO_JOURNAL_LIMIT;
 		}
 
-		$status = $this->input->get('status', true);
-		$matching = $this->input->get('matching', true);
-		$search = $this->input->get('search', true);
+		$params = $this->get_journals_params();
 		$export = $this->input->get('export', true);
-		$letter = $this->input->get('letter', true);
 
 		if ($export == 'csv') {
 
 			// Export all journals.
-			$journals = $this->Journals->list_all_journals(PHP_INT_MAX, 0, $status, $matching, $search, $letter);
+			$journals = $this->Journals->list_all_journals(PHP_INT_MAX, 0, $params['status'], $params['matching'], $params['search'], $params['letter']);
 
 			$this->load->vars('journals', $journals);
 			$this->load->view('pages/journals-' . $export);
@@ -282,38 +290,52 @@ class Home extends CI_Controller
 			return;
 		}
 
-		$publishers = $this->Journals->list_all_publishers($limit, $offset, $status, $matching, $search, $letter);
-		$total_publishers = $this->Journals->total_publishers($status, $matching, $search, $letter);
+		$publishers = $this->Journals->list_all_publishers($limit, $offset, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		$total_publishers = $this->Journals->total_publishers($params['status'], $params['matching'], $params['search'], $params['letter']);
 
 		$journals_links = $this->get_journals_links();
 		$base_url = $journals_links[$this->language]['list-by-publishers'] . "/?limit={$limit}";
-
-		if ($status) {
-			$base_url .= '&status=' . $status;
-		}
-
-		if ($matching) {
-			$base_url .= '&matching=' . $matching;
-		}
-
-		if ($search) {
-			$base_url .= '&search=' . $search;
-		}
-
-		if ($letter) {
-			$base_url .= '&letter=' . $letter;
-		}
-
+		$base_url = $this->add_params_to_base_url($base_url, $params['status'], $params['matching'], $params['search'], $params['letter']);
 		$base_url = $this->config_journals_pagination($base_url, $total_publishers, $limit, $offset);
 
-		$this->translate_journals_link('list-by-publishers', $limit, $status, $matching, $search, $letter, $offset);
+		$this->translate_journals_link('list-by-publishers', $limit, $params['status'], $params['matching'], $params['search'], $params['letter'], $offset);
 
+		$this->load->vars($params);
 		$this->load->vars('base_url', $base_url);
-		$this->load->vars('status', $status);
-		$this->load->vars('search', $search);
-		$this->load->vars('letter', $letter);
+		$this->load->vars('limit', $limit);
 		$this->load->vars('publishers', $publishers);
 		$this->load->view('pages/journals-by-publishers');
+	}
+
+	/**
+	 * List all journals publishers ordered by name printing the html template.
+	 *
+	 * @return	void
+	 */
+	public function list_by_publishers_ajax()
+	{
+
+		$offset = 0;
+
+		$limit = $this->input->get('limit', true);
+
+		if (!$limit) {
+			$limit = SCIELO_JOURNAL_LIMIT;
+		}
+
+		$params = $this->get_journals_params();
+
+		$publishers = $this->Journals->list_all_publishers($limit, $offset, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		$total_publishers = $this->Journals->total_publishers($params['status'], $params['matching'], $params['search'], $params['letter']);
+
+		$journals_links = $this->get_journals_links();
+		$base_url = $journals_links[$this->language]['list-by-publishers'] . "/?limit={$limit}";
+		$base_url = $this->add_params_to_base_url($base_url, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		$base_url = $this->config_journals_pagination($base_url, $total_publishers, $limit, $offset);
+
+		$html = $this->load->view('partials/journals-by-publishers-table.php', array('total_publishers' => $total_publishers, 'publishers' => $publishers, 'base_url' => $base_url), true);
+
+		print $html;
 	}
 
 	/**
@@ -338,16 +360,13 @@ class Home extends CI_Controller
 			$limit = SCIELO_JOURNAL_LIMIT;
 		}
 
-		$status = $this->input->get('status', true);
-		$matching = $this->input->get('matching', true);
-		$search = $this->input->get('search', true);
+		$params = $this->get_journals_params();
 		$export = $this->input->get('export', true);
-		$letter = $this->input->get('letter', true);
 
 		if ($export == 'csv') {
 
 			// Export all journals.
-			$journals = $this->Journals->list_all_journals_by_subject_area($id_subject_area, PHP_INT_MAX, 0, $status, $matching, $search, $letter);
+			$journals = $this->Journals->list_all_journals_by_subject_area($id_subject_area, PHP_INT_MAX, 0, $params['status'], $params['matching'], $params['search'], $params['letter']);
 
 			$this->load->vars('journals', $journals);
 			$this->load->view('pages/journals-' . $export);
@@ -355,10 +374,102 @@ class Home extends CI_Controller
 			return;
 		}
 
-		$journals = $this->Journals->list_all_journals_by_subject_area($id_subject_area, $limit, $offset, $status, $matching, $search, $letter);
-		$total_journals = $this->Journals->total_journals_by_subject_area($id_subject_area, $status, $matching, $search, $letter);
+		$journals = $this->Journals->list_all_journals_by_subject_area($id_subject_area, $limit, $offset, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		$total_journals = $this->Journals->total_journals_by_subject_area($id_subject_area, $params['status'], $params['matching'], $params['search'], $params['letter']);
 		$journals_links = $this->get_journals_links();
 		$base_url = $journals_links[$this->language]['list-by-subject-area'] . '/' . $id_subject_area . '/' . $subject_area . "/?limit={$limit}";
+		$base_url = $this->add_params_to_base_url($base_url, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		$base_url = $this->config_journals_pagination($base_url, $total_journals, $limit, $offset);
+
+		$this->translate_journals_link('list-by-subject-area', $limit, $params['status'], $params['matching'], $params['search'], $params['letter'], $offset, $id_subject_area, $subject_area);
+
+		$subject_area = $this->Journals->get_subject_area($id_subject_area);
+		$subject_areas = $this->Journals->list_all_subject_areas($this->language);
+
+		$this->load->vars($params);		
+		$this->load->vars('journals_links', $journals_links);
+		$this->load->vars('subject_area', $subject_area);
+		$this->load->vars('subject_areas', $subject_areas);
+		$this->load->vars('base_url', $base_url);
+		$this->load->vars('limit', $limit);
+		$this->load->vars('total_journals', $total_journals);
+		$this->load->vars('journals', $journals);
+		$this->load->view('pages/journals');
+	}
+
+	/**
+	 * List all journals by subject area ordered by name.
+	 *
+	 * @return	void
+	 */
+	public function list_by_subject_area_ajax($id_subject_area, $subject_area)
+	{
+
+		$offset = 0;
+
+		$limit = $this->input->get('limit', true);
+
+		if (!$limit) {
+			$limit = SCIELO_JOURNAL_LIMIT;
+		}
+
+		$params = $this->get_journals_params();
+
+		$journals = $this->Journals->list_all_journals_by_subject_area($id_subject_area, $limit, $offset, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		$total_journals = $this->Journals->total_journals_by_subject_area($id_subject_area, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		$journals_links = $this->get_journals_links();
+		$base_url = $journals_links[$this->language]['list-by-subject-area'] . '/' . $id_subject_area . '/' . $subject_area . "/?limit={$limit}";
+		$base_url = $this->add_params_to_base_url($base_url, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		$base_url = $this->config_journals_pagination($base_url, $total_journals, $limit, $offset);
+
+		$html = $this->load->view('partials/journals-table.php', array('total_journals' => $total_journals, 'journals' => $journals, 'base_url' => $base_url), true);
+
+		print $html;
+	}
+
+	/**
+	 * The default handler for 404 error.
+	 *
+	 * @return void
+	 */
+	public function page_not_found()
+	{
+
+		// In the page not found the metadata comes from the tabs API return json data.
+		$this->load_page_metadata('pageMetadataHome', TABS_EN_API_PATH, TABS_ES_API_PATH, TABS_API_PATH);
+
+		$this->load->view('page_not_found');
+	}
+
+	/**
+	 * Get the journals params returning an array.
+	 *
+	 * @return array
+	 */
+	private function get_journals_params()
+	{
+
+		$params = array();
+		$params['status'] = $this->input->get('status', true);
+		$params['matching'] = $this->input->get('matching', true);
+		$params['search'] = $this->input->get('search', true);
+		$params['letter'] = $this->input->get('letter', true);
+
+		return $params;
+	}
+
+	/**
+	 * Private method to add parameters to base url.
+	 *
+	 * @param  string 	$base_url
+	 * @param  string 	$status
+	 * @param  string   $matching 
+	 * @param  string   $search
+	 * @param  string   $letter
+	 * @return string
+	 */
+	private function add_params_to_base_url($base_url, $status, $matching, $search, $letter)
+	{
 
 		if ($status) {
 			$base_url .= '&status=' . $status;
@@ -376,37 +487,7 @@ class Home extends CI_Controller
 			$base_url .= '&letter=' . $letter;
 		}
 
-		$base_url = $this->config_journals_pagination($base_url, $total_journals, $limit, $offset);
-
-		$this->translate_journals_link('list-by-subject-area', $limit, $status, $matching, $search, $letter, $offset, $id_subject_area, $subject_area);
-
-		$subject_area = $this->Journals->get_subject_area($id_subject_area);
-		$subject_areas = $this->Journals->list_all_subject_areas($this->language);
-
-		$this->load->vars('journals_links', $journals_links);
-		$this->load->vars('subject_area', $subject_area);
-		$this->load->vars('subject_areas', $subject_areas);
-		$this->load->vars('base_url', $base_url);
-		$this->load->vars('status', $status);
-		$this->load->vars('search', $search);
-		$this->load->vars('letter', $letter);
-		$this->load->vars('total_journals', $total_journals);
-		$this->load->vars('journals', $journals);
-		$this->load->view('pages/journals');
-	}
-
-	/**
-	 * The default handler for 404 error.
-	 *
-	 * @return void
-	 */
-	public function page_not_found()
-	{
-
-		// In the page not found the metadata comes from the tabs API return json data.
-		$this->load_page_metadata('pageMetadataHome', TABS_EN_API_PATH, TABS_ES_API_PATH, TABS_API_PATH);
-
-		$this->load->view('page_not_found');
+		return $base_url;
 	}
 
 	/**

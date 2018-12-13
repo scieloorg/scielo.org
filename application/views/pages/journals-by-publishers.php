@@ -49,28 +49,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<div class="container">
 		<div class="row row-journal-filter">
 			<div class="col-md-6">
-				<div class="btn-group" data-toggle="buttons">
-					<label class="btn <?php if (!$status && !$letter) : ?>active<?php endif; ?>">
-						<input type="radio" autocomplete="off" name="query_filter" id="query_filter_all" value="all">
-						<?= lang('all') ?>
-					</label>
-					<label class="btn <?php if ($status == 'current') : ?>active<?php endif; ?>">
-						<input type="radio" autocomplete="off" name="query_filter" id="query_filter_current" value="current">
-						<span class="lbl-corrente hidden-xs"><?= lang('active_journals') ?></span>
-						<span class="lbl-corrente hidden-sm hidden-md hidden-lg"><?= lang('actives') ?></span>
-					</label>
-					<label class="btn <?php if ($status == 'deceased') : ?>active<?php endif; ?>">
-						<input type="radio" autocomplete="off" name="query_filter" id="query_filter_deceased" value="deceased">
-						<span class="lbl-nao-corrente hidden-xs"><?= lang('deceased_journals') ?></span>
-						<span class="lbl-nao-corrente hidden-sm hidden-md hidden-lg"><?= lang('deceaseds') ?></span>
-					</label>
-					<?php if ($letter != '') : ?>
-					<label class="btn <?php if (!$status): ?>active<?php endif; ?>">
-						<input type="radio" autocomplete="off" name="letter_filter" id="letter_filter" value="<?= $letter ?>">
-						<?= lang('letter').' '.$letter ?>
-					</label>
-					<?php endif; ?>					
-				</div>
+				<?php $this->load->view('partials/journals-status'); ?>
 			</div>
 			<div class="col-md-6">
 				<?php $this->load->view('partials/journals-search-form'); ?>
@@ -82,7 +61,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 				<div class="list-publisher">
 					<hr>
-					<?php $this->load->view('partials/journals-letter-filter'); ?>		
+					<?php $this->load->view('partials/journals-letter-filter'); ?>	
+					<div id="journalsTable">	
 					<table>
 						<colgroup>
 							<col width="50%">
@@ -144,18 +124,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<?php endif; ?>
 						</tbody>
 					</table>
-				</div>
-				<div class="row">
-					<div class="col-md-6">
-						<nav aria-label="Page navigation example">
-							<?= $this->pagination->create_links(); ?>
-						</nav>
 					</div>
-					<div class="col-md-6 text-right">
-						<?php if (!empty($publishers)) : ?>
-							<?php $this->load->view('partials/journals-filter-limit'); ?>
-						<?php endif; ?>						
-					</div>
+					<div style="display: none;" class="collectionListLoading"></div>		
 				</div>
 			</div>
 		</div>
