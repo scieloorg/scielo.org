@@ -93,9 +93,11 @@ defined('EXIT__AUTO_MAX') or define('EXIT__AUTO_MAX', 125); // highest automatic
 |
 |
  */
+define('USE_HTTPS', getenv('USE_HTTPS')); // @TODO - Define on production
+
 // Base URL (keeps this out of the config.php)
 if (isset($_SERVER['HTTP_HOST'])) {
-    $base_url = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' ? 'https' : 'http';
+    $base_url = USE_HTTPS == 'true' ? 'https' : 'http';
     $base_url .= '://' . $_SERVER['HTTP_HOST'];
     $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 
@@ -109,6 +111,7 @@ if (isset($_SERVER['HTTP_HOST'])) {
     $base_url = 'http://localhost/';
     $base_uri = '/';
 }
+
 
 // Define these values to be used later on.
 define('BASE_URL', $base_url);
