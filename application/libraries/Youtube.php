@@ -89,7 +89,7 @@ class Youtube
     {
 
         $client = new Google_Client();
-        $client->setApplicationName(GOOGLE_CLIENTE_API_APPNAME);
+        $client->setApplicationName(GOOGLE_CLIENT_API_APPNAME);
         $client->setDeveloperKey(GOOGLE_CLIENT_API_KEY);
         $client->addScope(Google_Service_YouTube::YOUTUBE_FORCE_SSL);
         $client->setAccessType('offline');        // offline access
