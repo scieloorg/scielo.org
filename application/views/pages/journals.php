@@ -129,7 +129,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 								<?= $last_letter_html ?>
 								<tr>
 									<td colspan="2">
-										<a href="<?= $journal->scielo_url ?>" <?php if ($journal->status == 'deceased') : ?>class="disabled"<?php endif; ?>>
+										<a href="<?= $journal->scielo_url ?>" <?php if ($journal->status == 'deceased' || $journal->status == 'suspended') : ?>class="disabled"<?php endif; ?>>
 											<strong class="journalTitle">
 												<?= $journal->title ?>
 											</strong>

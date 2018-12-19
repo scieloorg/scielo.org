@@ -92,11 +92,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
     };
 
     var param = '';
-    param += add_parameter_to(param, 'matching', matching);
-    param += add_parameter_to(param, 'search', search);
-    param += add_parameter_to(param, 'letter', letter);
-    param += add_parameter_to(param, 'status', status);
-    param += add_parameter_to(param, 'limit', limit);
+    param = add_parameter_to(param, 'matching', matching);
+    param = add_parameter_to(param, 'search', search);
+    param = add_parameter_to(param, 'letter', letter);
+    param = add_parameter_to(param, 'status', status);
+    param = add_parameter_to(param, 'limit', limit);
 
     $.ajax({
       url: current_url,

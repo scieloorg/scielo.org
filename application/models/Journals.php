@@ -345,10 +345,13 @@ class Journals extends CI_Model
      */
     private function set_status_criteria($status = false)
     {
-        if ($status) {
-            $this->db->where('status', $status);
+
+        if ($status == "current") {
+            $this->db->where('status = "current"');
+        } elseif ($status == "deceased") {
+            $this->db->where('(status = "deceased" OR status = "suspended")');
         } else {
-            $this->db->where('(status="current" OR status="deceased")');
+            $this->db->where('status != "inprogress"');
         }
     }
 
