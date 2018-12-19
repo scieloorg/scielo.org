@@ -74,7 +74,7 @@ if (!function_exists('create_letter_filter')) {
         for ($i = 65; $i <= 90; $i++) {
             $letter = chr($i);
 
-            $html .= '<button type="button" class="btn btn-sm btn-default ' . is_letter_selected($letter) . '" onclick="javascript:set_letter_filter(\'' . $letter . '\');">' . $letter . '</button>';
+            $html .= '<button type="button" name="letterBtn" id="letterBtn' . $letter . '" class="btn btn-sm btn-default ' . is_letter_selected($letter) . '" onclick="javascript:set_letter_filter(\'' . $letter . '\');">' . $letter . '</button>';
         }
 
         return $html;

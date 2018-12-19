@@ -41,7 +41,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <dl>
             <dt><h3><?= lang('list_journals_by_subject') ?></h3></dt>
             <dd class="text">
-                <a href="<?= $journals_links[$language]['list-by-alphabetical-order'] ?>"><?= lang('all') ?></a>
+                <a href="<?= $journals_links[$language]['list-by-subject-area'] ?>"><?= lang('all') ?></a>
             </dd>
             <?php foreach ($subject_areas as $subject_area) : ?>
             <?php

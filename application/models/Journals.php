@@ -118,9 +118,7 @@ class Journals extends CI_Model
     private function add_journals_query_parameters($status = false, $matching = false, $search = false, $letter = false)
     {
 
-        if ($status) {
-            $this->db->where('status', $status);
-        }
+        $this->set_status_criteria($status);
 
         if ($search) {
             switch ($matching) {
@@ -160,9 +158,9 @@ class Journals extends CI_Model
 
         $this->db->from($this->journals_table);
         $this->db->join($this->subject_areas_journals_table, $this->journals_table . '.id_journal=' . $this->subject_areas_journals_table . '.id_journal', 'left');
-        
+
         $this->add_journals_by_subject_area_query_parameters($id_subject_area, $status, $matching, $search, $letter);
-        
+
         $this->db->limit($limit, $offset);
         $this->db->group_by('title_search');
         $this->db->order_by('title_search', 'ASC');
@@ -184,7 +182,7 @@ class Journals extends CI_Model
     {
 
         $this->add_journals_by_subject_area_query_parameters($id_subject_area, $status, $matching, $search, $letter);
-        
+
         $this->db->join($this->subject_areas_journals_table, $this->journals_table . '.id_journal=' . $this->subject_areas_journals_table . '.id_journal', 'left');
         $this->db->group_by('title_search');
 
@@ -206,9 +204,7 @@ class Journals extends CI_Model
 
         $this->db->where('id_subject_area', $id_subject_area);
 
-        if ($status) {
-            $this->db->where('status', $status);
-        }
+        $this->set_status_criteria($status);
 
         if ($search) {
             switch ($matching) {
@@ -248,9 +244,7 @@ class Journals extends CI_Model
         $this->db->select('trim(publisher_name) as publisher_name');
         $this->db->from($this->journals_table);
 
-        if ($status) {
-            $this->db->where('status', $status);
-        }
+        $this->set_status_criteria($status);
 
         if ($search) {
             switch ($matching) {
@@ -293,9 +287,7 @@ class Journals extends CI_Model
     public function total_publishers($status = false, $matching = false, $search = false, $letter = false)
     {
 
-        if ($status) {
-            $this->db->where('status', $status);
-        }
+        $this->set_status_criteria($status);
 
         if ($search) {
             switch ($matching) {
@@ -338,14 +330,26 @@ class Journals extends CI_Model
         $this->db->from($this->journals_table);
         $this->db->where('publisher_name', $publisher_name);
 
-        if ($status) {
-            $this->db->where('status', $status);
-        }
+        $this->set_status_criteria($status);
 
         $this->db->group_by('title_search');
         $this->db->order_by('title_search', 'ASC');
 
         return $this->get_results_obj();
+    }
+
+    /**
+     * Utility function to add the status to the query.
+     * @param   $status
+     * @return	void
+     */
+    private function set_status_criteria($status = false)
+    {
+        if ($status) {
+            $this->db->where('status', $status);
+        } else {
+            $this->db->where('(status="current" OR status="deceased")');
+        }
     }
 
     /**

@@ -3,21 +3,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 <script>
   var status = '';
+  var totalLabelNew = '';
   
   $('#query_filter_all').on('change', function () {
     status = '';
-    unset_letter_filter();
-    query_filter();
+    query_filter(totalLabelNew);
   });
 
   $('#query_filter_current').on('change', function () {
     status = 'current';
-    query_filter();	
+    query_filter(totalLabelNew);	
   });
 
   $('#query_filter_deceased').on('change', function () {
     status = 'deceased';
-    query_filter();
+    query_filter(totalLabelNew);
   });
 
   $("#letter_filter").on('change', function () {
@@ -30,47 +30,31 @@ defined('BASEPATH') or exit('No direct script access allowed');
     clearTimeout(window.timer);
 
     window.timer = setTimeout(function() {  
-      query_filter(); 
+      query_filter(totalLabelNew); 
     },300);
   });
   
   $('#matching').on('change', function () {
-    query_filter();
+    query_filter(totalLabelNew);
   });
 
-  function untoggle_all_buttons() {
-    var field = $('input[name="query_filter"]');
-    field.parent().removeAttr('style');
-    field.parent().removeClass('active');
-    field.prop('checked', false);
-  }
+  $('#clean_btn').on('click', function() {
+      window.location = '<?= current_url() ?>';
+  });
+
+  $('#subject_area').on('change', function(){
+    window.location = $(this).val();
+  });
 
   function set_letter_filter(letter) {
-
-    untoggle_all_buttons();
-    var filter_label = $('#letter_filter_label');
-    filter_label.removeClass('hidden');
-    filter_label.addClass('active')
-
+    totalLabelNew = "<?= lang('with_initial_letter') ?>" + letter;
+    $('button[name="letterBtn"]').removeClass('btn-primary');
+    $('#letterBtn'+letter).addClass('btn-primary');
     $('#letter').val(letter);    
-    $('#letter_filter').val(letter);
-    $('#letter_span').html(letter);
-    query_filter();
+    query_filter(totalLabelNew);
   }
 
-  function unset_letter_filter() {
-
-    var filter_label = $('#letter_filter_label');
-    filter_label.removeClass('active');
-    filter_label.addClass('hidden');
-    filter_label.prev().attr('style', 'border-top-right-radius: 5px;  border-bottom-right-radius: 5px;');
-    
-    $('#letter').val(null);
-    $('#letter_filter').val(null);
-    $('#letter_span').html(null);
-  }
-
-  function query_filter() {
+  function query_filter(totalLabel=false) {
 
     var current_url = '<?= current_url() ?>';
 
@@ -125,7 +109,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
     }).done(function(data) {
       loading.hide();
       $('#journalsTable').html(data);
-
+      if(totalLabel) {
+        $('#totalLabel').html(totalLabel);
+      }
     }).error(function() {
       loading.hide();
       console.error('Error found on loading journal list');

@@ -48,11 +48,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <section>
 	<div class="container">
 		<div class="row row-journal-filter">
-			<div class="col-md-6">
+			<div class="col-sm-6 col-md-7">
 				<?php $this->load->view('partials/journals-status'); ?>
 			</div>
-			<div class="col-md-6">
+
+			<div class="col-sm-10 col-md-4">
 				<?php $this->load->view('partials/journals-search-form'); ?>
+			</div>
+
+			<div class="col-sm-2 col-md-1">
+				<input type="button" id="clean_btn" class="btn btn-default" value="<?=lang('clean_btn')?>">
 			</div>
 		</div>
 		<div class="row">
@@ -70,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						</colgroup>	
 						<thead class="hidden-xs">
 							<th class="col-xs-12 col-sm-6 col-md-6">
-								<?= lang('publisher') ?>
+								<?= lang('publisher') ?><span id="totalLabel"></span>
 							</th>
 							<th class="col-xs-12 col-sm-6 col-md-6">
 								<?= ucfirst(lang('journals')) ?>
