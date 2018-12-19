@@ -78,11 +78,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</div>
 			<?php endif; ?>
 				
-			<div class="col-sm-6 <?php if (isset($subject_areas)) : ?>col-md-4<?php else : ?>col-md-7<?php endif; ?>">
+			<div class="col-sm-6 <?php if (isset($subject_areas)) : ?>col-md-4<?php else : ?>col-md-6<?php endif; ?>">
 				<?php $this->load->view('partials/journals-status'); ?>
 			</div>
 			
-			<div class="col-sm-10 col-md-4">
+			<div class="col-sm-10 <?php if (isset($subject_areas)) : ?>col-md-4<?php else : ?>col-md-5<?php endif; ?>">
 				<?php $this->load->view('partials/journals-search-form'); ?>
 			</div>
 			
