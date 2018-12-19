@@ -48,11 +48,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <section>
 	<div class="container">
 		<div class="row row-journal-filter">
-			<div class="col-sm-6 col-md-7">
+			<div class="col-sm-6 col-md-6">
 				<?php $this->load->view('partials/journals-status'); ?>
 			</div>
 
-			<div class="col-sm-10 col-md-4">
+			<div class="col-sm-10 col-md-5">
 				<?php $this->load->view('partials/journals-search-form'); ?>
 			</div>
 
