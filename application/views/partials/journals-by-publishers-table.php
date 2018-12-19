@@ -5,7 +5,7 @@
     </colgroup>	
     <thead class="hidden-xs">
         <th class="col-xs-12 col-sm-6 col-md-6">
-            <?= lang('publisher') ?>
+            <?= lang('publisher') ?><span id="totalLabel"></span>
         </th>
         <th class="col-xs-12 col-sm-6 col-md-6">
             <?= ucfirst(lang('journals')) ?>

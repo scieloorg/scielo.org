@@ -1,7 +1,7 @@
 <table>
     <thead>
         <th>
-            <?= ucfirst(lang('journals')) ?> <small>(total <?= $total_journals ?>)</small>
+            <?= ucfirst(lang('journals')) ?><span id="totalLabel"></span> <small>(total <?= $total_journals ?>)</small>
         </th>
         <th width="30%">
             <div class="downloadList">

@@ -343,7 +343,7 @@ class Home extends CI_Controller
 	 *
 	 * @return	void
 	 */
-	public function list_by_subject_area($id_subject_area, $subject_area)
+	public function list_by_subject_area($id_subject_area = false, $subject_area = false)
 	{
 
 		$this->load_journals_page_metadata();
@@ -366,7 +366,11 @@ class Home extends CI_Controller
 		if ($export == 'csv') {
 
 			// Export all journals.
-			$journals = $this->Journals->list_all_journals_by_subject_area($id_subject_area, PHP_INT_MAX, 0, $params['status'], $params['matching'], $params['search'], $params['letter']);
+			if ($id_subject_area) {
+				$journals = $this->Journals->list_all_journals_by_subject_area($id_subject_area, PHP_INT_MAX, 0, $params['status'], $params['matching'], $params['search'], $params['letter']);
+			} else {
+				$journals = $this->Journals->list_all_journals(PHP_INT_MAX, 0, $params['status'], $params['matching'], $params['search'], $params['letter']);
+			}
 
 			$this->load->vars('journals', $journals);
 			$this->load->view('pages/journals-' . $export);
@@ -374,8 +378,14 @@ class Home extends CI_Controller
 			return;
 		}
 
-		$journals = $this->Journals->list_all_journals_by_subject_area($id_subject_area, $limit, $offset, $params['status'], $params['matching'], $params['search'], $params['letter']);
-		$total_journals = $this->Journals->total_journals_by_subject_area($id_subject_area, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		if ($id_subject_area) {
+			$journals = $this->Journals->list_all_journals_by_subject_area($id_subject_area, $limit, $offset, $params['status'], $params['matching'], $params['search'], $params['letter']);
+			$total_journals = $this->Journals->total_journals_by_subject_area($id_subject_area, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		} else {
+			$journals = $this->Journals->list_all_journals($limit, $offset, $params['status'], $params['matching'], $params['search'], $params['letter']);
+			$total_journals = $this->Journals->total_journals($params['status'], $params['matching'], $params['search'], $params['letter']);
+		}
+
 		$journals_links = $this->get_journals_links();
 		$base_url = $journals_links[$this->language]['list-by-subject-area'] . '/' . $id_subject_area . '/' . $subject_area . "/?limit={$limit}";
 		$base_url = $this->add_params_to_base_url($base_url, $params['status'], $params['matching'], $params['search'], $params['letter']);
@@ -386,7 +396,7 @@ class Home extends CI_Controller
 		$subject_area = $this->Journals->get_subject_area($id_subject_area);
 		$subject_areas = $this->Journals->list_all_subject_areas($this->language);
 
-		$this->load->vars($params);		
+		$this->load->vars($params);
 		$this->load->vars('journals_links', $journals_links);
 		$this->load->vars('subject_area', $subject_area);
 		$this->load->vars('subject_areas', $subject_areas);
@@ -402,7 +412,7 @@ class Home extends CI_Controller
 	 *
 	 * @return	void
 	 */
-	public function list_by_subject_area_ajax($id_subject_area, $subject_area)
+	public function list_by_subject_area_ajax($id_subject_area = false, $subject_area = false)
 	{
 
 		$offset = 0;
@@ -415,8 +425,14 @@ class Home extends CI_Controller
 
 		$params = $this->get_journals_params();
 
-		$journals = $this->Journals->list_all_journals_by_subject_area($id_subject_area, $limit, $offset, $params['status'], $params['matching'], $params['search'], $params['letter']);
-		$total_journals = $this->Journals->total_journals_by_subject_area($id_subject_area, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		if ($id_subject_area) {
+			$journals = $this->Journals->list_all_journals_by_subject_area($id_subject_area, $limit, $offset, $params['status'], $params['matching'], $params['search'], $params['letter']);
+			$total_journals = $this->Journals->total_journals_by_subject_area($id_subject_area, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		} else {
+			$journals = $this->Journals->list_all_journals($limit, $offset, $params['status'], $params['matching'], $params['search'], $params['letter']);
+			$total_journals = $this->Journals->total_journals($params['status'], $params['matching'], $params['search'], $params['letter']);
+		}
+
 		$journals_links = $this->get_journals_links();
 		$base_url = $journals_links[$this->language]['list-by-subject-area'] . '/' . $id_subject_area . '/' . $subject_area . "/?limit={$limit}";
 		$base_url = $this->add_params_to_base_url($base_url, $params['status'], $params['matching'], $params['search'], $params['letter']);

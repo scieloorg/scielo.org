@@ -53,35 +53,41 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <section>
 	<div class="container">
-		<?php if (isset($subject_areas)) : ?>			
+		
 		<div class="row row-journal-filter">
-			<div class="col-md-12">
-				<form action="#" id="subject_area_form" class="form-inline">
-					<div class="form-group">
-						<p class="form-control-static"><strong><?= lang('subject') ?>:</strong></p>
-					</div>
-					<div class="form-group">
-						<select id="subject_area" class="form-control" onchange="javascript:window.location=$('#subject_area').val();">
-							<?php foreach ($subject_areas as $_subject_area) : ?>
-							<?php
-						$id_subject_area = $_subject_area['id_subject_area'];
-						$name_url = str_replace(',', '', $_subject_area['name_' . $language]);
-						$name_url = str_replace('+', '-', urlencode(remove_accents(strtolower($name_url))));
-						?>     
-								<option value="<?= $journals_links[$language]['list-by-subject-area'] . '/' . $id_subject_area . '/' . $name_url ?>" <?php if ($subject_area['id_subject_area'] == $id_subject_area) : ?>selected<?php endif; ?>><?= $_subject_area['name_' . $language] ?></option>
-							<?php endforeach; ?>
-						</select>
-					</div>
-				</form>
-			</div>
-		</div>
-		<?php endif; ?>
-		<div class="row row-journal-filter">
-			<div class="col-md-6">
+			
+			<?php if (isset($subject_areas)) : ?>
+				<div class="col-sm-6 col-md-3">			
+					
+					<form action="#" id="subject_area_form" class="form-inline">
+						<div class="form-group">
+							<select id="subject_area" class="form-control">
+								<option value="<?= $journals_links[$language]['list-by-subject-area']?>"><?=lang('all_subjects')?></option>
+								<?php foreach ($subject_areas as $_subject_area) : ?>
+								<?php
+									$id_subject_area = $_subject_area['id_subject_area'];
+									$name_url = str_replace(',', '', $_subject_area['name_' . $language]);
+									$name_url = str_replace('+', '-', urlencode(remove_accents(strtolower($name_url))));
+									?>     
+									<option value="<?= $journals_links[$language]['list-by-subject-area'] . '/' . $id_subject_area . '/' . $name_url ?>" <?php if ($subject_area['id_subject_area'] == $id_subject_area) : ?>selected<?php endif; ?>><?= $_subject_area['name_' . $language] ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</form>
+				
+				</div>
+			<?php endif; ?>
+				
+			<div class="col-sm-6 <?php if (isset($subject_areas)) : ?>col-md-4<?php else : ?>col-md-7<?php endif; ?>">
 				<?php $this->load->view('partials/journals-status'); ?>
 			</div>
-			<div class="col-md-6">
+			
+			<div class="col-sm-10 col-md-4">
 				<?php $this->load->view('partials/journals-search-form'); ?>
+			</div>
+			
+			<div class="col-sm-2 col-md-1">
+				<input type="button" id="clean_btn" class="btn btn-default" value="<?=lang('clean_btn')?>">
 			</div>
 		</div>
 		<div class="row">
@@ -95,7 +101,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<table>
 						<thead>
 							<th>
-								<?= ucfirst(lang('journals')) ?> <small>(total <?= $total_journals ?>)</small>
+								<?= ucfirst(lang('journals')) ?><span id="totalLabel"></span> <small>(total <?= $total_journals ?>)</small>
 							</th>
 							<th width="30%">
 								<div class="downloadList">
