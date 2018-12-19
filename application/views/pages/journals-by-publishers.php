@@ -119,7 +119,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									</td>
 									<td class="col-xs-12 col-sm-6 col-md-6">
 										<?php foreach ($journals as $journal) : ?>
-											<a href="<?= $journal->scielo_url ?>" <?php if ($journal->status == 'deceased') : ?>class="disabled"<?php endif; ?>>
+											<a href="<?= $journal->scielo_url ?>" <?php if ($journal->status == 'deceased' || $journal->status == 'suspended') : ?>class="disabled"<?php endif; ?>>
 												<?= $journal->title ?>
 											</a>
 										<?php endforeach; ?>
