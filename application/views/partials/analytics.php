@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <dl>
                     <dt><?= $total_active_journals ?></dt>
                     <dd>
-                        <?= strtolower(lang('active_journals')) ?>
+                        <?= lang('active_journals') ?>
                     </dd>
                 </dl>
             </div>

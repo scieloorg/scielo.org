@@ -8,6 +8,7 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
     <div class="col-sm-12 col-md-12">
         <dl>
            <?php 
+           // Periódicos
             $counter = 0;
             foreach ($this->Collections->get_journals_list() as $key => $journal) : 
             $has_journal_count = array_key_exists('current', $journal->journal_count);
@@ -26,42 +27,7 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
             <?php endforeach; ?>
 
             <?php 
-            $counter = 0;
-            foreach ($this->Collections->get_development_list() as $key => $development) : 
-            $has_journal_count = array_key_exists('current', $development->journal_count);
-            $has_document_count = !empty($development->document_count);
-            $flag_no_data_css = (!$has_journal_count && !$has_document_count) ? 'flag-no-data' : null;
-            ?>
-                <dd class="flag-<?= $development->code ?> <?= $flag_no_data_css ?> <?php if($counter == 0):?> first-node-collection <?php endif;?>">
-                    <?php if($counter++ == 0):?>
-                    <h3><?= lang('development_list') ?></h3>
-                    <?php endif;?>
-                    <a href="http://<?= $development->domain ?>">
-                        <h4><?= $development->name[$lang_index] ?></h4>
-                        <span><?php if ($has_journal_count) : ?><?= $development->journal_count['current'] ?> <?= pluralize($development->journal_count['current'], lang('journals_singular'), lang('journals')) ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $development->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
-                    </a>
-                </dd>
-            <?php endforeach; ?>
-
-            <?php 
-            $counter = 0;
-            foreach ($this->Collections->get_discontinued_list() as $key => $discontinued) : 
-            $has_journal_count = array_key_exists('deceased', $discontinued->journal_count);
-            $has_document_count = !empty($discontinued->document_count);
-            $scielo_books_no_data_css = (!$has_journal_count && !$has_document_count) ? 'scielo-books-no-data' : null;
-            ?>
-                <dd class="scielo-books <?= $scielo_books_no_data_css ?> <?php if($counter == 0):?> first-node-collection <?php endif;?>">
-                    <?php if($counter++ == 0):?>
-                    <h3><?= lang('discontinued_list') ?></h3>
-                    <?php endif;?>
-                    <a href="http://<?= $discontinued->domain ?>">
-                        <h4><?= $discontinued->name[$lang_index] ?></h4>
-                        <span><?php if ($has_journal_count) : ?><?= $discontinued->journal_count['deceased'] ?> <?= pluralize($discontinued->journal_count['deceased'], lang('journals_singular'), lang('journals')) ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $discontinued->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
-                    </a>
-                </dd>
-            <?php endforeach; ?>
-
-            <?php 
+            // Livros
             $counter = 0;
             foreach ($this->Collections->get_books_list() as $key => $book) : 
             ?>
@@ -73,9 +39,10 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                         <h4><?= $book->name[$lang_index] ?></h4>
                     </a>
                 </dd>
-            <?php endforeach; ?> 
+            <?php endforeach; ?>
 
             <?php 
+            // Outros
             $counter = 0;
             foreach ($this->Collections->get_others_list() as $key => $other) : 
             $has_journal_count = array_key_exists('current', $other->journal_count);
@@ -92,6 +59,77 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                     </a>
                 </dd>
             <?php endforeach; ?>
+
+            <?php /*
+            // Em desenvolvimento
+            $counter = 0;
+            foreach ($this->Collections->get_development_list() as $key => $development) : 
+            $has_journal_count = array_key_exists('current', $development->journal_count);
+            $has_document_count = !empty($development->document_count);
+            $flag_no_data_css = (!$has_journal_count && !$has_document_count) ? 'flag-no-data' : null;
+            ?>
+                <dd class="flag-<?= $development->code ?> <?= $flag_no_data_css ?> <?php if($counter == 0):?> first-node-collection <?php endif;?>">
+                    <?php if($counter++ == 0):?>
+                    <h3><?= lang('development_list') ?></h3>
+                    <?php endif;?>
+                    <a href="http://<?= $development->domain ?>">
+                        <h4><?= $development->name[$lang_index] ?></h4>
+                        <span><?php if ($has_journal_count) : ?><?= $development->journal_count['current'] ?> <?= pluralize($development->journal_count['current'], lang('journals_singular'), lang('journals')) ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $development->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
+                    </a>
+                </dd>
+            <?php endforeach; */ ?>
+
+            <dd class="scielo-books first-node-collection-no-content">
+                <a href="" class="discontinued-toggle discontinued-toggle-off"><h3><?= lang('discontinued_list') ?></h3></a>
+            </dd>
+            
+            <?php 
+            // Discontinued journals
+            $counter = 0;
+            foreach ($this->Collections->get_discontinued_journals_list() as $key => $discontinued) : 
+            $has_journal_count = array_key_exists('deceased', $discontinued->journal_count);
+            $has_document_count = !empty($discontinued->document_count);
+            $scielo_books_no_data_css = (!$has_journal_count && !$has_document_count) ? 'scielo-books-no-data' : null;
+            ?>
+
+                
+                <dd class="scielo-books subcontent-block discontinued-item <?= $scielo_books_no_data_css ?> <?php if($counter == 0):?> first-node-collection <?php endif;?>">
+                    <?php if($counter++ == 0):?>
+                    <h4><?= lang('journals_list') ?></h4>
+                    <?php endif;?>
+                    <a href="http://<?= $discontinued->domain ?>">
+                        <h4><?= $discontinued->name[$lang_index] ?></h4>
+                        <span><?php if ($has_journal_count) : ?><?= $discontinued->journal_count['deceased'] ?> <?= pluralize($discontinued->journal_count['deceased'], lang('journals_singular'), lang('journals')) ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $discontinued->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
+                    </a>
+                </dd>
+            
+
+
+            <?php endforeach; ?>
+
+            <?php 
+            // Discontinued others
+            $counter = 0;
+            foreach ($this->Collections->get_discontinued_others_list() as $key => $discontinued) : 
+            $has_journal_count = array_key_exists('deceased', $discontinued->journal_count);
+            $has_document_count = !empty($discontinued->document_count);
+            $scielo_books_no_data_css = (!$has_journal_count && !$has_document_count) ? 'scielo-books-no-data' : null;
+            ?>
+               
+
+                <dd class="scielo-books subcontent-block discontinued-item <?= $scielo_books_no_data_css ?> <?php if($counter == 0):?> first-node-collection <?php endif;?>">
+                    <?php if($counter++ == 0):?>
+                    <h4><?= lang('others') ?></h4>
+                    <?php endif;?>
+                    <a href="http://<?= $discontinued->domain ?>">
+                        <h4><?= $discontinued->name[$lang_index] ?></h4>
+                        <span><?php if ($has_journal_count) : ?><?= $discontinued->journal_count['deceased'] ?> <?= pluralize($discontinued->journal_count['deceased'], lang('journals_singular'), lang('journals')) ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $discontinued->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
+                    </a>
+                </dd>
+                
+
+            <?php endforeach; ?>
+
         </dl>
     </div>
 </div>

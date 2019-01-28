@@ -240,5 +240,15 @@ var scieloLib = {
 				scieloLib.InitializeSlickTo(SLIDER_YOUTUBE_VIDEOS);
 			}
 		});
+
+
+		// Toggle discontinued collection
+		
+		$(".discontinued-toggle").click(function(e) {
+			e.preventDefault();
+			$(".discontinued-item").toggle( "slow");
+			$(this).toggleClass("discontinued-toggle-off discontinued-toggle-on");
+		});
+		
 	}
 };
