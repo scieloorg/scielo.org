@@ -60,11 +60,18 @@ class Collections
     private $journals_list = array();
 
     /**
-     * List of all the data used in the collections discontinued section.
+     * List of all the data used in the collections discontinued section and journals subsection.
      *
      * @var	array
      */
-    private $discontinued_list = array();
+    private $discontinued_journals_list = array();
+
+    /**
+     * List of all the data used in the collections discontinued section and others subsection.
+     *
+     * @var array
+     */
+    private $discontinued_others_list = array();
 
     /**
      * The user language selected.
@@ -139,15 +146,27 @@ class Collections
     }
 
     /**
-     * Returns the discontinued list.
+     * Returns the discontinued journals list.
      *
      * @return	array
      */
-    public function get_discontinued_list()
+    public function get_discontinued_journals_list()
     {
-        ksort($this->discontinued_list, SORT_LOCALE_STRING);
+        ksort($this->discontinued_journals_list, SORT_LOCALE_STRING);
 
-        return ($this->discontinued_list);
+        return ($this->discontinued_journals_list);
+    }
+
+    /**
+     * Returns the discontinued others list.
+     *
+     * @return  array
+     */
+    public function get_discontinued_others_list()
+    {
+        ksort($this->discontinued_others_list, SORT_LOCALE_STRING);
+
+        return ($this->discontinued_others_list);
     }
 
     /**
@@ -161,33 +180,38 @@ class Collections
     {
         foreach ($this->collection_json as $collection) {
 
-            if ($collection['type'] == 'journals') {
+            $index = $collection['name'][$this->language];
 
-                $index = $collection['name'][$this->language];
-
-                if ($collection['is_active']) {
-
+            if ($collection['is_active']) {
+                if ($collection['type'] == 'journals') {
                     switch ($collection['status']) {
-
                         case 'certified': // Section 'Coleções certificadas'  
+                        case 'development': // Section 'Coleção em desenvolvimento'
                             $this->journals_list[$index] = (object)$collection;
                             break;
 
                         case 'diffusion': // Section 'Outras'
                             $this->others_list[$index] = (object)$collection;
                             break;
-
+                    }
+                } else if($collection['type'] == 'books') {
+                    $this->books_list[] = (object)$collection;
+                }
+            } else {
+                if ($collection['type'] == 'journals') {
+                    switch ($collection['status']) {
+                        case 'certified': // Section 'Coleções certificadas'  
                         case 'development': // Section 'Coleção em desenvolvimento'
-                            $this->development_list[$index] = (object)$collection;
+                            $this->discontinued_journals_list[$index] = (object)$collection;
+                            break;
+
+                        case 'diffusion': // Section 'Outras'
+                            $this->discontinued_others_list[$index] = (object)$collection;
                             break;
                     }
-
                 } else {
-                    $this->discontinued_list[$index] = (object)$collection;
+                    $this->discontinued_others_list[$index] = (object)$collection;
                 }
-
-            } elseif ($collection['type'] == 'books') {
-                $this->books_list[] = (object)$collection;
             }
         }
     }
