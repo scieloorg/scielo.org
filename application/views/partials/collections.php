@@ -78,58 +78,6 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                     </a>
                 </dd>
             <?php endforeach; */ ?>
-
-            <dd class="scielo-books first-node-collection-no-content">
-                <a href="" class="discontinued-toggle discontinued-toggle-off"><h3><?= lang('discontinued_list') ?></h3></a>
-            </dd>
-            
-            <?php 
-            // Discontinued journals
-            $counter = 0;
-            foreach ($this->Collections->get_discontinued_journals_list() as $key => $discontinued) : 
-            $has_journal_count = array_key_exists('deceased', $discontinued->journal_count);
-            $has_document_count = !empty($discontinued->document_count);
-            $scielo_books_no_data_css = (!$has_journal_count && !$has_document_count) ? 'scielo-books-no-data' : null;
-            ?>
-
-                
-                <dd class="scielo-books subcontent-block discontinued-item <?= $scielo_books_no_data_css ?> <?php if($counter == 0):?> first-node-collection <?php endif;?>">
-                    <?php if($counter++ == 0):?>
-                    <h4><?= lang('journals_list') ?></h4>
-                    <?php endif;?>
-                    <a href="http://<?= $discontinued->domain ?>">
-                        <h4><?= $discontinued->name[$lang_index] ?></h4>
-                        <span><?php if ($has_journal_count) : ?><?= $discontinued->journal_count['deceased'] ?> <?= pluralize($discontinued->journal_count['deceased'], lang('journals_singular'), lang('journals')) ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $discontinued->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
-                    </a>
-                </dd>
-            
-
-
-            <?php endforeach; ?>
-
-            <?php 
-            // Discontinued others
-            $counter = 0;
-            foreach ($this->Collections->get_discontinued_others_list() as $key => $discontinued) : 
-            $has_journal_count = array_key_exists('deceased', $discontinued->journal_count);
-            $has_document_count = !empty($discontinued->document_count);
-            $scielo_books_no_data_css = (!$has_journal_count && !$has_document_count) ? 'scielo-books-no-data' : null;
-            ?>
-               
-
-                <dd class="scielo-books subcontent-block discontinued-item <?= $scielo_books_no_data_css ?> <?php if($counter == 0):?> first-node-collection <?php endif;?>">
-                    <?php if($counter++ == 0):?>
-                    <h4><?= lang('others') ?></h4>
-                    <?php endif;?>
-                    <a href="http://<?= $discontinued->domain ?>">
-                        <h4><?= $discontinued->name[$lang_index] ?></h4>
-                        <span><?php if ($has_journal_count) : ?><?= $discontinued->journal_count['deceased'] ?> <?= pluralize($discontinued->journal_count['deceased'], lang('journals_singular'), lang('journals')) ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $discontinued->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
-                    </a>
-                </dd>
-                
-
-            <?php endforeach; ?>
-
         </dl>
     </div>
 </div>
