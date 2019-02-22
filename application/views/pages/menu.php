@@ -61,14 +61,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 					// Verify if the page is of the type 'pageModel-linkExternal.php' or 'pageModel-linkToDocument.php'
 					if ($subpage['template'] == 'pageModel-linkExternal.php') {
-						$link = $subpage['acf']['link_pt'];
+					
+						$link = $subpage['acf']['link_'.$language];
+					
 					} else if ($subpage['template'] == 'pageModel-linkToDocument.php') {
-						$link = $subpage['acf']['document_pt'];
+						
+						$link = $subpage['acf']['document_'.$language];
+						
+
 					} else {
 						// If the language is Portuguese it is necessary to concatenate the cookie language value. 
 						$scielo_url = ($language == SCIELO_LANG) ? base_url($language . '/') : base_url();
 						$link = str_replace(WORDPRESS_URL, $scielo_url, $subpage['link']);
 					}
+
 				?>
 				<li>
 					<a href="<?= $link ?>">
