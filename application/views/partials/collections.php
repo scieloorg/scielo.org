@@ -11,8 +11,8 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
            // Periódicos
             $counter = 0;
             foreach ($this->Collections->get_journals_list() as $key => $journal) : 
-            $has_journal_count = array_key_exists('current', $journal->journal_count);
-            $has_document_count = !empty($journal->document_count);
+            $has_journal_count = (ENABLED_COUNTS_DISPLAY && array_key_exists('current', $journal->journal_count));
+            $has_document_count = (ENABLED_COUNTS_DISPLAY && !empty($journal->document_count));
             $flag_no_data_css = (!$has_journal_count && !$has_document_count) ? 'flag-no-data' : null;
             ?>
             <dd class="flag-<?= $journal->code ?> <?= $flag_no_data_css ?> <?php if($counter == 0):?> first-node-collection <?php endif;?>">
@@ -45,8 +45,8 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
             // Outros
             $counter = 0;
             foreach ($this->Collections->get_others_list() as $key => $other) : 
-            $has_journal_count = array_key_exists('current', $other->journal_count);
-            $has_document_count = !empty($other->document_count);
+            $has_journal_count = (ENABLED_COUNTS_DISPLAY && array_key_exists('current', $other->journal_count));
+            $has_document_count = (ENABLED_COUNTS_DISPLAY && !empty($other->document_count));
             $scielo_books_no_data_css = (!$has_journal_count && !$has_document_count) ? 'scielo-books-no-data' : null;
             ?>
                 <dd class="scielo-books <?= $scielo_books_no_data_css ?> <?php if($counter == 0):?> first-node-collection <?php endif;?>">
@@ -64,8 +64,8 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
             // Em desenvolvimento
             $counter = 0;
             foreach ($this->Collections->get_development_list() as $key => $development) : 
-            $has_journal_count = array_key_exists('current', $development->journal_count);
-            $has_document_count = !empty($development->document_count);
+            $has_journal_count = (ENABLED_COUNTS_DISPLAY && array_key_exists('current', $development->journal_count));
+            $has_document_count = (ENABLED_COUNTS_DISPLAY && !empty($development->document_count));
             $flag_no_data_css = (!$has_journal_count && !$has_document_count) ? 'flag-no-data' : null;
             ?>
                 <dd class="flag-<?= $development->code ?> <?= $flag_no_data_css ?> <?php if($counter == 0):?> first-node-collection <?php endif;?>">

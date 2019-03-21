@@ -42,3 +42,6 @@ services:
 
           # API Default Path. Very Important: Remember to add the last slash in this URL.
           - WORDPRESS_URL=
+
+          # Feature toggles
+          - ENABLED_COUNTS_DISPLAY=

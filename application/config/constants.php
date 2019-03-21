@@ -112,6 +112,8 @@ if (isset($_SERVER['HTTP_HOST'])) {
     $base_uri = '/';
 }
 
+// Feature togglers
+define('ENABLED_COUNTS_DISPLAY', getenv('ENABLED_COUNTS_DISPLAY'));
 
 // Define these values to be used later on.
 define('BASE_URL', $base_url);
