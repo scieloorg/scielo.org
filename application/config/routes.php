@@ -89,6 +89,8 @@ $route['es/revistas/listar-por-tema'] = 'home/list_by_subject_area';
 $route['es/revistas/listar-por-tema-ajax/(:num)/(:any)'] = 'home/list_by_subject_area_ajax/$1/$2';
 $route['es/revistas/listar-por-tema-ajax'] = 'home/list_by_subject_area_ajax';
 
+$route['php/index.php'] = 'home/redirect_legacy_index_url';
+
 $route['pt/(.+)'] = 'home/page/$1';
 $route['en/(.+)'] = 'home/page/$1';
 $route['es/(.+)'] = 'home/page/$1';

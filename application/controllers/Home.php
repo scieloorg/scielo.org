@@ -1177,4 +1177,13 @@ class Home extends CI_Controller
 
 		$this->load->vars('available_languages', $available_languages);
 	}
+
+	/**
+	 * Redirect legacy index page URL to the new one
+	 */	
+	public function redirect_legacy_index_url()
+	{
+		$lang = $this->input->get('lang', 'en');
+		return redirect($lang . '/', 'location', 301);
+	}
 }
