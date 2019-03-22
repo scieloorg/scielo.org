@@ -90,3 +90,17 @@ $lang['starts_with'] = 'Comienza con';
 $lang['search_btn'] = 'Buscar';
 $lang['clean_btn'] = 'Limpiar';
 $lang['with_initial_letter'] = '&nbsp;con la letra inicial&nbsp;';
+$lang['page_not_found_with_details'] = '
+No se pudo encontrar esta página. El contenido que ha buscado probablemente se ha movido o no está disponible.
+<br><br>
+Tal vez los siguientes enlaces puedan traer lo que está buscando:
+<br>
+<ul>
+	<li><a href="/pt/sobre-o-scielo/scielo/procedimentos-de-publicacao-no-scielo/">Procedimientos de publicación en SciELO (texto en portugués)</a></li>
+	<li><a href="/es/sobre-el-scielo/scielo/empresas-con-atestado-de-capacidad-para-marcacion-de-textos/">Empresas con Atestado de capacidad técnica para servicios de marcación de textos de acuerdo con SciELO Publishing Schema (SciELO PS)</a></li>
+</ul>
+
+Compruebe también nuestra sección <a href="/es/sobre-el-scielo">Sobre el SciELO</a>.
+<br><br>
+Si no ha encontrado lo que busca, póngase en <a href="/es/sobre-el-scielo/contacto/">contacto con nosotros</a>.
+';

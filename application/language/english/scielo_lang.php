@@ -90,3 +90,17 @@ $lang['starts_with'] = 'Starts with';
 $lang['search_btn'] = 'Search';
 $lang['clean_btn'] = 'Clean';
 $lang['with_initial_letter'] = '&nbsp;with the initial letter&nbsp;';
+$lang['page_not_found_with_details'] = '
+This page could not be found. The content you are looking for was probably moved or is no longer available.
+<br><br>
+Maybe the links below might bring you what you are looking for:
+<br>
+<ul>
+	<li><a href="/pt/sobre-o-scielo/scielo/procedimentos-de-publicacao-no-scielo/">Publication procedures at SciELO (text in portuguese)</a></li>
+	<li><a href="/en/about-scielo/scielo/companies-certified-for-xml-article-tagging-services/">Companies certified for XML Article text Tagging Services according to SciELO Publishing Schema</a></li>
+</ul>
+
+Also check our section <a href="/en/about-scielo/">About SciELO</a>.
+<br><br>
+If you did not find what you were looking for, please <a href="/en/about-scielo/contact/">contact us</a>.
+';
