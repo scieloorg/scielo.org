@@ -57,11 +57,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div class="row row-journal-filter">
 			
 			<?php if (isset($subject_areas)) : ?>
-				<div class="col-sm-6 col-md-3">			
+				<div class="col-sm-4 col-md-2">			
 					
 					<form action="#" id="subject_area_form" class="form-inline">
 						<div class="form-group">
-							<select id="subject_area" class="form-control">
+							<select id="subject_area" class="form-control" style="width: 100%;">
 								<option value="<?= $journals_links[$language]['list-by-subject-area']?>"><?=lang('all_subjects')?></option>
 								<?php foreach ($subject_areas as $_subject_area) : ?>
 								<?php
@@ -78,15 +78,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</div>
 			<?php endif; ?>
 				
-			<div class="col-sm-6 <?php if (isset($subject_areas)) : ?>col-md-4<?php else : ?>col-md-6<?php endif; ?>">
+			<div class="col-sm-8 <?php if (isset($subject_areas)) : ?>col-md-6 col-lg-5<?php else : ?>col-md-6<?php endif; ?>">
 				<?php $this->load->view('partials/journals-status'); ?>
 			</div>
 			
-			<div class="col-sm-10 <?php if (isset($subject_areas)) : ?>col-md-4<?php else : ?>col-md-5<?php endif; ?>">
+			<div class="col-xs-12 col-sm-10 <?php if (isset($subject_areas)) : ?>col-md-3 col-lg-4<?php else : ?>col-md-5<?php endif; ?>">
 				<?php $this->load->view('partials/journals-search-form'); ?>
 			</div>
 			
-			<div class="col-sm-2 col-md-1">
+			<div class="col-xs-12 col-sm-2 col-md-1">
 				<input type="button" id="clean_btn" class="btn btn-default" value="<?=lang('clean_btn')?>">
 			</div>
 		</div>
