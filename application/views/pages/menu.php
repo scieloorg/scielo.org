@@ -77,7 +77,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 				?>
 				<li>
-					<a href="<?= $link ?>">
+					<?php if ($subpage['template'] == 'pageModel-linkToDocument.php') { ?>
+						<a href="<?= $link ?>" target="_blank">
+					<?php }else{ ?>
+						<a href="<?= $link ?>">					
+					<?php } ?>
 						<?= $link_text ?>
 					</a>
 				</li>
