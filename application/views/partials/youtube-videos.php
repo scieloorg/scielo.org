@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
+<?php if(count($youtube_videos) > 0): ?>
 <div class="row slider-youtube-videos">
     <?php foreach ($youtube_videos as $video) : ?>
    <div class="col-xs-12 col-md-4">
@@ -29,6 +30,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </div>
     <?php endforeach; ?>	
+<?php else: ?>
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="card card-no-content">
+            <?= lang('content_error'); ?>
+        </div>
+    </div>
+<?php endif; ?>
 </div>
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-4 col-md-offset-8">

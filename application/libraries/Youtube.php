@@ -40,41 +40,46 @@ class Youtube
     public function get_videos()
     {
 
-        $google_service_youTube = new Google_Service_YouTube($this->get_google_client());
+        $client = $this->get_google_client();
+        $google_service_youTube = new Google_Service_YouTube($client);
 
-        $channels = $google_service_youTube->channels->listChannels(
-            'contentDetails',
-            array('forUsername' => SCIELO_YOUTUBE_CHANNEL)
-        );
-
-        // Retrieve the first channel
-        $playlistId = $channels->getItems()[0]->getContentDetails()->getRelatedPlaylists()->getUploads();
-
-        $playlistItems = $google_service_youTube->playlistItems->listPlaylistItems(
-            'snippet,contentDetails',
-            array('maxResults' => 50, 'playlistId' => $playlistId)
-        );
-
-        $videoIds = array();
-        foreach ($playlistItems->getItems() as $item) {
-            $videoIds[] = $item->getContentDetails()->videoId;
-        }
-
-        $videos = $google_service_youTube->videos->listVideos(
-            'snippet,contentDetails',
-            array('id' => implode(',', $videoIds))
-        );
-
-        $youtube_videos = array();
-
-        foreach ($videos->getItems() as $video) {
-            $youtube_videos[] = array(
-                'id' => $video->getId(),
-                'title' => $video->getSnippet()->getTitle(),
-                'description' => $video->getSnippet()->getDescription(),
-                'thumbnail' => $video->getSnippet()->getThumbnails()->getHigh()->getUrl(),
-                'publishedAt' => $video->getSnippet()->getPublishedAt()
+        if($client) {
+            $channels = $google_service_youTube->channels->listChannels(
+                'contentDetails',
+                array('forUsername' => SCIELO_YOUTUBE_CHANNEL)
             );
+
+            // Retrieve the first channel
+            $playlistId = $channels->getItems()[0]->getContentDetails()->getRelatedPlaylists()->getUploads();
+
+            $playlistItems = $google_service_youTube->playlistItems->listPlaylistItems(
+                'snippet,contentDetails',
+                array('maxResults' => 50, 'playlistId' => $playlistId)
+            );
+
+            $videoIds = array();
+            foreach ($playlistItems->getItems() as $item) {
+                $videoIds[] = $item->getContentDetails()->videoId;
+            }
+
+            $videos = $google_service_youTube->videos->listVideos(
+                'snippet,contentDetails',
+                array('id' => implode(',', $videoIds))
+            );
+
+            $youtube_videos = array();
+
+            foreach ($videos->getItems() as $video) {
+                $youtube_videos[] = array(
+                    'id' => $video->getId(),
+                    'title' => $video->getSnippet()->getTitle(),
+                    'description' => $video->getSnippet()->getDescription(),
+                    'thumbnail' => $video->getSnippet()->getThumbnails()->getHigh()->getUrl(),
+                    'publishedAt' => $video->getSnippet()->getPublishedAt()
+                );
+            }
+        } else {
+            $youtube_videos = array();
         }
 
         return $youtube_videos;

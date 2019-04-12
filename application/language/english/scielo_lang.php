@@ -89,6 +89,7 @@ $lang['contains'] = 'Contains';
 $lang['extact_title'] = 'Exact title';
 $lang['starts_with'] = 'Starts with';
 $lang['search_btn'] = 'Search';
+$lang["content_error"] = 'Sorry, there was an error loading this content.';
 $lang['clean_btn'] = 'Clear';
 $lang['with_initial_letter'] = '&nbsp;with the initial letter&nbsp;';
 $lang['page_not_found_with_details'] = '

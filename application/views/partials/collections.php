@@ -4,6 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <?php
 $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
 ?>
+<?php if(count($this->Collections->get_collection_json()) > 0): ?>
 <div class="row">
     <div class="col-sm-12 col-md-12">
         <dl>
@@ -81,3 +82,12 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
         </dl>
     </div>
 </div>
+<?php else: ?>
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="card card-no-content">
+            <?= lang('content_error'); ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

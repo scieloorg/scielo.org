@@ -43,6 +43,7 @@ class Home extends CI_Controller
 		$this->set_language();
 		$this->load_static_texts_by_language();
 		$this->load_about_link(); // The about link is the same in any page, so I load it here in the constructor.			
+		$this->load_openaccessdeclaration_link(); // The open access link in footer section, so I load it here in the constructor.			
 		$this->load_footer(); // The footer is the same in any page, so I load it here in the constructor.	
 	}
 
@@ -552,6 +553,25 @@ class Home extends CI_Controller
 	}
 
 	/**
+	 * Get the Open Access Page link and text for Home controller.
+	 *
+	 * @return void
+	 */
+	private function load_openaccessdeclaration_link()
+	{
+
+		// Load the about page content from the json array
+		$oad = $this->get_content_from_cache('open-acess-link', FOUR_HOURS_TIMEOUT, OPENACCESS_EN_API_PATH, OPENACCESS_ES_API_PATH, OPENACCESS_API_PATH);
+
+		$oad_url = explode('/', $oad['link']);
+
+		$oad_url = $oad_url[count($oad_url) - 2];
+
+		$oad_menu_item = array('link' => $oad_url, 'text' => $oad['title']['rendered']);
+		$this->load->vars('oad_menu_item', $oad_menu_item);
+	}
+
+	/**
 	 * Load the page metadata from the cache and pass it to be shown in the template head section.
 	 * 
 	 * @param  int 		$key		    The cache content key to be searched.
@@ -686,7 +706,13 @@ class Home extends CI_Controller
 
 		$blog_posts = $this->get_content_by_language($cachedContentPortuguese, $cachedContentEnglish, $cachedContentSpanish);
 
-		$this->load->vars('blog_posts', simplexml_load_string($blog_posts, 'SimpleXMLElement', LIBXML_NOCDATA));
+		libxml_use_internal_errors(true);
+		$blog_xml_var = simplexml_load_string($blog_posts, 'SimpleXMLElement', LIBXML_NOCDATA);
+
+		if($blog_xml_var === false)
+			$blog_xml_var = array();
+
+		$this->load->vars('blog_posts', $blog_xml_var);
 	}
 
 	/**

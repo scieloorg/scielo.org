@@ -88,11 +88,20 @@ class Collections
      */
     public function initialize($collection_json, $language)
     {
-        $this->collection_json = $collection_json;
+        $this->collection_json = count($collection_json) > 0 ? $collection_json : array();
 
         $this->language = $language;
 
         $this->set_collection_lists();
+    }
+
+    /**
+     * Gets the collections itens json array.
+     *
+     */
+    public function get_collection_json()
+    {
+        return $this->collection_json;
     }
 
     /**
@@ -151,6 +160,7 @@ class Collections
      * @return	array
      */
     public function get_discontinued_journals_list()
+
     {
         ksort($this->discontinued_journals_list, SORT_LOCALE_STRING);
 
@@ -167,6 +177,7 @@ class Collections
         ksort($this->discontinued_others_list, SORT_LOCALE_STRING);
 
         return ($this->discontinued_others_list);
+
     }
 
     /**
@@ -178,39 +189,36 @@ class Collections
      */
     private function set_collection_lists()
     {
-        foreach ($this->collection_json as $collection) {
+        if(count($this->collection_json) > 0) {
+            foreach ($this->collection_json as $collection) {
 
-            $index = $collection['name'][$this->language];
-
-            if ($collection['is_active']) {
                 if ($collection['type'] == 'journals') {
-                    switch ($collection['status']) {
-                        case 'certified': // Section 'Coleções certificadas'  
-                        case 'development': // Section 'Coleção em desenvolvimento'
-                            $this->journals_list[$index] = (object)$collection;
-                            break;
 
-                        case 'diffusion': // Section 'Outras'
-                            $this->others_list[$index] = (object)$collection;
-                            break;
+                    $index = $collection['name'][$this->language];
+
+                    if ($collection['is_active']) {
+
+                        switch ($collection['status']) {
+
+                            case 'certified': // Section 'Coleções certificadas'  
+                                $this->journals_list[$index] = (object)$collection;
+                                break;
+
+                            case 'diffusion': // Section 'Outras'
+                                $this->others_list[$index] = (object)$collection;
+                                break;
+
+                            case 'development': // Section 'Coleção em desenvolvimento'
+                                $this->development_list[$index] = (object)$collection;
+                                break;
+                        }
+
+                    } else {
+                        $this->discontinued_list[$index] = (object)$collection;
                     }
-                } else if($collection['type'] == 'books') {
+
+                } elseif ($collection['type'] == 'books') {
                     $this->books_list[] = (object)$collection;
-                }
-            } else {
-                if ($collection['type'] == 'journals') {
-                    switch ($collection['status']) {
-                        case 'certified': // Section 'Coleções certificadas'  
-                        case 'development': // Section 'Coleção em desenvolvimento'
-                            $this->discontinued_journals_list[$index] = (object)$collection;
-                            break;
-
-                        case 'diffusion': // Section 'Outras'
-                            $this->discontinued_others_list[$index] = (object)$collection;
-                            break;
-                    }
-                } else {
-                    $this->discontinued_others_list[$index] = (object)$collection;
                 }
             }
         }
