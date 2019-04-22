@@ -711,6 +711,7 @@ class Home extends CI_Controller
 
 		if($blog_xml_var === false)
 			$blog_xml_var = array();
+			libxml_clear_errors();
 
 		$this->load->vars('blog_posts', $blog_xml_var);
 	}
