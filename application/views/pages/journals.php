@@ -57,7 +57,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div class="row row-journal-filter">
 			
 			<?php if (isset($subject_areas)) : ?>
-				<div class="col-sm-4 col-md-2">			
+				<div class="col-sm-4 col-md-2 col-lg-3">			
 					
 					<form action="#" id="subject_area_form" class="form-inline">
 						<div class="form-group">
@@ -82,7 +82,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<?php $this->load->view('partials/journals-status'); ?>
 			</div>
 			
-			<div class="col-xs-12 col-sm-10 <?php if (isset($subject_areas)) : ?>col-md-3 col-lg-4<?php else : ?>col-md-5<?php endif; ?>">
+			<div class="col-xs-12 col-sm-10 <?php if (isset($subject_areas)) : ?>col-md-3 col-lg-3<?php else : ?>col-md-5<?php endif; ?>">
 				<?php $this->load->view('partials/journals-search-form'); ?>
 			</div>
 			
