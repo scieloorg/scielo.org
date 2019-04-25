@@ -46,6 +46,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div class="container">
 		<div class="row">
 			<div class="col-xs-12 content">
+				
+				<div class="page-updated-at">
+					<?php $date = new DateTime($page['date']);?>
+					<?= "(Atualizado: ". $date->format('d/m/Y') . ")" ?>
+				</div>
+
 				<?= $page['content']['rendered'] ?>
 			</div>        
 		</div>
