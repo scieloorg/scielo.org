@@ -24,6 +24,30 @@ class Cache_util extends CI_Controller
 {
 
 	/**
+	 * Update cache database. This function is only acessible by
+	 * command line, to run this method execute:
+	 * `php index.php cache_util update_database`
+	 */
+	public function update_database()
+	{
+		if (!defined("STDIN") && php_sapi_name() != "cli") {
+			exit("Not allowed");
+		}
+
+		log_message("debug", "Running cache update tool, it may take some minutes, please wait.");
+
+		try {
+			$this->clean_database_cache();
+			log_message("debug", "Update finished comfortably.");
+		} catch (Exception $e) {
+			log_message("error", "Something went wrong, please verify traceback.");
+			log_message("error", var_dump($e));
+		}
+
+		exit(0);
+	}
+
+	/**
 	 * Check if the database timeout is over, clear the cache and redirect to home.
 	 * Note that if the timeout for the database clean up is over, it is necessary
 	 * to make the requests and process the data to normalize it.
@@ -52,7 +76,7 @@ class Cache_util extends CI_Controller
 			$date2 = new DateTime();
 
 			$diff = $date2->diff($date1); // Get DateInterval Object
-			
+
 			// Verify if it pass than 30 days since the last processing.
 			if ($diff->format('%d') > 30) {
 
