@@ -31,3 +31,14 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /tests/tests/
 /tests/results/
+
+# NODE JS
+node_modules/
+
+# CSS Files
+static/style.css
+static/style.css.map
+
+# JavaScript
+static/js/scielo-min.js
+static/js/scielo-min.js.map
