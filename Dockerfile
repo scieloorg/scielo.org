@@ -1,3 +1,14 @@
+# Build static files container
+FROM node:10.15.3 AS buildstatic
+
+COPY . /app
+WORKDIR /app
+
+RUN npm install -y
+RUN cd /app \
+	&& npm run js-minify \
+	&& npm run css-compile
+
 FROM ubuntu:18.04
 
 RUN apt-get update && \
@@ -23,6 +34,8 @@ ENV APACHE_PID_FILE /var/run/apache2.pid
 ENV CI_ENV production
 
 ADD . /var/www/site/
+COPY --from=buildstatic /app/static/ /var/www/site/static/
+
 ADD docker/apache-config.conf /etc/apache2/sites-enabled/000-default.conf
 ADD docker/foreground.sh /etc/apache2/foreground.sh
 ADD docker/supervisord.conf /etc/supervisord.conf
