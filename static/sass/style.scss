@@ -1963,6 +1963,10 @@ section{
 
 	margin-bottom:2rem;
 
+	.form-group{
+		display: block; 
+	}
+
 	label{
 
 		&.btn{
