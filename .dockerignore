@@ -1,0 +1,6 @@
+node_modules/
+.github/
+Dockerfile
+arquitetura-scielo-wordpress.png
+.editorconfig
+docker-compose*.yml
