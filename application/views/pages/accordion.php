@@ -47,7 +47,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		<div class="page-updated-at">
 			<?php $date = new DateTime($page['date']);?>
-			<?= "(Atualizado: ". $date->format('d/m/Y') . ")" ?>
+			<?= "(" . lang('updated') . ": " . $date->format('d/m/Y') . ")" ?>
 		</div>
 
 		<?php if (!empty($page['content']['rendered'])) : ?>

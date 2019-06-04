@@ -105,3 +105,4 @@ Also check our section <a href="/en/about-scielo/">About SciELO</a>.
 <br><br>
 If you did not find what you were looking for, please <a href="/en/about-scielo/contact/">contact us</a>.
 ';
+$lang['updated'] = 'Updated';

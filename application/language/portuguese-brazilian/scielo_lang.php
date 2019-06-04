@@ -102,3 +102,4 @@ Verifique também a nossa seção <a href="/pt/sobre-o-scielo/">Sobre o SciELO</
 <br><br>
 Caso não tenha encontrado o que procurava, entre em <a href="/pt/sobre-o-scielo/contato/">contato</a> conosco.
 ';
+$lang['updated'] = 'Atualizado';
