@@ -67,7 +67,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 }
                 ?>
                 <li class="<?= $icon ?>">
-                    <?= $bibliography['reference'] ?> <a href="<?= $bibliography['available_from'] ?>"><?= $bibliography['available_from'] ?></a>
+                    <?= $bibliography['reference'] ?>
+                    <?php if (!empty($bibliography['link_download_'.$language])) : ?> 
+                    | <a href="<?= $bibliography['link_download_'.$language] ?>" target="_blank"><span class="ico-download"></span> Download</a>
+                    <?php endif; ?>    
                 </li>
                 <?php endforeach; ?>
             </ul>
