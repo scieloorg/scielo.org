@@ -249,7 +249,13 @@ class Alert
                 // Get the link's content and anchor.
 				$this->link  = $this->alert_json['acf']['link'];
 				$this->link_text  = $this->alert_json['acf']['linkText'];
-				$this->outside_column_size_desktop = "col-xs-12 col-sm-11 col-md-9";
+				
+				if($this->link){
+					$this->outside_column_size_desktop = "col-xs-12 col-sm-11 col-md-9";
+				}else{
+					$this->outside_column_size_desktop = "col-xs-12 col-sm-12 col-md-12";
+				}
+				
             }
 			
         }

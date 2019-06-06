@@ -16,7 +16,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
             </div>       
 
-        <?php if($this->Alert->is_link_visible()):?>
+
+        <?php if($this->Alert->get_link()):?>
             <div class="col-xs-12 col-sm-1 col-md-3">
                 <div class="cta-notification">
                     <a href="<?= $this->Alert->get_link() ?>" class="btn btn-arrow arrow-white"><?= $this->Alert->get_link_text() ?></a>
