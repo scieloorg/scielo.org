@@ -88,17 +88,10 @@ body{
 
 		.cta-notification{
 			text-align:center;
-			//background: green;
-			//margin-top:-30px;
-
-			@media (min-width: $screen-sm-min) {
-    			//text-align:right;
-    			//margin-right: 1.6rem;
-  			}
 
   			.btn-arrow{
-				//margin-top: 1.4rem;
 				border:1px solid white;
+				min-height: 29px;
 
 				@media (max-width: $screen-sm-max) {
 					padding-right:12px;
