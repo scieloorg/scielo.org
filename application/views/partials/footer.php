@@ -20,7 +20,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <?php endforeach; ?>
     </div>
     <div class="container collectionLicense">
-        <a href="<?= $about_menu_item['link'] ?>/declaracao-de-acesso-aberto" class="ico-oa">
+        <a href="<?= $about_menu_item['link'] ?>/<?= $oad_menu_item['link'] ?>" class="ico-oa">
             <?= $this->Footer->get_open_access_declaration() ?>
         </a>
     </div>
