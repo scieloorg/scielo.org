@@ -27,6 +27,25 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
             <?php endforeach; ?>
 
             <?php 
+           // Periódicos em desenvolvimento
+            $counter = 0;
+            foreach ($this->Collections->get_development_list() as $key => $journal) : 
+            $has_journal_count = (ENABLED_COUNTS_DISPLAY && array_key_exists('current', $journal->journal_count));
+            $has_document_count = (ENABLED_COUNTS_DISPLAY && !empty($journal->document_count));
+            $flag_no_data_css = (!$has_journal_count && !$has_document_count) ? 'flag-no-data' : null;
+            ?>
+            <dd class="flag-<?= $journal->code ?> <?= $flag_no_data_css ?> <?php if($counter == 0):?> first-node-collection <?php endif;?>">
+                <?php if($counter++ == 0):?>
+                <h3><?= lang('development_list') ?></h3>
+                <?php endif;?>
+                <a href="http://<?= $journal->domain ?>">
+                    <h4><?= $journal->name[$lang_index] ?></h4>
+                    <span><?php if ($has_journal_count) : ?><?= $journal->journal_count['current'] ?> <?= pluralize($journal->journal_count['current'], lang('journals_singular'), lang('journals')) ?> •<?php endif; ?> <?php if ($has_document_count) : ?><?= $journal->document_count ?> <?= lang('articles') ?><?php endif; ?></span>
+                </a>
+            </dd>
+            <?php endforeach; ?>
+
+            <?php 
             // Livros
             $counter = 0;
             foreach ($this->Collections->get_books_list() as $key => $book) : 
