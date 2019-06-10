@@ -104,3 +104,4 @@ Compruebe también nuestra sección <a href="/es/sobre-el-scielo">Sobre el SciEL
 <br><br>
 Si no ha encontrado lo que busca, póngase en <a href="/es/sobre-el-scielo/contacto/">contacto con nosotros</a>.
 ';
+$lang['updated'] = 'Actualizado';
