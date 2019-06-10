@@ -43,6 +43,7 @@ class Home extends CI_Controller
 		$this->set_language();
 		$this->load_static_texts_by_language();
 		$this->load_about_link(); // The about link is the same in any page, so I load it here in the constructor.			
+		$this->load_openaccessdeclaration_link(); // The open access link in footer section, so I load it here in the constructor.			
 		$this->load_footer(); // The footer is the same in any page, so I load it here in the constructor.	
 	}
 
@@ -549,6 +550,25 @@ class Home extends CI_Controller
 
 		$about_menu_item = array('link' => base_url($this->language . '/' . $about_url), 'text' => $about['title']['rendered']);
 		$this->load->vars('about_menu_item', $about_menu_item);
+	}
+
+	/**
+	 * Get the Open Access Page link and text for Home controller.
+	 *
+	 * @return void
+	 */
+	private function load_openaccessdeclaration_link()
+	{
+
+		// Load the about page content from the json array
+		$oad = $this->get_content_from_cache('open-acess-link', FOUR_HOURS_TIMEOUT, OPENACCESS_EN_API_PATH, OPENACCESS_ES_API_PATH, OPENACCESS_API_PATH);
+
+		$oad_url = explode('/', $oad['link']);
+
+		$oad_url = $oad_url[count($oad_url) - 2];
+
+		$oad_menu_item = array('link' => $oad_url, 'text' => $oad['title']['rendered']);
+		$this->load->vars('oad_menu_item', $oad_menu_item);
 	}
 
 	/**
