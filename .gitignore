@@ -36,8 +36,10 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 node_modules/
 
 # CSS Files
-static/style.css
-static/style.css.map
+static/css/style.css
+static/css/style.css.map
+static/css/journal-print.css
+static/css/journal-print.css.map
 
 # JavaScript
 static/js/scielo-min.js
