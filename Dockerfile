@@ -14,7 +14,7 @@ FROM ubuntu:18.04
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 \
       libapache2-mod-php php-gd php-curl php-memcached curl python-setuptools \
-	  python-pip php-sqlite3 php-xml  php-mbstring php-cli && \
+	  python-pip php-sqlite3 php-xml  php-mbstring php-cli cron && \
 	rm -rf /var/lib/apt/lists/* && \
 	pip install supervisor
 
@@ -35,6 +35,7 @@ ENV CI_ENV production
 
 ADD . /var/www/site/
 COPY --from=buildstatic /app/static/ /var/www/site/static/
+COPY docker/application-cron /etc/cron.d/application-cron
 
 ADD docker/apache-config.conf /etc/apache2/sites-enabled/000-default.conf
 ADD docker/foreground.sh /etc/apache2/foreground.sh
@@ -43,6 +44,11 @@ ADD docker/supervisord.conf /etc/supervisord.conf
 RUN chmod -R 0777 /var/www/site/application/cache
 RUN chmod 755 /etc/apache2/foreground.sh
 RUN mkdir /var/log/supervisor/
+
+RUN chmod 0644 /etc/cron.d/application-cron
+RUN crontab /etc/cron.d/application-cron
+
+RUN php /var/www/site/index.php cache_util update_database
 
 WORKDIR /var/www/site
 EXPOSE 80

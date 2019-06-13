@@ -1,0 +1,2 @@
+*/60 * * * * echo Cleaning application cache > /proc/1/fd/1 && php /var/www/site/index.php cache_util clean_cache >&1
+0 3 * * 1,5 echo Updating application database > /proc/1/fd/1 && php /var/www/site/index.php cache_util update_database >&1
