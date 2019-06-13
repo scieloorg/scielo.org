@@ -186,8 +186,11 @@ class Collections
                 if ($collection['type'] == 'journals') {
                     switch ($collection['status']) {
                         case 'certified': // Section 'Coleções certificadas'  
+                         $this->journals_list[$index] = (object)$collection;
+                            break;
+
                         case 'development': // Section 'Coleção em desenvolvimento'
-                            $this->journals_list[$index] = (object)$collection;
+                            $this->development_list[$index] = (object)$collection;
                             break;
 
                         case 'diffusion': // Section 'Outras'
