@@ -21,7 +21,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 	<link rel="stylesheet" type="text/css" href="<?= get_static_css_path('journal-print.css') ?>" media="print" />
 
-	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Arapey" rel="stylesheet">
 	<meta name="description" content="<?= $this->PageMetadata->get_page_description() ?>"/>
 </head>
 <body>

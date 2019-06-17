@@ -26,7 +26,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<?php endforeach; ?>
 			</ul>
 		</div>
-		<h1 class="logo"></h1>
+		<h1 class="logo">
+			<span>Scientific Electronic Library Online</span>
+		</h1>
 		<form name="searchForm" id="searchForm" action="<?= SCIELO_SEARCH_URL ?>" method="get">
 			<input type="hidden" name="lang" id="lang" value="<?= $language ?>">
 			<input type="hidden" name="count" id="count" value="15">
