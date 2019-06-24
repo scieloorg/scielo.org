@@ -212,7 +212,7 @@ section{
 			span{
 				text-align: center;
 				position: relative;
-				top: 22vh;
+				top: 22vh;				
 				display: block;
 				font-size: 16px;
 				font-family: Arapey,serif;
@@ -220,21 +220,19 @@ section{
 				white-space: nowrap;
 
 				@media (orientation: landscape) {
-					top: 30vh;
+					top: 118px; 
 				}
 				@media (min-width: $screen-sm-min) {
-					top: 17vh;
+					top: 175px; 
 
 					@media (orientation: landscape) {
-						top: 23vh;
+						top: 30vh
 					}
 				}
 				@media (min-width: $screen-md-min) {
-					top: 14vh;
+					top: 175px; 
 				}
-				@media (min-width: $screen-lg-min) {
-					top: 18vh;
-				}
+				
 			}
 		}
 	}
