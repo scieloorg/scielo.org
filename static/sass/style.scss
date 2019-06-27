@@ -192,21 +192,9 @@ section{
 					bottom:22vh;
 				}
 			}
-			@media (min-width: $screen-md-min) {
-
-			}
+			
 			@media (min-width: $screen-lg-min) {
 				bottom: 34vh;
-
-				@media (orientation: landscape) {
-
-					@media (max-height: 850px) {
-						bottom: auto;
-						top:70px;
-						height:175px;
-						min-height:175px;
-					}
-				}
 			}
 
 			span{
