@@ -11,7 +11,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <!-- ./alert -->
 
 <div class="container">
-
 	<div class="row">
 		<header class="header-container">
 			<div class="menu-lang">
