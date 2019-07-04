@@ -1713,6 +1713,12 @@ section{
 					background-repeat:no-repeat;
 					background-position: 1.6rem center;
 				}
+				&.ico-printed{
+					position:relative;
+					background-image: svg-uri('<svg width="23px" height="30px" viewBox="0 0 23 30" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="#6789D3" fill-rule="nonzero"><path d="m19.976 4.9412c-0.35354-0.35293-0.53033-0.52941-0.88387-0.88234-0.35354-0.35293-0.53033-0.52941-0.88387-0.88234-1.9445-1.9412-3.182-3.1765-4.4194-3.1765h-9.1924c-2.4749 0-4.5962 2.1176-4.5962 4.5882v20.824c0 2.4706 2.1213 4.5882 4.5962 4.5882h13.789c2.4749 0 4.5962-2.1176 4.5962-4.5882v-16.235c0.17679-1.0588-0.88387-2.2941-3.0052-4.2353v-4.136e-5zm0.88391 20.471c0 1.2353-1.0607 2.2941-2.2981 2.2941h-13.789c-1.2375 0-2.2981-1.0588-2.2981-2.2941v-20.647c0-1.2353 1.0607-2.2941 2.2981-2.2941h8.3085c0.88387 0.17648 0.88387 1.2353 0.88387 2.2941v3.5294c0 0.7059 0.53033 1.2353 1.2375 1.2353h3.3588c1.0607 0 2.2981 0 2.2981 1.2353v14.647z"/></g><g transform="translate(5 12.5)" stroke="#6789D3" stroke-linecap="round" stroke-width="1.8"><path d="m0.5 0.5h12"/><path d="m0.5 5h12"/><path d="m0.5 10h12"/></g></g></svg>');
+					background-repeat:no-repeat;
+					background-position: 1.6rem center;
+				}
 
 				p{
 					display: inline;
