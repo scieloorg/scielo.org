@@ -46,7 +46,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div class="container">
 
 		<div class="page-updated-at">
-			<?php $date = new DateTime($page['date']);?>
+			<?php $date = new DateTime($page['modified']);?>
 			<?= "(" . lang('updated') . ": " . $date->format('d/m/Y') . ")" ?>
 		</div>
 
