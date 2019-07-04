@@ -69,6 +69,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 if ($bibliography['type'] == 'EPUB') {
                     $icon = 'ico-epub';
                 }
+
+                if ($bibliography['type'] == 'printed') {
+                    $icon = 'ico-printed';
+                }
                 ?>
                 <li class="<?= $icon ?>">
                     <?= $bibliography['reference'] ?>
