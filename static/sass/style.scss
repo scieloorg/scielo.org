@@ -733,6 +733,15 @@ section{
 					.btn-default{
 						border-color: #DAE3F4;
 					}
+
+					input[type="submit"] {
+						&.btn-primary{
+							background-image: svg-uri('<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15"><defs><style>.cls-1{fill:#fff;fill-rule:evenodd;}</style></defs><title>magnifier-white</title><path id="path-1" class="cls-1" d="M1.06,5.73A4.67,4.67,0,1,1,5.73,10.4,4.67,4.67,0,0,1,1.06,5.73m13.63,7L12,10a1,1,0,0,0-1.25-.18l-.51-.52A5.73,5.73,0,1,0,0,5.73a5.72,5.72,0,0,0,9.28,4.5l.52.51A1,1,0,0,0,10,12l2.7,2.7a1.07,1.07,0,0,0,1.5,0l.51-.51a1.07,1.07,0,0,0,0-1.5"/></svg>');
+							background-size: 15px 15px;
+							background-position:center center;
+							background-repeat:no-repeat;
+						}
+					}
 				}
 
 
