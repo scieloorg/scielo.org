@@ -19,6 +19,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <li><a href="javascript:scieloLib.SetMatching('<?=lang('extact_title')?>', 'extact_title');"><?=lang('extact_title')?></a></li>
                                 <li><a href="javascript:scieloLib.SetMatching('<?=lang('starts_with')?>', 'starts_with');"><?=lang('starts_with')?></a></li>
                             </ul>
+                            <input type="submit" class="btn btn-primary" value="" alt="Buscar" title="Buscar">
                         </div><!-- /input-group-btn -->
                     </div><!-- /input-group -->
                 
