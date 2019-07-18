@@ -48,6 +48,7 @@ $lang['list_journals_by_alphabetical_order'] = 'Por ordem alfabética';
 $lang['by_publisher'] = 'Por publicador';
 $lang['publisher_list'] = 'Por publicadores';
 $lang['by_subject'] = 'Por assunto';
+$lang['all_subjects'] = 'Todos os assuntos';
 $lang['all'] = 'Todos';
 $lang['active_journals'] = 'Periódicos ativos';
 $lang['actives'] = 'Ativos';
