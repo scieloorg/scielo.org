@@ -88,6 +88,7 @@ $lang['extact_title'] = 'Título exato';
 $lang['starts_with'] = 'Começa com';
 $lang['search_btn'] = 'Buscar';
 $lang['clean_btn'] = 'Limpar';
+$lang["content_error"] = 'Desculpe, este conteúdo está temporariamente indisponível.';
 $lang['page_not_found_with_details'] = '
 Não foi possível encontrar essa página. O conteúdo que você buscou provavelmente foi movido ou não está mais disponível.
 <br><br>

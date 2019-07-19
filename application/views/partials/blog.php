@@ -1,15 +1,16 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
+<?php if(isset($blog_posts->channel)): ?>
 <div class="row slider-blog">
     <?php foreach ($blog_posts->channel->item as $post) : ?>
     <?php 
-    $content = $post->children("content", true);
-    preg_match('/<img.+src=[\'"](?P<src>.+?)[\'"].*>/i', $content, $img);
-    preg_match("'<p><strong>Por(.*?)<\/strong><\/p>'", $content, $author);
+        $content = $post->children("content", true);
+        preg_match('/<img.+src=[\'"](?P<src>.+?)[\'"].*>/i', $content, $img);
+        preg_match("'<p><strong>Por(.*?)<\/strong><\/p>'", $content, $author);
 
-    // @TODO - Feed RSS em inglês e espanhol não possui imagens de conteúdo.
-    $img = array_key_exists('src', $img) ?  $img['src'] : get_static_image_path('placeholder.jpg');
+        // @TODO - Feed RSS em inglês e espanhol não possui imagens de conteúdo.
+        $img = array_key_exists('src', $img) ?  $img['src'] : get_static_image_path('placeholder.jpg');
 
     ?>
     <div class="col-xs-12 col-md-4">
@@ -41,7 +42,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
         </div>
     </div>
-    <?php endforeach; ?>	
+    <?php endforeach; ?>
+<?php else: ?>
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div class="card card-no-content">
+                <?= lang('content_error'); ?>
+            </div>
+        </div>
+<?php endif; ?>	
 </div>
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-4 col-md-offset-8">

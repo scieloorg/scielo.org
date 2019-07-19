@@ -706,7 +706,12 @@ class Home extends CI_Controller
 
 		$blog_posts = $this->get_content_by_language($cachedContentPortuguese, $cachedContentEnglish, $cachedContentSpanish);
 
-		$this->load->vars('blog_posts', simplexml_load_string($blog_posts, 'SimpleXMLElement', LIBXML_NOCDATA));
+		libxml_use_internal_errors(true);
+		$blog_xml_var = simplexml_load_string($blog_posts, 'SimpleXMLElement', LIBXML_NOCDATA);
+ 		if($blog_xml_var === false)
+			$blog_xml_var = array();
+ 		$this->load->vars('blog_posts', $blog_xml_var);
+
 	}
 
 	/**
