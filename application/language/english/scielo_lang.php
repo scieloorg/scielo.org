@@ -90,7 +90,7 @@ $lang['extact_title'] = 'Exact title';
 $lang['starts_with'] = 'Starts with';
 $lang['search_btn'] = 'Search';
 $lang['clean_btn'] = 'Clear';
-$lang["content_error"] = 'Sorry, this content is unavailable at the moment.';
+$lang["content_error"] = 'Sorry, this content is currently unavailable';
 $lang['with_initial_letter'] = '&nbsp;with the initial letter&nbsp;';
 $lang['page_not_found_with_details'] = '
 This page could not be found. The content you are looking for was probably moved or is no longer available.

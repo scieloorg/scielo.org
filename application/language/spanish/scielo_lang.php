@@ -89,7 +89,7 @@ $lang['extact_title'] = 'Título exacto';
 $lang['starts_with'] = 'Comienza con';
 $lang['search_btn'] = 'Buscar';
 $lang['clean_btn'] = 'Limpiar';
-$lang["content_error"] = 'Lo sentimos, este contenido está indisponible temporalmente.';
+$lang["content_error"] = 'Lo sentimos, este contenido no está disponible en este momento';
 $lang['with_initial_letter'] = '&nbsp;con la letra inicial&nbsp;';
 $lang['page_not_found_with_details'] = '
 No se pudo encontrar esta página. El contenido que ha buscado probablemente se ha movido o no está disponible.
