@@ -449,10 +449,11 @@ section{
 
 			&.scielo-books,
 			&.flag-generic,
-			&.flag-spa{ // genericos X
+			&.flag-spa,
+			&.flag-wid{ // genericos X
 
 				&::before{
-					background-image: url(../images/ico/artigo.png);
+					background-image: url('../images/ico/artigo.png');
 					box-shadow:none;
 					width:50px;
 					height:50px;
