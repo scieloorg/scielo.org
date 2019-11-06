@@ -113,5 +113,6 @@ window.dataLayer = window.dataLayer || [];
 
   gtag('config', 'UA-604844-1');
 </script>
+<script src="https://static.scielo.org/js/cookiePolicy.min.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
