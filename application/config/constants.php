@@ -238,7 +238,7 @@ define('SCIELO_YOUTUBE_CHANNEL', 'RedeSciELO');
 unset($base_uri, $base_url);
 
 // Turn cookiePolicy script ON or OFF. True = ON, False = OFF. And define script url.
-define('COOKIE_POLICY_SCRIPT_STATUS', true);
-define('COOKIE_POLICY_SCRIPT_URL', 'https://static.scielo.org/js/cookiePolicy.min.js');
+define('COOKIE_POLICY_ENABLED', getenv('COOKIE_POLICY_ENABLED')?getenv('COOKIE_POLICY_ENABLED'): true);
+define('COOKIE_POLICY_SCRIPT_URL', getenv('COOKIE_POLICY_SCRIPT_URL')?getenv('COOKIE_POLICY_SCRIPT_URL'):'https://static.scielo.org/js/cookiePolicy.min.js');
 
 

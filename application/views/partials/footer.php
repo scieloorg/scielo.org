@@ -114,7 +114,7 @@ window.dataLayer = window.dataLayer || [];
   gtag('config', 'UA-604844-1');
 </script>
 
-<?php if (COOKIE_POLICY_SCRIPT_STATUS){ ?>
+<?php if (COOKIE_POLICY_ENABLED){ ?>
 <script src="<?= COOKIE_POLICY_SCRIPT_URL ?>" type="text/javascript" charset="utf-8"></script>
 <?php }?>
 
