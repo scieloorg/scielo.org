@@ -93,11 +93,9 @@ defined('EXIT__AUTO_MAX') or define('EXIT__AUTO_MAX', 125); // highest automatic
 |
 |
  */
-define('USE_HTTPS', getenv('USE_HTTPS')); // @TODO - Define on production
-
 // Base URL (keeps this out of the config.php)
 if (isset($_SERVER['HTTP_HOST'])) {
-    $base_url = USE_HTTPS == 'true' ? 'https' : 'http';
+    $base_url = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' ? 'https' : 'http';
     $base_url .= '://' . $_SERVER['HTTP_HOST'];
     $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 
@@ -122,36 +120,36 @@ define('APPPATH_URI', BASE_URI . APPPATH);
 define('STATIC_ASSETS_PATH', BASE_URL . 'static/');
 
 // API Token Authentication.
-define('API_USR', getenv('API_USR')); // @TODO - Define on production
-define('API_PWD', getenv('API_PWD')); // @TODO - Define on production
-define('SALT', getenv('SALT')); // @TODO - Define on production
+define('API_USR', 'app'); // @TODO - Define on production
+define('API_PWD', '#w7e45b22'); // @TODO - Define on production
+define('SALT', 'qKMlWO3nX7D7QZPYjqPfxBXVsr8r27eB'); // @TODO - Define on production
 
 // SMPT Authentication credentials.
-define('SCIELO_SMTP_AUTH', getenv('SCIELO_SMTP_AUTH')); // @TODO - Define on production
-define('SMTP_SMTP_SECURE', getenv('SMTP_SMTP_SECURE')); // @TODO - Define on production
-define('SCIELO_SMTP_SERVER', getenv('SCIELO_SMTP_SERVER')); // @TODO - Define on production
-define('SCIELO_SMTP_PORT', getenv('SCIELO_SMTP_PORT')); // @TODO - Define on production
-define('SCIELO_SMTP_USERNAME', getenv('SCIELO_SMTP_USERNAME')); // @TODO - Define on production
-define('SCIELO_SMTP_PASSWORD', getenv('SCIELO_SMTP_PASSWORD')); // @TODO - Define on production
+define('SCIELO_SMTP_AUTH', false); // @TODO - Define on production
+define('SMTP_SMTP_SECURE', ''); // @TODO - Define on production
+define('SCIELO_SMTP_SERVER', 'localhost'); // @TODO - Define on production
+define('SCIELO_SMTP_PORT', '1025'); // @TODO - Define on production
+define('SCIELO_SMTP_USERNAME', ''); // @TODO - Define on production
+define('SCIELO_SMTP_PASSWORD', ''); // @TODO - Define on production
 
 // Twitter API Authentication.
-define('TWITTER_ACCESS_TOKEN', getenv('TWITTER_ACCESS_TOKEN')); // @TODO - Define on production
-define('TWITTER_ACCESS_TOKEN_SECRET', getenv('TWITTER_ACCESS_TOKEN_SECRET')); // @TODO - Define on production
-define('TWITTER_CONSUMER_KEY', getenv('TWITTER_CONSUMER_KEY')); // @TODO - Define on production
-define('TWITTER_CONSUMER_SECRET', getenv('TWITTER_CONSUMER_SECRET')); // @TODO - Define on production
-define('TWITTER_SCREEN_NAME', getenv('TWITTER_SCREEN_NAME')); // @TODO - Define on production
+define('TWITTER_ACCESS_TOKEN', '71320992-ECLCq3q1cFLsQTQXMUDOVHRMFtcQlxxP07U8ET2IM'); // @TODO - Define on production
+define('TWITTER_ACCESS_TOKEN_SECRET', 'iEZ9pEtncHZsJAib6J1Luo60fY8mCxaUfE5mLzgMoqtYn'); // @TODO - Define on production
+define('TWITTER_CONSUMER_KEY', 'piIRji7BUY0WpDwpmNNmx5Xxh'); // @TODO - Define on production
+define('TWITTER_CONSUMER_SECRET', 'TQYoeLNcjHwGEXRJkPYHs3oEVRL6f7pFVzXsmY9FeDzoUt0hDz'); // @TODO - Define on production
+define('TWITTER_SCREEN_NAME', 'RedeSciELO'); // @TODO - Define on production
 
 // Google reCAPTCHA key.
-define('GOOGLE_RECAPTCHA_SITE_KEY', getenv('GOOGLE_RECAPTCHA_SITE_KEY')); // @TODO - Define on production
-define('GOOGLE_RECAPTCHA_SERVER_KEY', getenv('GOOGLE_RECAPTCHA_SERVER_KEY')); // @TODO - Define on production
+define('GOOGLE_RECAPTCHA_SITE_KEY', '6LfmU3AUAAAAANT43HVpmaewLxfH-Vblm2azNvpx'); // @TODO - Define on production
+define('GOOGLE_RECAPTCHA_SERVER_KEY', '6LfmU3AUAAAAAGSyKyYoiVst5mggGpldC3pxshIx'); // @TODO - Define on production
 define('GOOGLE_RECAPTCHA_VERIFY_URL', 'https://www.google.com/recaptcha/api/siteverify');
 
 // Google Client API Key
-define('GOOGLE_CLIENT_API_APPNAME', getenv('GOOGLE_CLIENT_API_APPNAME')); // @TODO - Define on production
-define('GOOGLE_CLIENT_API_KEY', getenv('GOOGLE_CLIENT_API_KEY')); // @TODO - Define on production
+define('GOOGLE_CLIENT_API_APPNAME', 'SciELO.or'); // @TODO - Define on production
+define('GOOGLE_CLIENT_API_KEY', 'AIzaSyBSVZxxAvUlB_c4sBJgBFGeJ1o9A4neCn8'); // @TODO - Define on production
 
 // API Default Path. Very Important: Remember to add the last slash in this URL.
-define('WORDPRESS_URL', getenv('WORDPRESS_URL')); // @TODO - Define on production
+define('WORDPRESS_URL', 'http://scielohomolog.parati.ag/scielo-org-adm/'); // @TODO - Define on production
 define('WORDPRESS_API_PATH', WORDPRESS_URL . 'wp-json');
 define('WORDPRESS_API_PATH_EN', WORDPRESS_URL . 'en/wp-json');
 define('WORDPRESS_API_PATH_ES', WORDPRESS_URL . 'es/wp-json');
@@ -236,3 +234,7 @@ define('SCIELO_YOUTUBE_CHANNEL', 'RedeSciELO');
 
 // We dont need these variables any more.
 unset($base_uri, $base_url);
+
+// Turn cookiePolicy script ON or OFF. True = ON, False = OFF. And define script url.
+define('COOKIE_POLICY_ENABLED', getenv('COOKIE_POLICY_ENABLED')?getenv('COOKIE_POLICY_ENABLED'): true);
+define('COOKIE_POLICY_SCRIPT_URL', getenv('COOKIE_POLICY_SCRIPT_URL')?getenv('COOKIE_POLICY_SCRIPT_URL'):'https://static.scielo.org/js/cookiePolicy.min.js');
