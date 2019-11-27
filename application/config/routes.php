@@ -91,6 +91,10 @@ $route['es/revistas/listar-por-tema-ajax'] = 'home/list_by_subject_area_ajax';
 
 $route['php/index.php'] = 'home/redirect_legacy_index_url';
 
+$route['pt/busca/(:any)'] = 'home/search/$1';
+$route['en/search/(:any)'] = 'home/search/$1';
+$route['es/busqueda/(:any)'] = 'home/search/$1';
+
 $route['pt/(.+)'] = 'home/page/$1';
 $route['en/(.+)'] = 'home/page/$1';
 $route['es/(.+)'] = 'home/page/$1';

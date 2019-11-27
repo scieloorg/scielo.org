@@ -250,20 +250,5 @@ var scieloLib = {
 			$(this).toggleClass("discontinued-toggle-off discontinued-toggle-on");
 		});
 
-		// Internal search
-		$("#btn-internal-search").click(function(e) {
-			
-			var q = $("#input-internal-search").val();
-				//idioma = scieloLib.GetCookie("language");
-
-			//console.log("O idioma ativo é: " + idioma);
-
-			window.location.href = "/search/query/" + q;
-			
-			console.log("o termo de busca é: " + q);
-			console.log("cliquei no botão da busca \n\n");
-
-		});
-		
 	}
 };

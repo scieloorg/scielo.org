@@ -1211,4 +1211,50 @@ class Home extends CI_Controller
 		$lang = $this->input->get('lang', 'en');
 		return redirect($lang . '/', 'location', 301);
 	}
+
+
+	/**
+	 * Create internal search query
+	 */
+	public function search(){
+
+		switch ($this->language) {
+
+			case SCIELO_LANG:
+				$url    = WORDPRESS_API_PATH."/swp_api/search?s="; 
+				break;
+
+			case SCIELO_EN_LANG:
+				$url    = WORDPRESS_API_PATH_EN."/swp_api/search?s="; 
+				break;
+
+			case SCIELO_ES_LANG:
+				$url    = WORDPRESS_API_PATH_ES."/swp_api/search?s="; 
+				break;
+		}
+
+        $q = $this->input->post('input-internal-search');
+        $json_url = $url.rawurlencode($q);
+        $dados["query"] = $q;
+        $dados["idioma"] = $this->language;
+        $dados["json"] = $this->doSearch($q, $json_url);
+
+        $this->load->view("/pages/search_results", $dados);
+        
+    }
+
+
+	/**
+	 * Internal search query 
+	 */
+    public function doSearch($q, $json_url){
+    
+        $rtn = array();
+        $q = strtolower($q);
+        $json = file_get_contents($json_url);
+        $searchResult = json_decode($json,true);
+        $rtn = $searchResult;
+        return $rtn;
+    
+    }
 }
