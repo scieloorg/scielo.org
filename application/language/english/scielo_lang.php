@@ -92,6 +92,9 @@ $lang['search_btn'] = 'Search';
 $lang['clean_btn'] = 'Clear';
 $lang["content_error"] = 'Sorry, this content is currently unavailable';
 $lang['with_initial_letter'] = '&nbsp;with the initial letter&nbsp;';
+$lang["internal_search_placeholder"] = "Criteria, guides, announcements etc";
+$lang['displaying_results_for_term'] = 'Displaying results for term ';
+$lang['no_items_found_for_term'] = 'No items found for term ';
 $lang['page_not_found_with_details'] = '
 This page could not be found. The content you are looking for was probably moved or is no longer available.
 <br><br>

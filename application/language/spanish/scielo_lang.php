@@ -87,10 +87,13 @@ $lang['watch_video'] = 'Ver en YouTube';
 $lang['contains'] = 'Contiene';
 $lang['extact_title'] = 'Título exacto';
 $lang['starts_with'] = 'Comienza con';
-$lang['search_btn'] = 'Buscar';
+$lang['search_btn'] = 'Búsqueda';
 $lang['clean_btn'] = 'Limpiar';
 $lang["content_error"] = 'Lo sentimos, este contenido no está disponible en este momento';
 $lang['with_initial_letter'] = '&nbsp;con la letra inicial&nbsp;';
+$lang["internal_search_placeholder"] = "Criterios, guías, anuncios, etc.";
+$lang['displaying_results_for_term'] = 'Mostrando resultados para el término ';
+$lang['no_items_found_for_term'] = 'No se encontraron elementos para el término ';
 $lang['page_not_found_with_details'] = '
 No se pudo encontrar esta página. El contenido que ha buscado probablemente se ha movido o no está disponible.
 <br><br>

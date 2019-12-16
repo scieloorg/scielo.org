@@ -12,6 +12,10 @@ body{
 	font-family: 'Roboto', sans-serif;
 }
 
+a{
+	word-wrap: break-word;
+}
+
 .alert-notification{
 
 	[class^=col-]:first-child{
@@ -2498,3 +2502,6 @@ section{
 	padding: 0 10px 17px;
 }
   
+.internal-search-box{
+	margin: 0 0 15px;
+}
