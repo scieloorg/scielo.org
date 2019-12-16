@@ -90,6 +90,9 @@ $lang['starts_with'] = 'Começa com';
 $lang['search_btn'] = 'Buscar';
 $lang['clean_btn'] = 'Limpar';
 $lang["content_error"] = 'Desculpe, este conteúdo está temporariamente indisponível.';
+$lang["internal_search_placeholder"] = "Critérios, guias, comunicados etc";
+$lang['displaying_results_for_term'] = 'Exibindo resultados para o termo ';
+$lang['no_items_found_for_term'] = 'Nenhum item encontrado para o termo ';
 $lang['page_not_found_with_details'] = '
 Não foi possível encontrar essa página. O conteúdo que você buscou provavelmente foi movido ou não está mais disponível.
 <br><br>

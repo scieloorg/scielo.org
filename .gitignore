@@ -1,5 +1,7 @@
 .DS_Store
 
+docker-compose-local.yml
+
 application/cache/*/Files
 !application/cache/index.html
 !application/cache/database/data.db

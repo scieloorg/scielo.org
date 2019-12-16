@@ -1211,4 +1211,132 @@ class Home extends CI_Controller
 		$lang = $this->input->get('lang', 'en');
 		return redirect($lang . '/', 'location', 301);
 	}
+
+
+	/**
+	 * Create internal search query
+	 */
+	public function search(){
+
+		switch ($this->language) {
+
+			case SCIELO_LANG:
+				//$url    = WORDPRESS_API_PATH."/swp_api/search?nopaging=true&s="; 
+				$paged_url  = WORDPRESS_API_PATH."/swp_api/search?posts_per_page=10&s="; 
+				$url    	= WORDPRESS_API_PATH."/swp_api/search?nopaging=true&s="; 
+				break;
+
+			case SCIELO_EN_LANG:
+				$paged_url  = WORDPRESS_API_PATH_EN."/swp_api/search?posts_per_page=10&s="; 
+				$url    	= WORDPRESS_API_PATH_EN."/swp_api/search?nopaging=true&s="; 
+				break;
+
+			case SCIELO_ES_LANG:
+				$paged_url  = WORDPRESS_API_PATH_ES."/swp_api/search?posts_per_page=10&s="; 
+				$url    	= WORDPRESS_API_PATH_ES."/swp_api/search?nopaging=true&s="; 
+				break;
+		}
+
+		// receive input value
+        $q = $this->input->get('q');
+        
+        // Clear input content to avoid xss
+        $q = htmlspecialchars(strip_tags($q));
+
+        // Rides Json paged url and embodies to accept blank
+        $paged_json_url = $paged_url.rawurlencode($q);
+
+        // Rides Json url and emboda to accept blank
+        $json_url = $url.rawurlencode($q);
+
+        // If page number is posted, assign it in the query. $ this-> uri-> segment (3) represents page number
+        if($this->uri->segment(3)){
+        	$page_num = $this->uri->segment(3);
+        	$json_url = $json_url."&page=".$page_num;
+        	$paged_json_url = $paged_json_url."&page=".$page_num;
+        }
+        
+        // Receive value sent by already formatted search field
+        $data["query"] = $q;
+
+        // Gets json from nonpaged search
+        $data["json"] = $this->doSearch($q, $json_url);
+
+        // gets json from paged search
+        $data["paged_json"] = $this->doSearch($q, $paged_json_url);
+                     	
+       
+        /* 
+        ##	Making pagination
+        */
+        $this->load->library('pagination');
+        
+        $scielo_url = ($this->language == SCIELO_LANG) ? base_url($this->language . '/') : base_url();
+        
+        // Displays total query results for pagination creation
+        $search_total_rows = count($data["json"]);
+
+        // Url to assemble pagination results
+        $data["url"] = base_url()."home/search/"; 
+        
+
+        // Display number of pages in url and not number of records displayed
+		$config['use_page_numbers'] = TRUE;
+
+		// Keep field values sent via get when reloading page
+		$config['reuse_query_string'] = TRUE;
+
+
+		// commented because the route was not made for this url/pt	
+		// $config['base_url'] = $scielo_url.'home/search/';
+		$config['base_url'] = base_url().'home/search';
+		
+		
+		$config['total_rows'] = $search_total_rows;
+		$config['per_page'] = 10;
+
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+
+		$config['first_link'] = lang('pagination_first_link');
+		$config['last_link'] = lang('pagination_last_link');
+
+		$config['first_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+
+		$config['last_tag_open'] = '<li>';
+		$config['last_tag_close'] = '</li>';
+
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+
+		$config['prev_tag_open'] = '<li>';
+		$config['prev_tag_close'] = '</li>';
+
+		$config['cur_tag_open'] = '<li class="active"><a href="#">';
+		$config['cur_tag_close'] = '</a></li>';
+
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+
+		$this->pagination->initialize($config);
+		$this->load->view("/pages/search_results", $data);
+	
+    }
+
+	/**
+	 * Internal search query 
+	 */
+    public function doSearch($q, $json_url){
+    
+        $rtn = array();
+        $q = strtolower($q);
+        $json = file_get_contents($json_url);
+        $searchResult = json_decode($json,true);
+        $rtn = $searchResult;
+
+        return $rtn;
+           
+    }
+
 }

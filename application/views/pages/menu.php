@@ -44,6 +44,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <section class="collection collectionAbout">
 	<div class="container">
+
+		<?php $this->load->view('partials/internal-search-box'); ?>
+		
 		<?php if (!empty($page['content']['rendered'])) : ?>
 		<div class="row">
 			<div class="col-xs-12">

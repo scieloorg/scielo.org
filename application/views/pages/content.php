@@ -46,6 +46,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div class="container">
 		<div class="row">
 			<div class="col-xs-12 content">
+
+				<?php $this->load->view('partials/internal-search-box'); ?>
 				
 				<div class="page-updated-at">
 					<?php $date = new DateTime($page['modified']);?>
