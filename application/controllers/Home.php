@@ -1252,7 +1252,6 @@ class Home extends CI_Controller
         // If page number is posted, assign it in the query. $ this-> uri-> segment (3) represents page number
         if($this->uri->segment(3)){
         	$page_num = $this->uri->segment(3);
-        	$json_url = $json_url."&page=".$page_num;
         	$paged_json_url = $paged_json_url."&page=".$page_num;
         }
         
@@ -1319,9 +1318,13 @@ class Home extends CI_Controller
 		$config['num_tag_open'] = '<li>';
 		$config['num_tag_close'] = '</li>';
 
+
+		// set page title
+		$pageMetadata = array('acf' => array('pageTitle' => ucfirst(lang('search_btn')) . ' | SciELO.org'));
+		$this->PageMetadata->initialize($pageMetadata);
+
 		$this->pagination->initialize($config);
-		$this->load->view("/pages/search_results", $data);
-	
+		$this->load->view("/pages/search_results", $data);	
     }
 
 	/**

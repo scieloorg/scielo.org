@@ -94,9 +94,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					}
 				?>
 
-				<?php //if ($paged_json[$i]['template'] != 'pageModel-linkToDocument.php'){ ?>
+				<?php if ($paged_json[$i]['template'] != 'pageModel-linkToDocument.php'){ ?>
 	            		
             		<div class="row">
+						<div class="col-xs-12">
+		    
+							<a href="<?= $link ?>">
+
+								<?= $link_text ?>
+							
+							</a>
+		            		
+		            	</div>
+					</div>
+					<hr>
+				
+				<?php }else{ ?>
+					
+					<div class="row">
 						<div class="col-xs-12">
 		    
 							<a href="<?= $link ?>" target="_blank">
@@ -109,7 +124,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					</div>
 					<hr>
 				
-				<?php //} ?>
+				<?php } ?>
 		        
 			<?php } ?>
 		
