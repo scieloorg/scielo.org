@@ -91,6 +91,7 @@ $lang['starts_with'] = 'Starts with';
 $lang['search_btn'] = 'Search';
 $lang['clean_btn'] = 'Clear';
 $lang["content_error"] = 'Sorry, this content is currently unavailable';
+$lang["search_content_error"] = 'An error occurred while fetching. Try again later';
 $lang['with_initial_letter'] = '&nbsp;with the initial letter&nbsp;';
 $lang["internal_search_placeholder"] = "Criteria, guides, announcements etc";
 $lang['displaying_results_for_term'] = 'Displaying results for term ';

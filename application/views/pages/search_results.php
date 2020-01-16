@@ -50,6 +50,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		
 		<?php $this->load->view('partials/internal-search-box'); ?>
 
+		
+	<?php if(!$error){ ?>
+		
 		<?php if($paged_json){ ?>
 				
 			<?php for($i=0;$i<count($paged_json);$i++) { ?>
@@ -137,20 +140,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					
 				</div>
 			</div>
+			<br><br>
 
 		<?php } ?>
 
-	</div>
+	<?php }else{ 
 
-	<!--
-	<div>
-		<nav aria-label="Page navigation example">
-			<ul class="pagination">
-				<?//= $this->pagination->create_links();?>
-			</ul>
-		</nav>
+		// Show error message
+	?>
+
+		<script type="text/javascript">
+			document.getElementById("q").select();
+		</script>
+
+		<div class="row">
+			<div class="col-xs-12 col-md-6 col-md-offset-3">
+		        <div class="card card-no-content card-internal-search">
+		            <?= lang('search_content_error'); ?>
+		        </div>
+		    </div>
+		</div>
+
+	<?php } ?>
+
 	</div>
-	-->
 
 	<div class="container">
 		<div class="row">
@@ -163,7 +176,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			</div>	
 		</div>		
 	</div>
-
 	
 </section>
 

@@ -1221,7 +1221,6 @@ class Home extends CI_Controller
 		switch ($this->language) {
 
 			case SCIELO_LANG:
-				//$url    = WORDPRESS_API_PATH."/swp_api/search?nopaging=true&s="; 
 				$paged_url  = WORDPRESS_API_PATH."/swp_api/search?posts_per_page=10&s="; 
 				$url    	= WORDPRESS_API_PATH."/swp_api/search?nopaging=true&s="; 
 				break;
@@ -1255,76 +1254,99 @@ class Home extends CI_Controller
         	$paged_json_url = $paged_json_url."&page=".$page_num;
         }
         
+        // Error status
+        $data["error"] = 0;
+
         // Receive value sent by already formatted search field
         $data["query"] = $q;
 
-        // Gets json from nonpaged search
-        $data["json"] = $this->doSearch($q, $json_url);
+        // Force status code test = 500
+        // http_response_code(500);
 
-        // gets json from paged search
-        $data["paged_json"] = $this->doSearch($q, $paged_json_url);
-                     	
-       
-        /* 
-        ##	Making pagination
-        */
-        $this->load->library('pagination');
-        
-        $scielo_url = ($this->language == SCIELO_LANG) ? base_url($this->language . '/') : base_url();
-        
-        // Displays total query results for pagination creation
-        $search_total_rows = count($data["json"]);
+        // Check http response code to avoid errors on front 
+        $data["http-response-code"] = http_response_code();
 
-        // Url to assemble pagination results
-        $data["url"] = base_url()."home/search/"; 
-        
+        // If there are no errors
+		if ($data["http-response-code"] == 200){
 
-        // Display number of pages in url and not number of records displayed
-		$config['use_page_numbers'] = TRUE;
+	        // Gets json from nonpaged search
+	        $data["json"] = $this->doSearch($q, $json_url);
 
-		// Keep field values sent via get when reloading page
-		$config['reuse_query_string'] = TRUE;
+	        // gets json from paged search
+	        $data["paged_json"] = $this->doSearch($q, $paged_json_url);
+	                     	
+	       
+	        /* 
+	        ##	Making pagination
+	        */
+	        $this->load->library('pagination');
+	        
+	        $scielo_url = ($this->language == SCIELO_LANG) ? base_url($this->language . '/') : base_url();
+	        
+	        // Displays total query results for pagination creation
+	        if($data["json"]){
+	        	$search_total_rows = count($data["json"]);
+	    	}else{
+	    		$search_total_rows = 0;
+	    	}
+	        // Url to assemble pagination results
+	        $data["url"] = base_url()."home/search/"; 
+	        
 
+	        // Display number of pages in url and not number of records displayed
+			$config['use_page_numbers'] = TRUE;
 
-		// commented because the route was not made for this url/pt	
-		// $config['base_url'] = $scielo_url.'home/search/';
-		$config['base_url'] = base_url().'home/search';
-		
-		
-		$config['total_rows'] = $search_total_rows;
-		$config['per_page'] = 10;
-
-		$config['full_tag_open'] = '<ul class="pagination">';
-		$config['full_tag_close'] = '</ul>';
-
-		$config['first_link'] = lang('pagination_first_link');
-		$config['last_link'] = lang('pagination_last_link');
-
-		$config['first_tag_open'] = '<li>';
-		$config['first_tag_close'] = '</li>';
-
-		$config['last_tag_open'] = '<li>';
-		$config['last_tag_close'] = '</li>';
-
-		$config['next_tag_open'] = '<li>';
-		$config['next_tag_close'] = '</li>';
-
-		$config['prev_tag_open'] = '<li>';
-		$config['prev_tag_close'] = '</li>';
-
-		$config['cur_tag_open'] = '<li class="active"><a href="#">';
-		$config['cur_tag_close'] = '</a></li>';
-
-		$config['num_tag_open'] = '<li>';
-		$config['num_tag_close'] = '</li>';
+			// Keep field values sent via get when reloading page
+			$config['reuse_query_string'] = TRUE;
 
 
-		// set page title
-		$pageMetadata = array('acf' => array('pageTitle' => ucfirst(lang('search_btn')) . ' | SciELO.org'));
-		$this->PageMetadata->initialize($pageMetadata);
+			// commented because the route was not made for this url/pt	
+			// $config['base_url'] = $scielo_url.'home/search/';
+			$config['base_url'] = base_url().'home/search';
+			
+			
+			$config['total_rows'] = $search_total_rows;
+			$config['per_page'] = 10;
 
-		$this->pagination->initialize($config);
-		$this->load->view("/pages/search_results", $data);	
+			$config['full_tag_open'] = '<ul class="pagination">';
+			$config['full_tag_close'] = '</ul>';
+
+			$config['first_link'] = lang('pagination_first_link');
+			$config['last_link'] = lang('pagination_last_link');
+
+			$config['first_tag_open'] = '<li>';
+			$config['first_tag_close'] = '</li>';
+
+			$config['last_tag_open'] = '<li>';
+			$config['last_tag_close'] = '</li>';
+
+			$config['next_tag_open'] = '<li>';
+			$config['next_tag_close'] = '</li>';
+
+			$config['prev_tag_open'] = '<li>';
+			$config['prev_tag_close'] = '</li>';
+
+			$config['cur_tag_open'] = '<li class="active"><a href="#">';
+			$config['cur_tag_close'] = '</a></li>';
+
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+
+
+			// set page title
+			$pageMetadata = array('acf' => array('pageTitle' => ucfirst(lang('search_btn')) . ' | SciELO.org'));
+			$this->PageMetadata->initialize($pageMetadata);
+
+			$this->pagination->initialize($config);
+	
+		}else{
+
+			// Json request error
+			$data["error"] = 1;
+		}	
+
+		$this->load->view("/pages/search_results", $data);
+			
     }
 
 	/**
@@ -1334,12 +1356,12 @@ class Home extends CI_Controller
     
         $rtn = array();
         $q = strtolower($q);
-        $json = file_get_contents($json_url);
+       	$json = file_get_contents($json_url);
         $searchResult = json_decode($json,true);
         $rtn = $searchResult;
 
         return $rtn;
            
     }
-
+    
 }

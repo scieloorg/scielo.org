@@ -90,6 +90,7 @@ $lang['starts_with'] = 'Comienza con';
 $lang['search_btn'] = 'Búsqueda';
 $lang['clean_btn'] = 'Limpiar';
 $lang["content_error"] = 'Lo sentimos, este contenido no está disponible en este momento';
+$lang["search_content_error"] = 'Se produjo un error al buscar. Intenta nuevamente más tarde';
 $lang['with_initial_letter'] = '&nbsp;con la letra inicial&nbsp;';
 $lang["internal_search_placeholder"] = "Criterios, guías, anuncios, etc.";
 $lang['displaying_results_for_term'] = 'Mostrando resultados para el término ';
