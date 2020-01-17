@@ -708,9 +708,9 @@ class Home extends CI_Controller
 
 		libxml_use_internal_errors(true);
 		$blog_xml_var = simplexml_load_string($blog_posts, 'SimpleXMLElement', LIBXML_NOCDATA);
- 		if($blog_xml_var === false)
+		if($blog_xml_var === false)
 			$blog_xml_var = array();
- 		$this->load->vars('blog_posts', $blog_xml_var);
+		$this->load->vars('blog_posts', $blog_xml_var);
 
 	}
 
@@ -1237,131 +1237,127 @@ class Home extends CI_Controller
 		}
 
 		// receive input value
-        $q = $this->input->get('q');
-        
-        // Clear input content to avoid xss
-        $q = htmlspecialchars(strip_tags($q));
+		$q = $this->input->get('q');
+		
+		// Clear input content to avoid xss
+		$q = htmlspecialchars(strip_tags($q));
 
-        // Rides Json paged url and embodies to accept blank
-        $paged_json_url = $paged_url.rawurlencode($q);
+		// Rides Json paged url and embodies to accept blank
+		$paged_json_url = $paged_url.rawurlencode($q);
 
-        // Rides Json url and emboda to accept blank
-        $json_url = $url.rawurlencode($q);
+		// Rides Json url and emboda to accept blank
+		$json_url = $url.rawurlencode($q);
 
-        // If page number is posted, assign it in the query. $ this-> uri-> segment (3) represents page number
-        if($this->uri->segment(3)){
-        	$page_num = $this->uri->segment(3);
-        	$paged_json_url = $paged_json_url."&page=".$page_num;
-        }
-        
-        // Error status
-        $data["error"] = 0;
+		// If page number is posted, assign it in the query. $ this-> uri-> segment (3) represents page number
+		if($this->uri->segment(3)){
+			$page_num = $this->uri->segment(3);
+			$paged_json_url = $paged_json_url."&page=".$page_num;
+		}
+		
+		// Error status
+		$data["error"] = 0;
 
-        // Receive value sent by already formatted search field
-        $data["query"] = $q;
+		// Receive value sent by already formatted search field
+		$data["query"] = $q;
 
-        // Force status code test = 500
-        // http_response_code(500);
+		
+		// Gets json from nonpaged search
+		$data["json"] = $this->doSearch($q, $json_url);
 
-        // Check http response code to avoid errors on front 
-        $data["http-response-code"] = http_response_code();
+		if(!isset($data["json"]["error"])) {
+			$data["paged_json"] = $this->doSearch($q, $paged_json_url);
 
-        // If there are no errors
-		if ($data["http-response-code"] == 200){
+			if(!isset($data["paged_json"]["error"])) {
+				/* 
+				##	Making pagination
+				*/
+				$this->load->library('pagination');
+				
+				// Displays total query results for pagination creation
+				if($data["json"]){
+					$search_total_rows = count($data["json"]);
+				}else{
+					$search_total_rows = 0;
+				}
+				// Url to assemble pagination results
+				$data["url"] = base_url()."home/search/"; 
+				
 
-	        // Gets json from nonpaged search
-	        $data["json"] = $this->doSearch($q, $json_url);
+				// Display number of pages in url and not number of records displayed
+				$config['use_page_numbers'] = TRUE;
 
-	        // gets json from paged search
-	        $data["paged_json"] = $this->doSearch($q, $paged_json_url);
-	                     	
-	       
-	        /* 
-	        ##	Making pagination
-	        */
-	        $this->load->library('pagination');
-	        
-	        $scielo_url = ($this->language == SCIELO_LANG) ? base_url($this->language . '/') : base_url();
-	        
-	        // Displays total query results for pagination creation
-	        if($data["json"]){
-	        	$search_total_rows = count($data["json"]);
-	    	}else{
-	    		$search_total_rows = 0;
-	    	}
-	        // Url to assemble pagination results
-	        $data["url"] = base_url()."home/search/"; 
-	        
-
-	        // Display number of pages in url and not number of records displayed
-			$config['use_page_numbers'] = TRUE;
-
-			// Keep field values sent via get when reloading page
-			$config['reuse_query_string'] = TRUE;
+				// Keep field values sent via get when reloading page
+				$config['reuse_query_string'] = TRUE;
 
 
-			// commented because the route was not made for this url/pt	
-			// $config['base_url'] = $scielo_url.'home/search/';
-			$config['base_url'] = base_url().'home/search';
-			
-			
-			$config['total_rows'] = $search_total_rows;
-			$config['per_page'] = 10;
+				// commented because the route was not made for this url/pt	
+				// $config['base_url'] = $scielo_url.'home/search/';
+				$config['base_url'] = base_url().'home/search';
+				
+				// Pagination
+				$config['total_rows'] = $search_total_rows;
+				$config['per_page'] = 10;
 
-			$config['full_tag_open'] = '<ul class="pagination">';
-			$config['full_tag_close'] = '</ul>';
+				$config['full_tag_open'] = '<ul class="pagination">';
+				$config['full_tag_close'] = '</ul>';
 
-			$config['first_link'] = lang('pagination_first_link');
-			$config['last_link'] = lang('pagination_last_link');
+				$config['first_link'] = lang('pagination_first_link');
+				$config['last_link'] = lang('pagination_last_link');
 
-			$config['first_tag_open'] = '<li>';
-			$config['first_tag_close'] = '</li>';
+				$config['first_tag_open'] = '<li>';
+				$config['first_tag_close'] = '</li>';
 
-			$config['last_tag_open'] = '<li>';
-			$config['last_tag_close'] = '</li>';
+				$config['last_tag_open'] = '<li>';
+				$config['last_tag_close'] = '</li>';
 
-			$config['next_tag_open'] = '<li>';
-			$config['next_tag_close'] = '</li>';
+				$config['next_tag_open'] = '<li>';
+				$config['next_tag_close'] = '</li>';
 
-			$config['prev_tag_open'] = '<li>';
-			$config['prev_tag_close'] = '</li>';
+				$config['prev_tag_open'] = '<li>';
+				$config['prev_tag_close'] = '</li>';
 
-			$config['cur_tag_open'] = '<li class="active"><a href="#">';
-			$config['cur_tag_close'] = '</a></li>';
+				$config['cur_tag_open'] = '<li class="active"><a href="#">';
+				$config['cur_tag_close'] = '</a></li>';
 
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
+				$config['num_tag_open'] = '<li>';
+				$config['num_tag_close'] = '</li>';
 
-
-			// set page title
-			$pageMetadata = array('acf' => array('pageTitle' => ucfirst(lang('search_btn')) . ' | SciELO.org'));
-			$this->PageMetadata->initialize($pageMetadata);
-
-			$this->pagination->initialize($config);
-	
-		}else{
-
-			// Json request error
+				$this->pagination->initialize($config);
+		
+			} else {
+				$data["error"] = 1;	
+			}
+		} else {
 			$data["error"] = 1;
-		}	
+		}
 
+		// set page title
+		$pageMetadata = array('acf' => array('pageTitle' => ucfirst(lang('search_btn')) . ' | SciELO.org'));
+		$this->PageMetadata->initialize($pageMetadata);
+		
 		$this->load->view("/pages/search_results", $data);
-			
-    }
+
+	}
 
 	/**
 	 * Internal search query 
 	 */
-    public function doSearch($q, $json_url){
-    
-        $rtn = array();
-        $q = strtolower($q);
-       	$json = file_get_contents($json_url);
-        $searchResult = json_decode($json,true);
-        $rtn = $searchResult;
+	public function doSearch($q, $json_url){
+		$searchResult = "";
+		$q = strtolower($q);
 
-        return $rtn;
-           
-    }
-    
+		$json = @file_get_contents($json_url);
+		
+		if ($json === false) {
+			$searchResult = array(
+				"error" => true
+			);
+		} else {
+			$searchResult = json_decode($json,true);
+		}
+
+		return $searchResult;
+		   
+	}
+	
 }
