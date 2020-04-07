@@ -28,6 +28,7 @@ $lang['open_access'] = 'in open access';
 $lang['journals_singular'] = 'journal';
 $lang['journals'] = 'journals';
 $lang['books'] = 'Books';
+$lang['preprints'] = 'Preprints';
 $lang['journals_list'] = 'Journals';
 $lang['development_list'] = 'In development';
 $lang['discontinued_list'] = 'Discontinued';
