@@ -45,6 +45,7 @@ class Home extends CI_Controller
 		$this->load_about_link(); // The about link is the same in any page, so I load it here in the constructor.			
 		$this->load_openaccessdeclaration_link(); // The open access link in footer section, so I load it here in the constructor.			
 		$this->load_footer(); // The footer is the same in any page, so I load it here in the constructor.	
+		$this->currentLocale = setlocale(LC_ALL, 0); // it returns the current locale, e.g: pt_BR.UTF8
 	}
 
 	/**
@@ -207,7 +208,7 @@ class Home extends CI_Controller
 			return;
 		}
 
-		$journals = $this->Journals->list_all_journals($limit, $offset, $params['status'], $params['matching'], $params['search'], $params['letter']);
+		$journals = $this->Journals->list_all_journals($limit, $offset, $params['status'], $params['matching'], $params['search'], $params['letter'], $this->currentLocale);
 		$total_journals = $this->Journals->total_journals($params['status'], $params['matching'], $params['search'], $params['letter']);
 
 		$journals_links = $this->get_journals_links();
