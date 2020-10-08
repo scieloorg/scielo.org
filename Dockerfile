@@ -14,7 +14,9 @@ FROM ubuntu:18.04
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 \
       libapache2-mod-php php-gd php-curl php-memcached curl python-setuptools \
-	  python-pip php-sqlite3 php-xml  php-mbstring php-cli cron && \
+	  python-pip php-sqlite3 php-xml  php-mbstring php-cli cron \
+	  language-pack-pt language-pack-en-base language-pack-es \
+	  libicu-dev php-intl && \
 	rm -rf /var/lib/apt/lists/* && \
 	pip install supervisor
 
