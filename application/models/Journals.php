@@ -30,6 +30,19 @@ class Journals extends CI_Model
     public function __construct()
     {
         parent::__construct();
+
+        $this->db->conn_id->createFunction(
+            'locale',
+            function ($data, $locale = 'root') {
+                static $collators = array();
+
+                if (isset($collators[$locale]) !== true) {
+                    $collators[$locale] = new \Collator($locale);
+                }
+
+                return $collators[$locale]->getSortKey($data);
+            }
+        );
     }
 
     /**
