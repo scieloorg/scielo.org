@@ -30,6 +30,19 @@ class Journals extends CI_Model
     public function __construct()
     {
         parent::__construct();
+
+        $this->db->conn_id->createFunction(
+            'locale',
+            function ($data, $locale = 'root') {
+                static $collators = array();
+
+                if (isset($collators[$locale]) !== true) {
+                    $collators[$locale] = new \Collator($locale);
+                }
+
+                return $collators[$locale]->getSortKey($data);
+            }
+        );
     }
 
     /**
@@ -73,7 +86,7 @@ class Journals extends CI_Model
      * @param   string $letter
      * @return	array
      */
-    public function list_all_journals($limit, $offset, $status = false, $matching = false, $search = false, $letter = false)
+    public function list_all_journals($limit, $offset, $status = false, $matching = false, $search = false, $letter = false, $locale = 'root')
     {
 
         $this->db->from($this->journals_table);
@@ -82,7 +95,7 @@ class Journals extends CI_Model
 
         $this->db->limit($limit, $offset);
         $this->db->group_by('title_search');
-        $this->db->order_by('title_search', 'ASC');
+        $this->db->order_by("locale('title', '$locale')");
 
         return $this->get_results_obj();
     }
