@@ -452,7 +452,7 @@ section{
 				}
 
 			&.scielo-books,
-			&.scielo-preprints,
+			&.scielo-servers-repos,
 			&.flag-generic,
 			&.flag-spa,
 			&.flag-wid{ // genericos X
@@ -466,7 +466,7 @@ section{
 					margin-top:-2px;
 				}
 
-				&.scielo-preprints-no-data,
+				&.scielo-servers-repos-no-data,
 				&.scielo-books-no-data{
 					h4{
 						margin-top:.8rem;
@@ -612,7 +612,7 @@ section{
 				}
 
 
-				&.scielo-preprints-no-data,
+				&.scielo-servers-repos-no-data,
 				&.scielo-books-no-data{
 					&::before{
 						margin-top: 27px;
@@ -649,7 +649,7 @@ section{
 						margin-top: 22px;
 					}
 
-					&.scielo-preprints-no-data,
+					&.scielo-servers-repos-no-data,
 					&.scielo-books-no-data{
 						&::before{
 							margin-top: 26px;

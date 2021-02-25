@@ -46,16 +46,16 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
             <?php endforeach; ?>
 
             <?php 
-            // Preprints
+            // Servidores e repositórios
             $counter = 0;
-            foreach ($this->Collections->get_preprints_list() as $key => $preprint) : 
+            foreach (array_merge($this->Collections->get_repositories_list(), $this->Collections->get_preprints_list()) as $key => $server_or_repo) : 
             ?>
-                <dd class="scielo-preprints scielo-preprints-no-data <?php if($counter == 0):?> first-node-collection <?php endif;?>">
+                <dd class="scielo-servers-repos scielo-servers-repos-no-data <?php if($counter == 0):?> first-node-collection <?php endif;?>">
                     <?php if($counter++ == 0):?>
-                    <h3><?= lang('preprints') ?></h3>
+                    <h3><?= lang('servers_and_repos') ?></h3>
                     <?php endif;?>
-                    <a href="https://<?= $preprint->domain ?>">
-                        <h4><?= $preprint->name[$lang_index] ?></h4>
+                    <a href="https://<?= $server_or_repo->domain ?>">
+                        <h4><?= $server_or_repo->name[$lang_index] ?></h4>
                     </a>
                 </dd>
             <?php endforeach; ?>
