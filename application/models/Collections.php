@@ -53,6 +53,13 @@ class Collections
     private $preprints_list = array();
 
     /**
+     * List of all the data used in the collections repositories section.
+     *
+     * @var	array
+     */
+    private $repositories_list = array();
+
+    /**
      * List of all the data used in the others collections section.
      *
      * @var	array
@@ -122,6 +129,17 @@ class Collections
     {
 
         return $this->preprints_list;
+    }
+
+    /**
+     * Returns the repositories list.
+     *
+     * @return	array
+     */
+    public function get_repositories_list()
+    {
+
+        return $this->repositories_list;
     }
 
     /**
@@ -219,6 +237,8 @@ class Collections
                     $this->books_list[] = (object)$collection;
                 } else if($collection['type'] == 'preprints') {
                     $this->preprints_list[] = (object)$collection;
+                } else if($collection['type'] == 'repositories') {
+                    $this->repositories_list[] = (object)$collection;
                 }
             } else {
                 if ($collection['type'] == 'journals') {
