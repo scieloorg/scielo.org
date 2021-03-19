@@ -337,6 +337,10 @@ section{
 		column-count: 1;
 		column-gap: 0;
 
+		div{
+			display: inline-block;
+		}
+
 		@media (orientation: landscape) {
 
 			@media (min-width: 485px) and (max-width: 850px) {

@@ -44,7 +44,7 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                 </a>
             </dd>
             <?php endforeach; ?>
-
+        <div>
             <?php 
             // Servidores e repositórios
             $counter = 0;
@@ -59,7 +59,7 @@ $lang_index = isset($language) ? $language : SCIELO_EN_LANG;
                     </a>
                 </dd>
             <?php endforeach; ?>
-
+        </div>
             <?php 
             // Livros
             $counter = 0;
