@@ -32,7 +32,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <script src="<?= get_static_js_path('scielo.js') ?>" type="text/javascript" charset="utf-8"></script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-604844-1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LVJH6ZZGQ7"></script>
 <script>
 $(function(){
 
@@ -111,7 +111,7 @@ window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-604844-1');
+  gtag('config', 'G-LVJH6ZZGQ7');
 </script>
 
 <?php if (COOKIE_POLICY_ENABLED){ ?>
