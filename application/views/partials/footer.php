@@ -31,8 +31,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <script src="<?= get_static_js_path('slick.js') ?>" type="text/javascript" charset="utf-8"></script>
 <script src="<?= get_static_js_path('scielo.js') ?>" type="text/javascript" charset="utf-8"></script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-604844-1"></script>
+
 <script>
 $(function(){
 
@@ -106,12 +105,6 @@ $(function(){
         }
     });
 });
-
-window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-604844-1');
 </script>
 
 <?php if (COOKIE_POLICY_ENABLED){ ?>
