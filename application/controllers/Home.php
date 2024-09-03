@@ -63,7 +63,7 @@ class Home extends CI_Controller
 		$this->load_journals();
 		$this->load_analytics();
 		$this->load_blog_rss_feed();
-		$this->load_twitter();
+		//$this->load_twitter();
 		$this->load_youtube_videos();
 		$this->load_tabs();
 
